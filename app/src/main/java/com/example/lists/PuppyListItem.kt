@@ -1,6 +1,7 @@
 package com.example.lists
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.example.lists.data.Puppy
 
 @Composable
-fun PuppyListItem(puppy: Puppy) {
+fun MalePuppyListItem(puppy: Puppy) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
@@ -37,7 +38,7 @@ fun PuppyListItem(puppy: Puppy) {
             defaultElevation = 6.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White,  // Set the container color to white
+            containerColor = Color(0xFF8cb6fa),  // Set the container color to white
         ),
         shape = RoundedCornerShape(corner = CornerSize(16.dp))
     ) {
@@ -58,6 +59,46 @@ fun PuppyListItem(puppy: Puppy) {
                     style = typography.bodyMedium
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun FemalePuppyListItem(puppy: Puppy) {
+    Card(
+        modifier = Modifier
+            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFfa8ca9),  // Set the container color to white
+        ),
+        shape = RoundedCornerShape(corner = CornerSize(16.dp))
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .weight(1f)
+                    .align(Alignment.CenterVertically),
+            horizontalAlignment = Alignment.End
+            ) {
+                Text(
+                    text = puppy.title,
+                    style = typography.headlineMedium
+                )
+                Text(
+                    text = "View Details",
+                    style = typography.bodyMedium
+                )
+            }
+            PuppyImage(puppy = puppy)
         }
     }
 }

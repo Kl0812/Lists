@@ -16,11 +16,12 @@ fun BarkHomeContent() {
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        items(
-            items = puppies,
-            itemContent = {
-                PuppyListItem(puppy = it)
+        items(puppies) { puppy ->
+            if (puppy.sex == "Female") {
+                FemalePuppyListItem(puppy = puppy)
+            } else {
+                MalePuppyListItem(puppy = puppy)
             }
-        )
+        }
     }
 }
