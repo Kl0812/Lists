@@ -47,9 +47,11 @@ fun DogDetailScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         state.dog?.let { dog ->
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
             ) {
-                DogImage(dog = dog)
+                DogDetailImage(dog = dog)
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "Breed: ${dog.dogBreed}",
@@ -123,13 +125,15 @@ fun DogDetailScreen(
 }
 
 @Composable
-private fun DogImage(dog: DogDetail) {
+private fun DogDetailImage(dog: DogDetail) {
     val painter = rememberAsyncImagePainter(
         ImageRequest.Builder(LocalContext.current).data(
-        data = dog.dogUrl
-    ).apply(block = fun ImageRequest.Builder.() {
-        crossfade(true)
-    }).build()
+            data = dog.dogUrl
+        ).apply(
+            block = fun ImageRequest.Builder.() {
+                crossfade(true)
+            }
+        ).build()
     )
 
     Image(
