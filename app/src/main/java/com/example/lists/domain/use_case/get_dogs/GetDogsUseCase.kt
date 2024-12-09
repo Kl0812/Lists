@@ -15,10 +15,10 @@ import javax.inject.Inject
 class GetDogsUseCase @Inject constructor(
     private val repository: DogRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<Dog>>> = flow {
+    operator fun invoke(page: Int): Flow<Resource<List<Dog>>> = flow {
         try{
             emit(Resource.Loading<List<Dog>>())
-            val dogs = repository.getDogs().map {it.toDog()}
+            val dogs = repository.getDogs(page).map {it.toDog()}
             emit(Resource.Success<List<Dog>>(dogs))
         } catch (e: HttpException) {
             emit(Resource.Error<List<Dog>>(e.localizedMessage ?: "An Unexpected Error Occur"))

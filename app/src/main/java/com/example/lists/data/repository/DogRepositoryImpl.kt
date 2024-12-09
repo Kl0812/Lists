@@ -10,8 +10,8 @@ class DogRepositoryImpl @Inject constructor(
     private val api: DogApi
 ) : DogRepository {
 
-    override suspend fun getDogs(): List<DogDto> {
-        return api.getDogs()
+    override suspend fun getDogs(page: Int): List<DogDto> {
+        return api.getDogs(page = page)
     }
 
     override suspend fun getDogById(dogId: String): DogDetailDto {

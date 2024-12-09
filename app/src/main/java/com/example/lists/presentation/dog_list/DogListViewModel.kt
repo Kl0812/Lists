@@ -21,14 +21,29 @@ class DogListViewModel @Inject constructor(
     private val _state = mutableStateOf(DogListState())
     val state : State<DogListState> = _state
 
+    private var currentPage = 0
+    private var isLastPage = false
+
     init {
         getDogs()
     }
 
-    private fun getDogs() {
-        getDogsUseCase().onEach { result ->
+    internal fun getDogs() {
+        if (_state.value.isLoading || isLastPage) return
+        _state.value = _state.value.copy(isLoading = true)
+
+        getDogsUseCase(currentPage).onEach { result ->
             when(result) {
                 is Resource.Success -> {
+                    val newDogs = result.data ?: emptyList()
+                    if (newDogs.isEmpty()) {
+                        isLastPage = true
+                    }
+                    _state.value = _state.value.copy(
+                        dogs = _state.value.dogs + newDogs,
+                        isLoading = false
+                    )
+                    currentPage++
                     _state.value = DogListState(dogs = result.data ?: emptyList())
                 }
                 is Resource.Error -> {
