@@ -90,6 +90,14 @@ dependencies {
     //Coil
     implementation(libs.coil.compose)
 
+    //pullRefresh
+    implementation (libs.foundation)
+    implementation (libs.androidx.foundation)
+    implementation (platform(libs.androidx.compose.bom))
+    implementation (libs.ui)
+    implementation (libs.androidx.compose.foundation.foundation)
+    implementation (libs.material3)
+
 }
 
 kapt {

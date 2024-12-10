@@ -1,6 +1,5 @@
 package com.example.lists.presentation.dog_details
 
-import com.example.lists.domain.model.Dog
 import com.example.lists.domain.model.DogDetail
 
 data class DogDetailState (

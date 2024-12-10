@@ -9,9 +9,11 @@ import com.example.lists.domain.use_case.get_dogs.GetDogsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.lang.Error
 import javax.inject.Inject
 
+/*
+* View Model for dog list, used to pass values to list screen
+* */
 @HiltViewModel
 class DogListViewModel @Inject constructor(
     private val getDogsUseCase: GetDogsUseCase
@@ -28,6 +30,9 @@ class DogListViewModel @Inject constructor(
         getDogs()
     }
 
+    // Handle actions for each loading situation
+    // The reason why internal fun is because getDogs need to be used
+    // everytime when refreshing or load more data
     internal fun getDogs() {
         if (_state.value.isLoading || isLastPage) return
         _state.value = _state.value.copy(isLoading = true)

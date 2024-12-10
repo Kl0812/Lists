@@ -1,18 +1,18 @@
 package com.example.lists.domain.use_case.get_dog
 
 import com.example.lists.common.Resource
-import com.example.lists.data.remote.dto.toDog
 import com.example.lists.data.remote.dto.toDogDetail
 import com.example.lists.domain.model.DogDetail
 import com.example.lists.domain.repository.DogRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-
 import okio.IOException
 import retrofit2.HttpException
-
 import javax.inject.Inject
 
+/*
+* Set page loading state and set dog detail information
+* */
 class GetDogUseCase @Inject constructor(
     private val repository: DogRepository
 ) {

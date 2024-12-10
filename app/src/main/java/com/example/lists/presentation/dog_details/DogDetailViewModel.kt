@@ -2,20 +2,20 @@ package com.example.lists.presentation.dog_details
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.unit.Constraints
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lists.common.Constants
 import com.example.lists.common.Resource
 import com.example.lists.domain.use_case.get_dog.GetDogUseCase
-import com.example.lists.domain.use_case.get_dogs.GetDogsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.lang.Error
 import javax.inject.Inject
 
+/*
+* View Model for dog details, used to pass values to detail screen
+* */
 @HiltViewModel
 class DogDetailViewModel @Inject constructor(
     private val getDogUseCase: GetDogUseCase,
@@ -32,6 +32,7 @@ class DogDetailViewModel @Inject constructor(
         }
     }
 
+    // Handle actions for each loading situation
     private fun getDog(dogId: String) {
         getDogUseCase(dogId).onEach { result ->
             when(result) {

@@ -6,6 +6,9 @@ import com.example.lists.data.remote.dto.DogDto
 import com.example.lists.domain.repository.DogRepository
 import javax.inject.Inject
 
+/*
+* The implement of dog repository
+* */
 class DogRepositoryImpl @Inject constructor(
     private val api: DogApi
 ) : DogRepository {

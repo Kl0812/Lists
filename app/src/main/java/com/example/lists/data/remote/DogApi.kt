@@ -7,6 +7,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+/*
+* API information
+* */
 interface DogApi {
 
     //Only get 20 dogs once

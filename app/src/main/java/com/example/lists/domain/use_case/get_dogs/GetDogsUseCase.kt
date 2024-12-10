@@ -12,6 +12,9 @@ import retrofit2.HttpException
 
 import javax.inject.Inject
 
+/*
+* Set page loading state and set dog list information
+* */
 class GetDogsUseCase @Inject constructor(
     private val repository: DogRepository
 ) {

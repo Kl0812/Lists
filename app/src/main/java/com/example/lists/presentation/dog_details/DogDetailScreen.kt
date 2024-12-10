@@ -1,109 +1,71 @@
 package com.example.lists.presentation.dog_details
 
-import android.graphics.Paint.Align
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import com.example.lists.domain.model.Dog
+import coil.compose.AsyncImage
+import com.example.lists.R
 import com.example.lists.domain.model.DogDetail
-import com.example.lists.presentation.Screen
-import com.example.lists.presentation.dog_list.components.DogListItem
 
+/*
+* This file is to set the detail information of the Dog Detail Screen
+* */
 @Composable
 fun DogDetailScreen(
     viewModel: DogDetailViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Color(0xFFf7cd60))
+        .statusBarsPadding()
+        .navigationBarsPadding()
+    ) {
         state.dog?.let { dog ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
                 DogDetailImage(dog = dog)
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Breed: ${dog.dogBreed}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "ID: ${dog.dogId}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Origin: ${dog.dogOrigin}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Description: ${dog.description}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Adaptability: ${dog.adaptability}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Affection Level: ${dog.affectionLevel}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Child Friendly Level: ${dog.childFriendly}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Stranger Friendly Level: ${dog.strangerFriendly}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Social Needs Level: ${dog.socialNeeds}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Energy Level: ${dog.energyLevel}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-
+                LineText(title = "Dog Breed: ", info = dog.dogBreed)
+                LineText(title = "Dog ID: ", info = dog.dogId)
+                LineText(title = "Origin: ", info = dog.dogOrigin)
+                LineText(title = "Description: ", info = dog.description)
+                LineText(title = "Adaptability: ", info = dog.adaptability.toString())
+                LineText(title = "Affection Level: ", info = dog.affectionLevel.toString())
+                LineText(title = "Child Friendly Level: ", info = dog.childFriendly.toString())
+                LineText(title = "Stranger Friendly Level: ", info = dog.strangerFriendly.toString())
+                LineText(title = "Social Needs Level: ", info = dog.socialNeeds.toString())
+                LineText(title = "Energy Level: ", info = dog.energyLevel.toString())
             }
         }
 
@@ -122,27 +84,38 @@ fun DogDetailScreen(
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
+
 }
 
 @Composable
 private fun DogDetailImage(dog: DogDetail) {
-    val painter = rememberAsyncImagePainter(
-        ImageRequest.Builder(LocalContext.current).data(
-            data = dog.dogUrl
-        ).apply(
-            block = fun ImageRequest.Builder.() {
-                crossfade(true)
-            }
-        ).build()
-    )
-
-    Image(
-        painter = painter,
-        contentDescription = null,
+    AsyncImage(
+        model = dog.dogUrl,
         contentScale = ContentScale.Crop,
+        contentDescription = null,
+        error = painterResource(R.drawable.no_image),
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
+            .wrapContentHeight()
     )
 
+}
+
+@Composable
+fun LineText(title: String, info: String) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+    ) {
+        Text(
+            text = title,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(
+            text = info,
+            fontSize = 24.sp
+        )
+    }
+    Spacer(modifier = Modifier.height(24.dp))
 }
