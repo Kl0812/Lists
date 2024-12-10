@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -42,7 +43,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 
-@OptIn(FlowPreview::class)
 @Composable
 fun DogListScreen(
     navController: NavController,
@@ -50,29 +50,26 @@ fun DogListScreen(
 ) {
     val state = viewModel.state.value
     val listState = rememberLazyStaggeredGridState()
-    val overscrollState = remember { mutableStateOf(false)}
+    val overscrollState = remember { mutableStateOf(false) }
+    val showPullToLoadMore = remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0xFFf7cd60))
-        .nestedScroll(object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (available.y < 0 &&
-                    listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == state.dogs.lastIndex
-                ) {
-                    overscrollState.value = true
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFf7cd60))
+            .nestedScroll(object : NestedScrollConnection {
+                override fun onPostScroll(
+                    consumed: Offset,
+                    available: Offset,
+                    source: NestedScrollSource
+                ): Offset {
+                    val lastVisibleIndex = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                    if (available.y < 0 && lastVisibleIndex == state.dogs.lastIndex) {
+                        showPullToLoadMore.value = true
+                    }
+                    return Offset.Zero
                 }
-                return Offset.Zero
-            }
-
-            override fun onPostScroll(consumed: Offset, available: Offset, source: NestedScrollSource): Offset {
-                if (overscrollState.value && available.y == 0f && !state.isLoading) {
-                    viewModel.getDogs()
-                    overscrollState.value = false
-                }
-                return Offset.Zero
-            }
-        })
+            })
     ) {
         if (state.isLoading && state.dogs.isEmpty()) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -80,7 +77,26 @@ fun DogListScreen(
             LazyVerticalStaggeredGrid(
                 state = listState,
                 columns = StaggeredGridCells.Fixed(2),
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .pointerInput(Unit) {
+                        detectVerticalDragGestures(
+                            onDragEnd = {
+                                if (overscrollState.value && !state.isLoading) {
+                                    viewModel.getDogs()
+                                    overscrollState.value = false
+                                }
+                                showPullToLoadMore.value = false
+                            },
+                            onVerticalDrag = { _, dragAmount ->
+                                val lastVisibleIndex =
+                                    listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                                if (dragAmount < 0 && lastVisibleIndex == state.dogs.lastIndex) {
+                                    overscrollState.value = true
+                                }
+                            }
+                        )
+                    },
                 content = {
                     items(state.dogs) { dog ->
                         DogListItem(
@@ -100,7 +116,7 @@ fun DogListScreen(
                                     .padding(16.dp)
                                     .wrapContentSize(Alignment.Center)
                             )
-                        } else {
+                        } else if(showPullToLoadMore.value) {
                             Text(
                                 text = "Pull up to load more...",
                                 textAlign = TextAlign.Center,
@@ -126,27 +142,4 @@ fun DogListScreen(
         }
 
     }
-
-    /*LaunchedEffect(listState) {
-        snapshotFlow {
-            listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-        }
-            .filterNotNull()
-            .distinctUntilChanged()
-            .collect { lastVisibleIndex ->
-            Log.d("DogListScreen", "Last visible index: $lastVisibleIndex")
-            *//*if (lastVisibleIndex != null &&
-                lastVisibleIndex == state.dogs.lastIndex && !state.isLoading) {
-                viewModel.getDogs()
-            }*//*
-            if (lastVisibleIndex != null) {
-                Log.d("DogListScreen", "Last visible index: $lastVisibleIndex")
-            }
-
-            if (lastVisibleIndex != null && lastVisibleIndex == state.dogs.lastIndex && !state.isLoading) {
-                Log.d("DogListScreen", "Fetching more dogs...")
-                viewModel.getDogs()
-            }
-        }
-    }*/
 }

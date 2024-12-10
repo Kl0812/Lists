@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -29,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -46,26 +49,17 @@ fun DogListItem(
     dog: Dog,
     onItemClick: (Dog) -> Unit
     ) {
-        Card(
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
+                .fillMaxHeight()
                 .padding(2.dp)
-                .clickable { onItemClick(dog) },
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            shape = RoundedCornerShape(corner = CornerSize(16.dp))
-        ){
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-            ) {
-                DogListImage(dog = dog)
-            }
+                .clickable { onItemClick(dog) }
+                .onGloballyPositioned { coordinates ->
+                    Log.d("DogListItem", "Item size: ${coordinates.size}")
+                }
+        ) {
+            DogListImage(dog = dog)
         }
-
 }
 
 @Composable
@@ -84,10 +78,11 @@ private fun DogListImage(dog: Dog) {
     Image(
         painter = painter,
         contentDescription = null,
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.Fit,
         modifier = Modifier
-            .fillMaxSize()
-            .clip(RoundedCornerShape(16.dp))
+            .fillMaxWidth()
+            .wrapContentSize()
+            .clip(RoundedCornerShape(8.dp))
     )
 
 }
