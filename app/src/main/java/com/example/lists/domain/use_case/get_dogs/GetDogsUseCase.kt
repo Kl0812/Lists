@@ -1,5 +1,6 @@
 package com.example.lists.domain.use_case.get_dogs
 
+import android.util.Log
 import com.example.lists.common.Resource
 import com.example.lists.data.remote.dto.toDog
 import com.example.lists.domain.model.Dog

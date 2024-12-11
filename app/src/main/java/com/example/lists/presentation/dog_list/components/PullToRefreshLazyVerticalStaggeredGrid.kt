@@ -3,6 +3,7 @@ package com.example.lists.presentation.dog_list.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -16,6 +17,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 
 /*
 * This file is used to make a pullable LazyVerticalStaggeredGrid,
@@ -38,13 +41,17 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
     Box(
         modifier = modifier
             .nestedScroll(pullToRefreshState.nestedScrollConnection)
+            //Priority: Lowest layer
+            .zIndex(1f)
     ) {
+
         // Use LazyVerticalStaggeredGrid to show images with different height
         // to make the screen looks like a waterfall
         LazyVerticalStaggeredGrid(
             state = lazyStaggeredGridState,
             columns = StaggeredGridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
         ) {
             items(items) {
                 content(it)
@@ -71,7 +78,8 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
         PullToRefreshContainer(
             state = pullToRefreshState,
             modifier = Modifier
-                .align(Alignment.TopCenter),
+                .align(Alignment.TopCenter)
         )
+
     }
 }
