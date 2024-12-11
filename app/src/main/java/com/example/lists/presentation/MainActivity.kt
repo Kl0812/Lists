@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                         ) {
-                            DogDetailScreen()
+                            DogDetailScreen(navController)
                         }
                     }
                 }
