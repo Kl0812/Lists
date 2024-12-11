@@ -19,7 +19,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 /*
 * This file is used to make a pullable LazyVerticalStaggeredGrid,
-*
 * */
 @Composable
 fun <T> PullToRefreshLazyVerticalStaggeredGrid(

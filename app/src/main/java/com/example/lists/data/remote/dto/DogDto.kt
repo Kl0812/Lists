@@ -6,13 +6,14 @@ data class DogDto(
     val height: Int,
     val id: String,
     val url: String,
-    val width: Int,
-    val dogBreed: String?
+    val width: Int
 )
 
 fun DogDto.toDog(): Dog {
     return Dog(
         id = id,
-        url = url
+        url = url,
+        width = width,
+        height = height
     )
 }

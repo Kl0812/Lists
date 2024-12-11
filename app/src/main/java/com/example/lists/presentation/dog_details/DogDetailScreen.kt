@@ -106,7 +106,7 @@ fun DogDetailScreen(
 private fun DogDetailImage(dog: DogDetail) {
     AsyncImage(
         model = dog.dogUrl,
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.Fit,
         contentDescription = null,
         error = painterResource(R.drawable.no_image),
         modifier = Modifier
