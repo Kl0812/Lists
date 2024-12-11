@@ -4,16 +4,21 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,7 +43,9 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination =  Screen.DogListScreen.route
+                        startDestination =  Screen.DogListScreen.route,
+                        enterTransition = { EnterTransition.None },
+                        exitTransition = { ExitTransition.None }
                     ) {
                         composable (
                             route = Screen.DogListScreen.route
@@ -46,7 +53,27 @@ class MainActivity : ComponentActivity() {
                             DogListScreen(navController)
                         }
                         composable (
-                            route = Screen.DogDetailScreen.route + "/{dogId}"
+                            route = Screen.DogDetailScreen.route + "/{dogId}",
+                            enterTransition = {
+                                fadeIn(
+                                    animationSpec = tween(
+                                        300, easing = LinearEasing
+                                    )
+                                ) + slideIntoContainer(
+                                    animationSpec = tween(300, easing = EaseIn),
+                                    towards = AnimatedContentTransitionScope.SlideDirection.Start
+                                )
+                            },
+                            exitTransition = {
+                                fadeOut(
+                                    animationSpec = tween(
+                                        300, easing = LinearEasing
+                                    )
+                                ) + slideOutOfContainer(
+                                    animationSpec = tween(300, easing = EaseOut),
+                                    towards = AnimatedContentTransitionScope.SlideDirection.End
+                                )
+                            }
                         ) {
                             DogDetailScreen()
                         }
