@@ -1,6 +1,7 @@
 package com.example.lists.presentation.dog_details
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -48,24 +49,38 @@ fun DogDetailScreen(
         .navigationBarsPadding()
     ) {
         state.dog?.let { dog ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                DogDetailImage(dog = dog)
-                Spacer(modifier = Modifier.height(16.dp))
-                LineText(title = "Dog Breed: ", info = dog.dogBreed)
-                LineText(title = "Dog ID: ", info = dog.dogId)
-                LineText(title = "Origin: ", info = dog.dogOrigin)
-                LineText(title = "Description: ", info = dog.description)
-                LineText(title = "Adaptability: ", info = dog.adaptability.toString())
-                LineText(title = "Affection Level: ", info = dog.affectionLevel.toString())
-                LineText(title = "Child Friendly Level: ", info = dog.childFriendly.toString())
-                LineText(title = "Stranger Friendly Level: ", info = dog.strangerFriendly.toString())
-                LineText(title = "Social Needs Level: ", info = dog.socialNeeds.toString())
-                LineText(title = "Energy Level: ", info = dog.energyLevel.toString())
+            Column(modifier = Modifier.fillMaxSize()) {
+                // Header
+                Text(
+                    text = "Dog Details",
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                // Main Content
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 16.dp, end = 16.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    DogDetailImage(dog = dog)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    LineText(title = "Dog Breed: ", info = dog.dogBreed)
+                    LineText(title = "Dog ID: ", info = dog.dogId)
+                    LineText(title = "Origin: ", info = dog.dogOrigin)
+                    LineText(title = "Description: ", info = dog.description)
+                    LineText(title = "Adaptability: ", info = dog.adaptability.toString())
+                    LineText(title = "Affection Level: ", info = dog.affectionLevel.toString())
+                    LineText(title = "Child Friendly Level: ", info = dog.childFriendly.toString())
+                    LineText(
+                        title = "Stranger Friendly Level: ",
+                        info = dog.strangerFriendly.toString()
+                    )
+                    LineText(title = "Social Needs Level: ", info = dog.socialNeeds.toString())
+                    LineText(title = "Energy Level: ", info = dog.energyLevel.toString())
+                }
             }
         }
 
