@@ -18,7 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 /*
-* This file is used to capture and return the state and pull distance of pulling
+* This file is used to make a pullable LazyVerticalStaggeredGrid,
+*
 * */
 @Composable
 fun <T> PullToRefreshLazyVerticalStaggeredGrid(
@@ -30,6 +31,11 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
     lazyStaggeredGridState: LazyStaggeredGridState = rememberLazyStaggeredGridState()
 ) {
     val pullToRefreshState = rememberPullToRefreshState()
+    /*
+    * A Box container that supports nested scrolling via the nestedScroll modifier.
+    * This ensures that when the user pulls down, the pullToRefreshState can intercept
+    * and measure the pull gesture before it scrolls the grid.
+    * */
     Box(
         modifier = modifier
             .nestedScroll(pullToRefreshState.nestedScrollConnection)
@@ -46,12 +52,14 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
             }
         }
 
+        // If the screen is refreshing, call onRefresh function
         if(pullToRefreshState.isRefreshing) {
             LaunchedEffect(true) {
                 onRefresh()
             }
         }
 
+        // Launched effect when refresh state is changing
         LaunchedEffect(isRefreshing) {
             if(isRefreshing) {
                 pullToRefreshState.startRefresh()
@@ -60,6 +68,7 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
             }
         }
 
+        // A UI element to show pull-down indicator
         PullToRefreshContainer(
             state = pullToRefreshState,
             modifier = Modifier

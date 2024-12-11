@@ -55,6 +55,7 @@ fun DogListScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFf7cd60))
+            // System Bar Padding
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
@@ -77,6 +78,7 @@ fun DogListScreen(
                     content = { dog ->
                         DogListItem(
                             dog = dog,
+                            // Used for navigating to detail screen when click the image
                             onItemClick = {
                                 navController.navigate(
                                     Screen.DogDetailScreen.route + "/${dog.id}"
@@ -85,15 +87,15 @@ fun DogListScreen(
                         )
                     },
                     isRefreshing = isRefreshing,
+                    // Main logic refresh function
                     onRefresh = {
                         scope.launch {
                             isRefreshing = true
-                            delay(3000L) // Simulated API call
+                            delay(3000L) // TODO: Simulated API call, add logic here
                             isRefreshing = false
                         }
                     }
                 )
-                // TODO: Add footer
             }
         }
 
