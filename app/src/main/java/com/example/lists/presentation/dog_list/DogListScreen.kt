@@ -64,54 +64,51 @@ fun DogListScreen(
             .background(Color(0xFFf7cd60))
     ) {
         // If load for the first time or refresh the page, show loading animation
-        if (state.isLoading && state.dogs.isEmpty()) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        } else {
-            Column(modifier = Modifier
-                .fillMaxSize()
+        Column(modifier = Modifier
+            .fillMaxSize()
+        ) {
+            //Header
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(Color(0xFFf7cd60))
+                //Priority: Top layer
+                .zIndex(2f)
             ) {
-                //Header
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .background(Color(0xFFf7cd60))
-                    //Priority: Top layer
-                    .zIndex(2f)
-                ) {
-                    Text(
-                        text = "Dog Images",
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                }
-                // Main Content
-                PullToRefreshLazyVerticalStaggeredGrid(
-                    items = state.dogs,
-                    content = { dog ->
-                        DogListItem(
-                            dog = dog,
-                            // Used for navigating to detail screen when click the image
-                            onItemClick = {
-                                navController.navigate(
-                                    Screen.DogDetailScreen.route + "/${dog.id}"
-                                )
-                            }
-                        )
-                    },
-                    isRefreshing = isRefreshing,
-                    // Main logic refresh function
-                    onRefresh = {
-                        scope.launch {
-                            isRefreshing = true
-                            delay(3000L) // TODO: Simulated API call, add logic here
-                            isRefreshing = false
-                        }
-                    }
+                Text(
+                    text = "Dog Images",
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
             }
+            // Main Content
+            PullToRefreshLazyVerticalStaggeredGrid(
+                items = state.dogs,
+                content = { dog ->
+                    DogListItem(
+                        dog = dog,
+                        // Used for navigating to detail screen when click the image
+                        onItemClick = {
+                            navController.navigate(
+                                Screen.DogDetailScreen.route + "/${dog.id}"
+                            )
+                        }
+                    )
+                },
+                isRefreshing = state.isRefreshing,
+                // Main logic refresh function
+                onRefresh = {
+                    scope.launch {
+                        /*isRefreshing = true
+                        viewModel.getDogs()
+                        isRefreshing = false*/
+                        viewModel.refreshDogs()
+                    }
+                }
+            )
         }
 
         // Actions if app state is error
