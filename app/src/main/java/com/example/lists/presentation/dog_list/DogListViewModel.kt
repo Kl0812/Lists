@@ -28,41 +28,9 @@ class DogListViewModel @Inject constructor(
     private var isLastPage = false
 
     init {
-
         //Use refresh logic even open app for the first time
         refreshDogs()
-        //getDogs()
     }
-
-    //Separate one get dogs logic to loading and refreshing
-    /*internal fun getDogs() {
-        if (_state.value.isLoading || isLastPage) return
-        _state.value = _state.value.copy(isLoading = true)
-
-        getDogsUseCase(currentPage).onEach { result ->
-            when(result) {
-                is Resource.Success -> {
-                    val newDogs = result.data ?: emptyList()
-                    if (newDogs.isEmpty()) {
-                        isLastPage = true
-                    }
-                    _state.value = _state.value.copy(
-                        dogs = _state.value.dogs + newDogs,
-                        isLoading = false
-                    )
-                    currentPage++
-                    _state.value = DogListState(dogs = result.data ?: emptyList())
-                }
-                is Resource.Error -> {
-                    _state.value = DogListState(
-                        error = result.message ?: "An Unexpected Error Occur")
-                }
-                is Resource.Loading -> {
-                    _state.value = DogListState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }*/
 
     // Handle actions for each refreshing situation,
     // include load data for the first time when open the app

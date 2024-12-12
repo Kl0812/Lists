@@ -3,7 +3,6 @@ package com.example.lists.presentation.dog_list.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -17,7 +16,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 
 /*
@@ -59,15 +57,15 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
         }
 
         // If the screen is refreshing, call onRefresh function
-        if(pullToRefreshState.isRefreshing) {
-            LaunchedEffect(true) {
+        if (pullToRefreshState.isRefreshing) {
+            LaunchedEffect(pullToRefreshState.isRefreshing) {
                 onRefresh()
             }
         }
 
         // Launched effect when refresh state is changing
         LaunchedEffect(isRefreshing) {
-            if(isRefreshing) {
+            if (isRefreshing) {
                 pullToRefreshState.startRefresh()
             } else {
                 pullToRefreshState.endRefresh()
