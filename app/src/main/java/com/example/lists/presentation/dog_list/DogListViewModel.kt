@@ -45,6 +45,7 @@ class DogListViewModel @Inject constructor(
             isLoading = false,
             error = ""
         )
+        Log.d("ViewModel", "Refreshing dogs: isRefreshing=true")
         fetchDogs()
     }
 
@@ -54,16 +55,20 @@ class DogListViewModel @Inject constructor(
     internal fun loadMoreDogs() {
         if (_state.value.isLoading || _state.value.isRefreshing || isLastPage) return
         _state.value = _state.value.copy(isLoading = true)
+        Log.d("ViewModel", "Loading more dogs: isLoading=true")
         fetchDogs()
     }
 
     // Main function to get dogs data
     private fun fetchDogs() {
         getDogsUseCase(currentPage).onEach { result ->
+            Log.d("GetDogsUseCase", "isRefreshing: ${_state.value.isRefreshing}")
             when(result) {
                 is Resource.Success -> {
+                    Log.d("Success Start", "isRefreshing: ${_state.value.isRefreshing}")
                     val newDogs = result.data ?: emptyList()
                     if (newDogs.isEmpty()) {
+                        Log.d("ViewModel", "No more dogs to load: isLastPage=true")
                         isLastPage = true
                     }
 
@@ -87,6 +92,7 @@ class DogListViewModel @Inject constructor(
                         isRefreshing = false,
                         error = ""
                     )
+                    Log.d("Success End", "isRefreshing: ${_state.value.isRefreshing}, dogs size: ${_state.value.dogs.size}")
                     currentPage++
                 }
                 is Resource.Error -> {
@@ -95,8 +101,10 @@ class DogListViewModel @Inject constructor(
                         isLoading = false,
                         isRefreshing = false
                     )
+                    Log.d("ViewModel", "Fetch Error: ${result.message}")
                 }
                 is Resource.Loading -> {
+                    Log.d("ViewModel", "Fetch Loading")
                     // Do nothing. Because the loading state is
                     // set in refreshDogs and loadMoreDogs
                 }

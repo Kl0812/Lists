@@ -14,11 +14,17 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.zIndex
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 
 /*
 * This file is used to make a pullable LazyVerticalStaggeredGrid,
@@ -28,12 +34,14 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
     items: List<T>,
     content: @Composable (T) -> Unit,
     isRefreshing: Boolean,
+    isLoading: Boolean,
     onRefresh: () -> Unit,
     onLoadMore: () -> Unit,
     modifier: Modifier = Modifier,
     lazyStaggeredGridState: LazyStaggeredGridState = rememberLazyStaggeredGridState()
 ) {
     val pullToRefreshState = rememberPullToRefreshState()
+    var loadMoreTriggered by remember { mutableStateOf(false) }
     /*
     * A Box container that supports nested scrolling via the nestedScroll modifier.
     * This ensures that when the user pulls down, the pullToRefreshState can intercept
@@ -59,6 +67,16 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
             }
         }
 
+        // Launched effect when refresh state is changing
+        LaunchedEffect(isRefreshing) {
+            if (isRefreshing) {
+                pullToRefreshState.startRefresh()
+            } else {
+                pullToRefreshState.endRefresh()
+                loadMoreTriggered = false
+            }
+        }
+
         // If the screen is refreshing, call onRefresh function
         LaunchedEffect(pullToRefreshState.isRefreshing) {
             if (pullToRefreshState.isRefreshing && !isRefreshing) {
@@ -66,24 +84,32 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
             }
         }
 
-        // Launched effect when refresh state is changing
-        LaunchedEffect(isRefreshing) {
-            if (isRefreshing) {
-                pullToRefreshState.startRefresh()
-            } else {
-                pullToRefreshState.endRefresh()
-            }
-        }
-
         // Launched effect when reach last item of the list
         LaunchedEffect(lazyStaggeredGridState) {
             snapshotFlow {
                 lazyStaggeredGridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-            }.collect { lastVisibleItemIndex ->
-                if (items.isNotEmpty() && lastVisibleItemIndex == items.size - 1) {
-                    Log.d("Reach Last", "Lunch")
-                    onLoadMore()
+            }
+                .filter { lastVisibleItemIndex ->
+                    val threshold = 5 // Reach last item threshold
+                    !isLoading &&
+                            items.size >= threshold &&
+                            // TODO: Something wrong here
+                            lastVisibleItemIndex!! >= items.size - threshold &&
+                            items.isNotEmpty()
                 }
+                .distinctUntilChanged()
+                .collect { lastVisibleItemIndex ->
+                    if (!loadMoreTriggered) {
+                        loadMoreTriggered = true
+                        onLoadMore()
+                    }
+                }
+        }
+
+        // Reset loading trigger
+        LaunchedEffect(isLoading) {
+            if (!isLoading) {
+                loadMoreTriggered = false
             }
         }
 

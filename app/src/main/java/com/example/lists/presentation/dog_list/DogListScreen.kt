@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +40,7 @@ fun DogListScreen(
 ) {
     val state = viewModel.state.value
     val scope = rememberCoroutineScope()
+    val lazyStaggeredGridState = rememberLazyStaggeredGridState()
 
     // Main container for the whole screen
     Box(
@@ -70,6 +72,8 @@ fun DogListScreen(
             // Main Content
             PullToRefreshLazyVerticalStaggeredGrid(
                 items = state.dogs,
+                isRefreshing = state.isRefreshing,
+                isLoading = state.isLoading,
                 content = { dog ->
                     DogListItem(
                         dog = dog,
@@ -81,7 +85,6 @@ fun DogListScreen(
                         }
                     )
                 },
-                isRefreshing = state.isRefreshing,
                 // Main logic refresh function
                 onRefresh = {
                     scope.launch {
@@ -92,7 +95,8 @@ fun DogListScreen(
                     scope.launch {
                         viewModel.loadMoreDogs()
                     }
-                }
+                },
+                lazyStaggeredGridState = lazyStaggeredGridState
             )
         }
 
