@@ -1,5 +1,6 @@
 package com.example.lists.data.repository
 
+import android.util.Log
 import com.example.lists.data.remote.DogApi
 import com.example.lists.data.remote.dto.DogDetailDto
 import com.example.lists.data.remote.dto.DogDto

@@ -21,7 +21,7 @@ class GetDogsUseCase @Inject constructor(
 ) {
     operator fun invoke(page: Int): Flow<Resource<List<Dog>>> = flow {
         try{
-            emit(Resource.Loading<List<Dog>>())
+            // emit(Resource.Loading<List<Dog>>())
             val dogs = repository.getDogs(page).map {it.toDog()}
             emit(Resource.Success<List<Dog>>(dogs))
         } catch (e: HttpException) {

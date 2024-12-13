@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lists.common.Resource
+import com.example.lists.domain.model.Dog
 import com.example.lists.domain.use_case.get_dogs.GetDogsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -22,13 +23,13 @@ class DogListViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _state = mutableStateOf(DogListState())
-    val state : State<DogListState> = _state
+    val state: State<DogListState> = _state
 
     private var currentPage = 0
     private var isLastPage = false
 
+    // Initialization function
     init {
-        //Use refresh logic even open app for the first time
         refreshDogs()
     }
 
@@ -65,13 +66,13 @@ class DogListViewModel @Inject constructor(
                     if (newDogs.isEmpty()) {
                         isLastPage = true
                     }
-                    val currentList = if (_state.value.isRefreshing) {
-                        // Refreshing data, empty existing data list
-                        emptyList()
-                    } else {
-                        // If loading more, append data on existing data list
+
+                    val currentList = if (_state.value.isLoading) {
                         _state.value.dogs
+                    }else{
+                        emptyList()
                     }
+
                     // Refreshing loading states
                     _state.value = _state.value.copy(
                         dogs = currentList + newDogs,
