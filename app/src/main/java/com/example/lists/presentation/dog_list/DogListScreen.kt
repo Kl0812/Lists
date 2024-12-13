@@ -87,6 +87,11 @@ fun DogListScreen(
                     scope.launch {
                         viewModel.refreshDogs()
                     }
+                },
+                onLoadMore = {
+                    scope.launch {
+                        viewModel.loadMoreDogs()
+                    }
                 }
             )
         }

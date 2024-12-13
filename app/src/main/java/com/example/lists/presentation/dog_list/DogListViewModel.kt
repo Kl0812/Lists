@@ -67,15 +67,22 @@ class DogListViewModel @Inject constructor(
                         isLastPage = true
                     }
 
-                    val currentList = if (_state.value.isLoading) {
-                        _state.value.dogs
-                    }else{
-                        emptyList()
+                    // According to onRefresh and onLoad, decide how to deal with the data list
+                    val updatedDogs = when {
+                        _state.value.isRefreshing -> {
+                            newDogs
+                        }
+                        _state.value.isLoading -> {
+                            _state.value.dogs + newDogs
+                        }
+                        else -> {
+                            _state.value.dogs + newDogs
+                        }
                     }
 
                     // Refreshing loading states
                     _state.value = _state.value.copy(
-                        dogs = currentList + newDogs,
+                        dogs = updatedDogs,
                         isLoading = false,
                         isRefreshing = false,
                         error = ""

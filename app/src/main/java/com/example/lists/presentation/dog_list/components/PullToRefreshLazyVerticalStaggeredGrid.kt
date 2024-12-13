@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 package com.example.lists.presentation.dog_list.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
@@ -13,6 +14,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -27,6 +29,7 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
     content: @Composable (T) -> Unit,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
+    onLoadMore: () -> Unit,
     modifier: Modifier = Modifier,
     lazyStaggeredGridState: LazyStaggeredGridState = rememberLazyStaggeredGridState()
 ) {
@@ -57,8 +60,8 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
         }
 
         // If the screen is refreshing, call onRefresh function
-        if (pullToRefreshState.isRefreshing) {
-            LaunchedEffect(pullToRefreshState.isRefreshing) {
+        LaunchedEffect(pullToRefreshState.isRefreshing) {
+            if (pullToRefreshState.isRefreshing && !isRefreshing) {
                 onRefresh()
             }
         }
@@ -69,6 +72,18 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
                 pullToRefreshState.startRefresh()
             } else {
                 pullToRefreshState.endRefresh()
+            }
+        }
+
+        // Launched effect when reach last item of the list
+        LaunchedEffect(lazyStaggeredGridState) {
+            snapshotFlow {
+                lazyStaggeredGridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+            }.collect { lastVisibleItemIndex ->
+                if (items.isNotEmpty() && lastVisibleItemIndex == items.size - 1) {
+                    Log.d("Reach Last", "Lunch")
+                    onLoadMore()
+                }
             }
         }
 
