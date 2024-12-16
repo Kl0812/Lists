@@ -49,9 +49,7 @@ fun DogListScreen(
             .background(Color(0xFFf7cd60))
     ) {
         // If load for the first time or refresh the page, show loading animation
-        Column(modifier = Modifier
-            .fillMaxSize()
-        ) {
+        Column(modifier = Modifier.fillMaxSize()) {
             //Header
             Box(modifier = Modifier
                 .fillMaxWidth()
@@ -115,37 +113,3 @@ fun DogListScreen(
 
     }
 }
-
-// item {
-//     if (state.isLoadingMore) {
-//         // Show loading indicator for load-more scenario
-//         CircularProgressIndicator(
-//             modifier = Modifier
-//                 .fillMaxWidth()
-//                 .padding(16.dp)
-//                 .wrapContentSize(Alignment.Center)
-//         )
-//     } else if (/* condition to show pull-up hint */) {
-//         Text(
-//             text = "Pull up to load more...",
-//             textAlign = TextAlign.Center,
-//             modifier = Modifier
-//                 .fillMaxWidth()
-//                 .padding(16.dp)
-//         )
-//     }
-// }
-
-/*// Pull up and load more
-LaunchedEffect(listState) {
-    snapshotFlow {
-        listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-    }.collect { lastVisibleItemIndex ->
-        // If the user has scrolled to the last item, we can load more data automatically
-        // or show a prompt. For manual "pull up" gestures, you'd need a custom approach,
-        // but infinite scroll is often handled this way.
-        if (lastVisibleItemIndex == state.dogs.lastIndex && !state.isLoadingMore) {
-            viewModel.getDogs()
-        }
-    }
-}*/

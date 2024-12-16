@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.filter
 /*
 * This file is used to make a pullable LazyVerticalStaggeredGrid,
 * */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> PullToRefreshLazyVerticalStaggeredGrid(
     items: List<T>,
@@ -91,20 +92,21 @@ fun <T> PullToRefreshLazyVerticalStaggeredGrid(
             }
                 .filter { lastVisibleItemIndex ->
                     val threshold = 5 // Reach last item threshold
-                    !isLoading &&
+                    val shouldLoadMore = lastVisibleItemIndex != null &&
+                            lastVisibleItemIndex >= (items.size - threshold) &&
+                            !isLoading &&
+                            !loadMoreTriggered &&
                             items.size >= threshold &&
-                            // TODO: Something wrong here
-                            lastVisibleItemIndex!! >= items.size - threshold &&
                             items.isNotEmpty()
+                    shouldLoadMore
                 }
                 .distinctUntilChanged()
                 .collect { lastVisibleItemIndex ->
-                    if (!loadMoreTriggered) {
-                        loadMoreTriggered = true
-                        onLoadMore()
-                    }
+                    loadMoreTriggered = true
+                    onLoadMore()
                 }
         }
+
 
         // Reset loading trigger
         LaunchedEffect(isLoading) {
