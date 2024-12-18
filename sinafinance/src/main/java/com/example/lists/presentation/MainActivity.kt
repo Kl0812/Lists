@@ -10,6 +10,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBars
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
             ListsTheme {
                 // Change color of system bars
                 SystemBarsColorChanger(
-                    statusBarColor = Color(0xFFf7cd60),
+                    statusBarColor = Color.White,
                     navigationBarColor = Color.White,
                     isLightIcons = true
                 )

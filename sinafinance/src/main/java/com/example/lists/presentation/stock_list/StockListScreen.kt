@@ -1,13 +1,23 @@
 package com.example.lists.presentation.stock_list
 
 import android.net.Uri
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.lists.listUtils.reusableList.ReusableLazyColumn
@@ -29,11 +39,31 @@ fun StockListScreen(
 
     // Main container for the whole screen
     Scaffold(
+        containerColor = Color.White,
         topBar = {
-            TopAppBar(
-                title = { Text(text = "研报") },
-                // navigationIcon = null // TODO: Currently no upper layer to return
-            )
+            Column( modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+            ) {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            text = "研报中心",
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(Color.White)
+                    // navigationIcon = null // TODO: Currently no upper layer to return
+                )
+                HorizontalDivider(
+                    thickness = 0.2.dp,
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
         }
     ) { innerPadding ->
 
