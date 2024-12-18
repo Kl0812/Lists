@@ -51,7 +51,7 @@ fun <T> ReusableLazyColumn(
     val pullToRefreshState = rememberPullToRefreshState()
     var loadMoreTriggered by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier
+    Box(modifier = modifier
         .nestedScroll(pullToRefreshState.nestedScrollConnection)
     ) {
         LazyColumn(

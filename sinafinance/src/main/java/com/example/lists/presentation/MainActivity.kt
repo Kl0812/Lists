@@ -41,11 +41,12 @@ class MainActivity : ComponentActivity() {
                 SystemBarsColorChanger(
                     statusBarColor = Color.White,
                     navigationBarColor = Color.White,
-                    isLightIcons = true
+                    isLightIcons = false // Color of system status icon
                 )
                 Scaffold(modifier = Modifier
                     .fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.systemBars) // System Bar Padding
+                    // System Bar Padding, not needed because TopAppBar will handle it
+                    // .windowInsetsPadding(WindowInsets.systemBars)
                 ){ innerPadding ->
                     val navController = rememberNavController()
                     NavHost(
