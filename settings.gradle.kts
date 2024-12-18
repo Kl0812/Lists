@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Lists"
-include(":app")
+include(":sinafinance")

@@ -31,6 +31,7 @@ storage = "1.5.0"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanistFlowlayout" }
+accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityCompose" }
 androidx-compose-bom-v170 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
 androidx-compose-bom-v20240201 = { module = "androidx.compose:compose-bom", version.ref = "androidxComposeBom" }
