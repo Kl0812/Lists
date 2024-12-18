@@ -1,5 +1,6 @@
 package com.example.lists.listUtils.reusableList
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,7 +40,6 @@ import kotlinx.coroutines.flow.filter
 fun <T> ReusableLazyColumn(
     items: List<T>,
     isRefreshing: Boolean,
-    isLoading: Boolean,
     isLastPage: Boolean,
     error: String,
     onRefresh: () -> Unit,
@@ -49,7 +50,15 @@ fun <T> ReusableLazyColumn(
     lazyListState: LazyListState = rememberLazyListState()
 ) {
     val pullToRefreshState = rememberPullToRefreshState()
-    var loadMoreTriggered by remember { mutableStateOf(false) }
+
+    // Observe list scrolling
+    val isLoading: Boolean by remember {
+        derivedStateOf {
+            val lastVisibleItem = lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()
+            lastVisibleItem?.index != 0 && lastVisibleItem?.index ==
+                    lazyListState.layoutInfo.totalItemsCount - threshold
+        }
+    }
 
     Box(modifier = modifier
         .nestedScroll(pullToRefreshState.nestedScrollConnection)
@@ -97,30 +106,9 @@ fun <T> ReusableLazyColumn(
                 .align(Alignment.TopCenter),
         )
 
-        // Load more logic
-        LaunchedEffect(lazyListState) {
-            snapshotFlow {
-                lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-            }
-                .filter { lastVisibleItemIndex ->
-                    lastVisibleItemIndex != null &&
-                            lastVisibleItemIndex >= (items.size - threshold) &&
-                            !isLoading &&
-                            !isLastPage &&
-                            !loadMoreTriggered &&
-                            items.size >= threshold
-                }
-                .distinctUntilChanged()
-                .collect {
-                    loadMoreTriggered = true
-                    onLoadMore()
-                }
-        }
-
+        // Load more if scrolled to bottom
         LaunchedEffect(isLoading) {
-            if (!isLoading) {
-                loadMoreTriggered = false
-            }
+            if (isLoading) onLoadMore()
         }
 
         if (error.isNotBlank()) {
