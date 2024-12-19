@@ -49,7 +49,7 @@ fun StockListMenu() {
             .fillMaxWidth()
             .background(Color.White)
             .zIndex(1f)
-            .padding(16.dp)
+            .padding(12.dp)
     ) {
         Text(
             text = "近三月行业研报情况",

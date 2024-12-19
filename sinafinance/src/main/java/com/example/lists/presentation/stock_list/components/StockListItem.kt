@@ -1,5 +1,7 @@
 package com.example.lists.presentation.stock_list.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
@@ -27,11 +28,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.example.lists.domain.model.Stock
+import com.example.lists.listUtils.SameDateTimeCheck
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /*
 * This file is to set the elements in each item in the LazyVerticalStaggeredGrid
 * There's an image as the element, wrapped by a clickable box.
 * */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun StockListItem(
     stock: Stock,
@@ -76,12 +82,7 @@ fun StockListItem(
                         textAlign = TextAlign.Center
                     )
                     // TODO: Add time logic
-                    Text(
-                        text = stock.create_date,
-                        fontSize = 12.sp,
-                        color = Color.Gray,
-                        textAlign = TextAlign.Center
-                    )
+                    ShowDate(stock)
                 }
                 HorizontalDivider(
                     thickness = 0.2.dp,
@@ -94,6 +95,68 @@ fun StockListItem(
         }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun ShowDate(stock: Stock) {
+    // Transformed format
+    val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+    // Merge date and time to LocalDateTime
+    val dateTimeString = "${stock.create_date} ${stock.create_time}"
+    val createDateTime = LocalDateTime.parse(dateTimeString, dateTimeFormatter)
+
+    // Get current date and time
+    val now = LocalDateTime.now()
+
+    // Calculate time gap
+    val duration = Duration.between(createDateTime, now)
+    val minutes = duration.toMinutes()
+
+    //Date Time Check
+    val sameDateTime = SameDateTimeCheck(createDateTime, now)
+
+    // If in same day
+    if (sameDateTime.contains("day")) {
+        // If in one hour
+        if (sameDateTime.contains("hour")) {
+            Text(
+                text = "${minutes}分钟前",
+                fontSize = 12.sp,
+                color = Color.Gray,
+                textAlign = TextAlign.Center
+            )
+        // If not in one hour
+        } else {
+            val timeOnlyFormatter = DateTimeFormatter.ofPattern("HH:mm")
+            Text(
+                text = "今天 ${createDateTime.format(timeOnlyFormatter)}",
+                fontSize = 12.sp,
+                color = Color.Gray,
+                textAlign = TextAlign.Center
+            )
+        }
+    // If not in same day but same year
+    } else if (sameDateTime.contains("year")) {
+        val timeAndDateFormatter = DateTimeFormatter.ofPattern("MM-dd HH:mm")
+        Text(
+            text = createDateTime.format(timeAndDateFormatter),
+            fontSize = 12.sp,
+            color = Color.Gray,
+            textAlign = TextAlign.Center
+        )
+    // If not in same year
+    } else {
+        Text(
+            text = stock.create_date,
+            fontSize = 12.sp,
+            color = Color.Gray,
+            textAlign = TextAlign.Center
+        )
+    }
+
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(
     name = "StockListItem Preview",
     showBackground = true
