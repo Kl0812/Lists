@@ -18,11 +18,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.lists.listUtils.reusableList.ReusableLazyColumn
 import com.example.lists.presentation.Screen
 import com.example.lists.presentation.stock_list.components.StockListItem
+import com.example.lists.presentation.stock_list.components.StockListMenu
 
 
 /*
@@ -66,30 +68,46 @@ fun StockListScreen(
         }
     ) { innerPadding ->
 
-        ReusableLazyColumn(
-            items = state.stocks,
-            isRefreshing = state.isRefreshing,
-            //isLoading = state.isLoading,
-            isLastPage = state.isLastPage,
-            error = state.error,
-            onRefresh = { viewModel.refreshStocks() },
-            onLoadMore = { viewModel.loadMoreStocks() },
-            listContent = { stock ->
-                StockListItem(
-                    stock = stock,
-                    onItemClick = { selectedStock ->
-                        val encodedUrl = Uri.encode(selectedStock.wapUrl)
-                        navController.navigate(
-                            "${Screen.StockDetailScreen.route}/$encodedUrl"
-                        ) {
-                            launchSingleTop = true
-                        }
-                    }
-                )
-            },
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-        )
+        ) {
+            // Menu Bar Header
+            StockListMenu()
+
+            // Divider
+            HorizontalDivider(
+                thickness = 0.2.dp,
+                color = Color.Gray,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            // Main content list
+            ReusableLazyColumn(
+                items = state.stocks,
+                isRefreshing = state.isRefreshing,
+                isLastPage = state.isLastPage,
+                error = state.error,
+                onRefresh = { viewModel.refreshStocks() },
+                onLoadMore = { viewModel.loadMoreStocks() },
+                listContent = { stock ->
+                    StockListItem(
+                        stock = stock,
+                        onItemClick = { selectedStock ->
+                            val encodedUrl = Uri.encode(selectedStock.wapUrl)
+                            navController.navigate(
+                                "${Screen.StockDetailScreen.route}/$encodedUrl"
+                            ) {
+                                launchSingleTop = true
+                            }
+                        }
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+            )
+        }
     }
 }
