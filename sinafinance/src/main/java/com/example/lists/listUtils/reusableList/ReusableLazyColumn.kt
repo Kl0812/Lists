@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 
 /*
 * This fun make a reusable lazy column,
@@ -97,7 +98,8 @@ fun <T> ReusableLazyColumn(
         PullToRefreshContainer(
             state = pullToRefreshState,
             modifier = Modifier
-                .align(Alignment.TopCenter),
+                .align(Alignment.TopCenter)
+                .zIndex(0f)
         )
 
         // Load more if scrolled to bottom

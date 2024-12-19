@@ -107,6 +107,7 @@ fun StockListScreen(
                 },
                 modifier = Modifier
                     .fillMaxSize()
+                    .zIndex(-1f)
             )
         }
     }

@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import com.example.lists.R
 
 /*
@@ -46,6 +47,8 @@ fun StockListMenu() {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
+            .background(Color.White)
+            .zIndex(1f)
             .padding(16.dp)
     ) {
         Text(
@@ -83,15 +86,12 @@ fun StockListMenu() {
                     .background(Color.White)
             ) {
 
-                val itemPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-
                 MenuItem(
                     text = "全部",
                     onSelected = {
                         currentFilter = it
                         isDropDownExpanded = false
-                                 },
-                    itemPadding
+                    }
                 )
 
                 HorizontalDivider(
@@ -109,8 +109,7 @@ fun StockListMenu() {
                     onSelected = {
                         currentFilter = it
                         isDropDownExpanded = false
-                                 },
-                    itemPadding
+                    }
                 )
 
                 HorizontalDivider(
@@ -128,8 +127,8 @@ fun StockListMenu() {
                     onSelected = {
                         currentFilter = it
                         isDropDownExpanded = false
-                                 },
-                    itemPadding)
+                    }
+                )
 
                 HorizontalDivider(
                     thickness = 0.2.dp,
@@ -146,8 +145,8 @@ fun StockListMenu() {
                     onSelected = {
                         currentFilter = it
                         isDropDownExpanded = false
-                                 },
-                    itemPadding)
+                    }
+                )
 
                 HorizontalDivider(
                     thickness = 0.2.dp,
@@ -164,8 +163,8 @@ fun StockListMenu() {
                     onSelected = {
                         currentFilter = it
                         isDropDownExpanded = false
-                                 },
-                    itemPadding)
+                    }
+                )
             }
         }
     }
@@ -175,8 +174,7 @@ fun StockListMenu() {
 @Composable
 fun MenuItem(
     text: String,
-    onSelected: (String) -> Unit,
-    contentPadding: PaddingValues
+    onSelected: (String) -> Unit
 ) {
     DropdownMenuItem(
         text = {
@@ -186,8 +184,7 @@ fun MenuItem(
                 textAlign = TextAlign.Center
             )
         },
-        onClick = { onSelected(text) },
-        contentPadding = contentPadding
+        onClick = { onSelected(text) }
     )
 }
 

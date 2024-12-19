@@ -18,18 +18,14 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 
 /*
 * This fun make a reusable lazy vertical staggered grid,
@@ -43,7 +39,6 @@ fun <T> ReusableLazyVerticalStaggeredGrid(
     items: List<T>,
     content: @Composable (T) -> Unit,
     isRefreshing: Boolean,
-    isLoading: Boolean,
     isLastPage: Boolean,
     error: String,
     onRefresh: () -> Unit,
@@ -53,7 +48,15 @@ fun <T> ReusableLazyVerticalStaggeredGrid(
     threshold: Int = 5
 ) {
     val pullToRefreshState = rememberPullToRefreshState()
-    var loadMoreTriggered by remember { mutableStateOf(false) }
+
+    // Observe list scrolling
+    val isLoading: Boolean by remember {
+        derivedStateOf {
+            val lastVisibleItem = lazyStaggeredGridState.layoutInfo.visibleItemsInfo.lastOrNull()
+            lastVisibleItem?.index != 0 && lastVisibleItem?.index ==
+                    lazyStaggeredGridState.layoutInfo.totalItemsCount - threshold
+        }
+    }
 
     Box(
         modifier = modifier
@@ -99,32 +102,12 @@ fun <T> ReusableLazyVerticalStaggeredGrid(
 
         PullToRefreshContainer(
             state = pullToRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
         )
 
-        LaunchedEffect(lazyStaggeredGridState) {
-            snapshotFlow {
-                lazyStaggeredGridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-            }
-                .filter { lastVisibleItemIndex ->
-                    lastVisibleItemIndex != null &&
-                            lastVisibleItemIndex >= (items.size - threshold) &&
-                            !isLoading &&
-                            !isLastPage &&
-                            !loadMoreTriggered &&
-                            items.size >= threshold
-                }
-                .distinctUntilChanged()
-                .collect {
-                    loadMoreTriggered = true
-                    onLoadMore()
-                }
-        }
-
         LaunchedEffect(isLoading) {
-            if (!isLoading) {
-                loadMoreTriggered = false
-            }
+            if (isLoading) onLoadMore()
         }
 
         if (error.isNotBlank()) {
