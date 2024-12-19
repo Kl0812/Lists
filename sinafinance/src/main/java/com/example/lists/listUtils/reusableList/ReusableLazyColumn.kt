@@ -40,7 +40,7 @@ fun <T> ReusableLazyColumn(
     onLoadMore: () -> Unit,
     listContent: @Composable (T) -> Unit,
     modifier: Modifier = Modifier,
-    threshold: Int = 5,
+    threshold: Int = 1, // Threshold for load more when reach which last item, has to larger than 1
     lazyListState: LazyListState = rememberLazyListState()
 ) {
     val pullToRefreshState = rememberPullToRefreshState()

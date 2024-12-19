@@ -1,6 +1,5 @@
 package com.example.lists.presentation.stock_list
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -35,7 +34,7 @@ class StockListViewModel @Inject constructor(
     // Handle actions for each refreshing situation,
     // include load data for the first time when open the app
     // The reason why internal fun is because refreshStocks need to be used
-    // everytime when refreshing or load more data
+    // everytime when refreshing data
     internal fun refreshStocks() {
         currentPage = 1
         isLastPage = false
@@ -49,7 +48,7 @@ class StockListViewModel @Inject constructor(
 
     // Handle actions for each loading situation
     // The reason why internal fun is because loadMoreStocks need to be used
-    // everytime when refreshing or load more data
+    // everytime when load more data
     internal fun loadMoreStocks() {
         if (_state.value.isLoading || _state.value.isRefreshing || isLastPage) return
         _state.value = _state.value.copy(isLoading = true)
