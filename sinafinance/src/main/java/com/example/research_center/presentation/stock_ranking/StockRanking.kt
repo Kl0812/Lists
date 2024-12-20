@@ -39,8 +39,7 @@ fun StockRanking(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            .fillMaxSize(),
     ) {
         // Menu Bar Header
         StockListMenu()
