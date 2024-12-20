@@ -170,8 +170,7 @@ fun ResearchCenterScreen(
 
             // Main content area, able to swipe to switch
             HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.weight(1f)
+                state = pagerState
             ) { page ->
                 when (page) {
                     0 -> IndustryRanking()

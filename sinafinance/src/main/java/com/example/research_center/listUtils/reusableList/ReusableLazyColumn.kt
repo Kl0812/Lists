@@ -1,5 +1,6 @@
 package com.example.research_center.listUtils.reusableList
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,11 +19,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 /*
 * This fun make a reusable lazy column,
@@ -47,11 +50,13 @@ fun <T> ReusableLazyColumn(
     val pullToRefreshState = rememberPullToRefreshState()
 
     // Observe list scrolling
-    val isLoading: Boolean by remember {
+    val loadMore = remember {
         derivedStateOf {
-            val lastVisibleItem = lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()
-            lastVisibleItem?.index != 0 && lastVisibleItem?.index ==
-                    lazyListState.layoutInfo.totalItemsCount - threshold
+            val layoutInfo = lazyListState.layoutInfo
+            val totalItemsNumber = layoutInfo.totalItemsCount
+            val lastVisibleItemIndex = (layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0) + 1
+
+            lastVisibleItemIndex > (totalItemsNumber - threshold)
         }
     }
 
@@ -66,19 +71,8 @@ fun <T> ReusableLazyColumn(
                 listContent(it)
             }
 
-            // If user pull down to the end and load
-            if (isLoading && !isLastPage) {
-                item {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        androidx.compose.material3.CircularProgressIndicator()
-                    }
-                }
-            }
+            Log.i("Reusable Lazy Column", "Items number: ${items.size}")
+
         }
 
         if(pullToRefreshState.isRefreshing) {
@@ -103,8 +97,12 @@ fun <T> ReusableLazyColumn(
         )
 
         // Load more if scrolled to bottom
-        LaunchedEffect(isLoading) {
-            if (isLoading) onLoadMore()
+        LaunchedEffect(loadMore) {
+            snapshotFlow { loadMore.value }
+                .distinctUntilChanged()
+                .collect {
+                    onLoadMore()
+                }
         }
 
         if (error.isNotBlank()) {
