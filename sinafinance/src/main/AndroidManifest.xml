@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".StockRankingApplication"
+        android:name="com.example.research_center.ResearchCenterApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Lists"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name="com.example.research_center.presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Lists">
             <intent-filter>
