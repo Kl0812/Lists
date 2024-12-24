@@ -117,7 +117,7 @@ fun ShowDate(stock: Stock) {
     // If in same day
     if (sameDateTime.contains("day")) {
         // If in one hour
-        if (sameDateTime.contains("hour")) {
+        if (minutes < 60) {
             Text(
                 text = "${minutes}分钟前",
                 fontSize = 12.sp,
