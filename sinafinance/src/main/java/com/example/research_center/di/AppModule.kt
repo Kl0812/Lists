@@ -1,7 +1,7 @@
 package com.example.research_center.di
 
 import com.example.research_center.common.Constants
-import com.example.research_center.data.remote.StockRankingApi
+import com.example.research_center.data.remote.ReportCenterApi
 import com.example.research_center.data.repository.StockRepositoryImpl
 import com.example.research_center.domain.repository.StockRepository
 import dagger.Module
@@ -21,17 +21,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideStockApi(): StockRankingApi {
+    fun provideStockApi(): ReportCenterApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(StockRankingApi::class.java)
+            .create(ReportCenterApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideStockRepository(api: StockRankingApi): StockRepository {
+    fun provideStockRepository(api: ReportCenterApi): StockRepository {
         return StockRepositoryImpl(api)
     }
 }
