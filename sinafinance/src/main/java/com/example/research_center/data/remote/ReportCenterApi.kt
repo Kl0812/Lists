@@ -10,7 +10,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /*
-* API information
+* List API information, use LIST_BASE_UR
 * */
 interface ReportCenterApi {
 
@@ -90,10 +90,5 @@ interface ReportCenterApi {
         @Query("qs_code") qs_code: String // 券商代码，必须传参
     ): QsSymbolDto
 
-    // Get stock detail information
-    @GET("stock/api/openapi.php/ReportService.getShow?")
-    suspend fun getShowById(
-        @Query("rptid") rptid: String // 股票ID，必须传参
-    ): StockDetailDto
 }
 

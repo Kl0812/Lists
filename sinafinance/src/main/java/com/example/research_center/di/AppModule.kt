@@ -2,6 +2,7 @@ package com.example.research_center.di
 
 import com.example.research_center.common.Constants
 import com.example.research_center.data.remote.ReportCenterApi
+import com.example.research_center.data.remote.StockDetailApi
 import com.example.research_center.data.repository.ReportCenterRepositoryImpl
 import com.example.research_center.domain.repository.ReportCenterRepository
 import dagger.Module
@@ -14,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /*
 * Set up a Hilt module for Dependency Injection.
+* Able to create fake repository for test purpose
 * */
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,9 +23,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideStockApi(): ReportCenterApi {
+    fun provideReportCenterApi(): ReportCenterApi {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(Constants.LIST_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ReportCenterApi::class.java)
@@ -31,7 +33,20 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideStockRepository(api: ReportCenterApi): ReportCenterRepository {
-        return ReportCenterRepositoryImpl(api)
+    fun provideStockDetailApi(): StockDetailApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.DETAIL_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(StockDetailApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReportCenterRepository(
+        listApi: ReportCenterApi,
+        detailApi: StockDetailApi
+    ): ReportCenterRepository {
+        return ReportCenterRepositoryImpl(listApi, detailApi)
     }
 }

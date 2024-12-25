@@ -1,6 +1,7 @@
 package com.example.research_center.data.repository
 
 import com.example.research_center.data.remote.ReportCenterApi
+import com.example.research_center.data.remote.StockDetailApi
 import com.example.research_center.data.remote.dto.HyDto
 import com.example.research_center.data.remote.dto.QsDto
 import com.example.research_center.data.remote.dto.QsSymbolDto
@@ -14,7 +15,8 @@ import javax.inject.Inject
 * can easily implement test use case
 * */
 class ReportCenterRepositoryImpl @Inject constructor(
-    private val api: ReportCenterApi
+    private val listApi: ReportCenterApi,
+    private val detailApi: StockDetailApi
 ) : ReportCenterRepository {
 
     override suspend fun getList(
@@ -23,7 +25,7 @@ class ReportCenterRepositoryImpl @Inject constructor(
         hy_code: String,
         qs_code: String
     ): StockDto {
-        return api.getList(
+        return listApi.getList(
             page = page,
             rating_change = rating_change,
             hy_code = hy_code,
@@ -38,7 +40,7 @@ class ReportCenterRepositoryImpl @Inject constructor(
         date_type: Int,
         sort_col: String
     ): HyDto {
-        return api.getHyRank(
+        return listApi.getHyRank(
             page = page,
             type = type,
             sort_type = sort_type,
@@ -54,7 +56,7 @@ class ReportCenterRepositoryImpl @Inject constructor(
         sort_col: String,
         is_top: Int
     ): QsDto {
-        return  api.getQsRank(
+        return listApi.getQsRank(
             page = page,
             sort_type = sort_type,
             date_type = date_type,
@@ -70,7 +72,7 @@ class ReportCenterRepositoryImpl @Inject constructor(
         sort_col: String,
         qs_code: String
     ): QsSymbolDto {
-        return api.getQsSymbolRank(
+        return listApi.getQsSymbolRank(
             page = page,
             sort_type = sort_type,
             date_type = date_type,
@@ -82,7 +84,7 @@ class ReportCenterRepositoryImpl @Inject constructor(
     override suspend fun getShowById(
         rptid: String
     ): StockDetailDto {
-        return api.getShowById(
+        return detailApi.getShowById(
             rptid = rptid
         )
     }
