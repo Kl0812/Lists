@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.research_center.common.Resource
-import com.example.research_center.domain.use_case.get_stocks.GetStocksUseCase
+import com.example.research_center.domain.use_case.get_stock.GetStockUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,7 +16,7 @@ import javax.inject.Inject
 * */
 @HiltViewModel
 class StockListViewModel @Inject constructor(
-    private val getStocksUseCase: GetStocksUseCase
+    private val getStocksUseCase: GetStockUseCase
 
 ): ViewModel() {
 
