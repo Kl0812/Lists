@@ -43,7 +43,7 @@ interface ReportCenterRepository {
     ): QsSymbolDto
 
     suspend fun getShowById(
-        showId: String
+        rptid: String
     ): StockDetailDto
 
 }

@@ -1,6 +1,5 @@
 package com.example.research_center.data.remote.dto
 
-import com.example.research_center.domain.model.Qs
 import com.example.research_center.domain.model.QsSymbol
 
 data class QsSymbolDto(

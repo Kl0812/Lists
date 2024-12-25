@@ -23,7 +23,12 @@ class ReportCenterRepositoryImpl @Inject constructor(
         hy_code: String,
         qs_code: String
     ): StockDto {
-        return api.getList()
+        return api.getList(
+            page = page,
+            rating_change = rating_change,
+            hy_code = hy_code,
+            qs_code = qs_code
+        )
     }
 
     override suspend fun getHyRank(
@@ -33,7 +38,13 @@ class ReportCenterRepositoryImpl @Inject constructor(
         date_type: Int,
         sort_col: String
     ): HyDto {
-        return api.getHyRank()
+        return api.getHyRank(
+            page = page,
+            type = type,
+            sort_type = sort_type,
+            date_type = date_type,
+            sort_col = sort_col
+        )
     }
 
     override suspend fun getQsRank(
@@ -43,7 +54,13 @@ class ReportCenterRepositoryImpl @Inject constructor(
         sort_col: String,
         is_top: Int
     ): QsDto {
-        return  api.getQsRank()
+        return  api.getQsRank(
+            page = page,
+            sort_type = sort_type,
+            date_type = date_type,
+            sort_col = sort_col,
+            is_top = is_top
+        )
     }
 
     override suspend fun getQsSymbolRank(
@@ -53,12 +70,20 @@ class ReportCenterRepositoryImpl @Inject constructor(
         sort_col: String,
         qs_code: String
     ): QsSymbolDto {
-        return api.getQsSymbolRank(qs_code = qs_code)
+        return api.getQsSymbolRank(
+            page = page,
+            sort_type = sort_type,
+            date_type = date_type,
+            sort_col = sort_col,
+            qs_code = qs_code
+        )
     }
 
     override suspend fun getShowById(
-        showId: String
+        rptid: String
     ): StockDetailDto {
-        return api.getShowById(showId = showId)
+        return api.getShowById(
+            rptid = rptid
+        )
     }
 }

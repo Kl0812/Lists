@@ -72,7 +72,7 @@ interface ReportCenterApi {
     ): QsDto
 
     // Get qs symbol rank data list
-    @GET("report/center/getQsSymbolRank?qs_code={qs_code}")
+    @GET("report/center/getQsSymbolRank?")
     suspend fun getQsSymbolRank(
         // Don't know what are these variables, but they are important and never change,
         // so keep them with default values
@@ -87,13 +87,13 @@ interface ReportCenterApi {
         @Query("sort_type") sort_type: Int = 0, // 排序，默认高到低
         @Query("date_type") date_type: Int = 1, // 近多久的数据，默认近一周
         @Query("sort_col") sort_col: String = "percent", // 按照什么排序，默认按照涨幅
-        @Path("qs_code") qs_code: String // 券商代码，必须传参
+        @Query("qs_code") qs_code: String // 券商代码，必须传参
     ): QsSymbolDto
 
     // Get stock detail information
-    @GET("stock/api/openapi.php/ReportService.getShow?rptid={showID}")
+    @GET("stock/api/openapi.php/ReportService.getShow?")
     suspend fun getShowById(
-        @Path("showId") showId: String // 股票ID，必须传参
+        @Query("rptid") rptid: String // 股票ID，必须传参
     ): StockDetailDto
 }
 
