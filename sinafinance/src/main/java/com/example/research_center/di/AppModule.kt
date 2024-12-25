@@ -2,8 +2,8 @@ package com.example.research_center.di
 
 import com.example.research_center.common.Constants
 import com.example.research_center.data.remote.ReportCenterApi
-import com.example.research_center.data.repository.StockRepositoryImpl
-import com.example.research_center.domain.repository.StockRepository
+import com.example.research_center.data.repository.ReportCenterRepositoryImpl
+import com.example.research_center.domain.repository.ReportCenterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +31,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideStockRepository(api: ReportCenterApi): StockRepository {
-        return StockRepositoryImpl(api)
+    fun provideStockRepository(api: ReportCenterApi): ReportCenterRepository {
+        return ReportCenterRepositoryImpl(api)
     }
 }

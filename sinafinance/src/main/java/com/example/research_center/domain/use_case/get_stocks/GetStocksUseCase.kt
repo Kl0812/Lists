@@ -2,7 +2,7 @@ package com.example.research_center.domain.use_case.get_stocks
 
 import com.example.research_center.common.Resource
 import com.example.research_center.data.remote.dto.toStock
-import com.example.research_center.domain.repository.StockRepository
+import com.example.research_center.domain.repository.ReportCenterRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -11,7 +11,7 @@ import javax.inject.Inject
 * Set page loading state and set dog list information
 * */
 class GetStocksUseCase @Inject constructor(
-    private val repository: StockRepository
+    private val repository: ReportCenterRepository
 ) {
     operator fun invoke(page: Int): Flow<Resource<List<Stock>>> = flow {
         try {
