@@ -16,8 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.research_center.listUtils.reusableList.ReusableLazyColumn
 import com.example.research_center.presentation.Screen
-import com.example.research_center.presentation.stock_ranking.components.StockListItem
-import com.example.research_center.presentation.stock_ranking.components.StockListMenu
+import com.example.research_center.presentation.stock_list.components.StockListMenu
 import com.example.research_center.presentation.stock_list.StockListViewModel
 
 
@@ -49,7 +48,7 @@ fun StockRanking(
                 .fillMaxWidth()
         )
 
-        // Main content list
+        /*// Main content list
         ReusableLazyColumn(
             items = state.stocks,
             isRefreshing = state.isRefreshing,
@@ -73,7 +72,7 @@ fun StockRanking(
             modifier = Modifier
                 .fillMaxSize()
                 .zIndex(-1f)
-        )
+        )*/
     }
 }
 

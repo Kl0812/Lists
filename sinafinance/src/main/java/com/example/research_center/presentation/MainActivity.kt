@@ -10,7 +10,10 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.research_center.listUtils.SystemBarsColorChanger
+import com.example.research_center.presentation.research_center.ResearchCenterScreen
 import com.example.research_center.presentation.stock_ranking.stock_detail.StockDetailScreen
 import com.example.research_center.presentation.ui.theme.ListsTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +45,8 @@ class MainActivity : ComponentActivity() {
                 )
                 Scaffold(modifier = Modifier
                     .fillMaxSize()
-                    // System Bar Padding, not needed because TopAppBar will handle it
-                    // .windowInsetsPadding(WindowInsets.systemBars)
+                    // System bar padding
+                    .windowInsetsPadding(WindowInsets.systemBars)
                 ){ innerPadding ->
                     val navController = rememberNavController()
                     NavHost(
@@ -53,9 +57,9 @@ class MainActivity : ComponentActivity() {
                     ) {
                         // Research Center Screen
                         composable (
-                            route = Screen.ResearchCenterScreen.route
+                            route = Screen.ResearchCenterScreen.route,
                         ) {
-                            ResearchCenterScreen(navController)
+                            ResearchCenterScreen()// navController)
                         }
 
                         // Stock Details Screen

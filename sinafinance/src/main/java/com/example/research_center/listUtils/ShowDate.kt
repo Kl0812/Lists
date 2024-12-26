@@ -28,7 +28,23 @@ fun ShowDate(stock: Stock) {
     val duration = Duration.between(createDateTime, now)
     val minutes = duration.toMinutes()
 
-    // If in same day
+    /*
+    * The time check and show function of below code is working
+    * However, the json data fetched form sina api doesn't show the time, only date
+    * Such as "adddate": "2024-12-26 00:00:00"
+    * So only show the date for now. If the time is given
+    * Remove below val and Text, and un-comment code below
+    * Then the time check function can work normally
+    * */
+    val dateOnlyFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    Text(
+        text =  createDateTime.format(dateOnlyFormatter),
+        fontSize = 12.sp,
+        color = Color.Gray,
+        textAlign = TextAlign.Center
+    )
+
+    /*// If in same day
     if (createDateTime.toLocalDate() == now.toLocalDate()) {
         // If in one hour
         if (minutes < 60) {
@@ -66,5 +82,5 @@ fun ShowDate(stock: Stock) {
             color = Color.Gray,
             textAlign = TextAlign.Center
         )
-    }
+    }*/
 }

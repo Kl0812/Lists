@@ -74,9 +74,9 @@ fun StockListItem(
 fun StockListItemPreview() {
     val sampleStock = Stock(
         adddate = "2024-12-26 00:00:00",
-        orgname = "国泰君安",
-        report_id = "788497346818",
-        title = "华海清科(688120)收购芯嵛半导体剩余股权点评：全资收购离子注入主体 开辟第二曲线"
+        orgname = "东吴证券",
+        report_id = "788525455904",
+        title = "宇邦新材(301266)：焊带加工费下滑短期承压 BC新品有望结构性改善盈利"
     )
 
     // 当预览时，onItemClick可以使用空的lambda

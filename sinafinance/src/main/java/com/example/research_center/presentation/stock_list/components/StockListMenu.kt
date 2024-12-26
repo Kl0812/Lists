@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.stock_ranking.components
+package com.example.research_center.presentation.stock_list.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,14 +40,12 @@ fun StockListMenu() {
     var isDropDownExpanded by remember { mutableStateOf(false) }
     var currentFilter by remember { mutableStateOf("全部") }
 
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .zIndex(1f)
             .padding(12.dp)
     ) {
         Text(
