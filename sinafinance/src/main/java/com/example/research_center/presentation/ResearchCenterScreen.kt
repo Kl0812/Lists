@@ -30,8 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.research_center.presentation.brokerage_ranking.BrokerageRanking
-import com.example.research_center.presentation.industry_ranking.IndustryRanking
 import com.example.research_center.presentation.stock_ranking.StockRanking
 import kotlinx.coroutines.launch
 
