@@ -18,7 +18,7 @@ import com.example.research_center.listUtils.reusableList.ReusableLazyColumn
 import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.stock_ranking.components.StockListItem
 import com.example.research_center.presentation.stock_ranking.components.StockListMenu
-import com.example.research_center.presentation.stock_ranking.components.StockListViewModel
+import com.example.research_center.presentation.stock_list.StockListViewModel
 
 
 /*
