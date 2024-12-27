@@ -36,7 +36,7 @@ class StockDetailViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     _state.value = StockDetailState(
-                        detail = result.data
+                        stockDetail = result.data
                     )
                 }
                 is Resource.Error -> {

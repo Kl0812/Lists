@@ -1,8 +1,6 @@
 package com.example.research_center.presentation.research_center
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,17 +16,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.research_center.listUtils.CustomTopBar
 import com.example.research_center.presentation.TestScreen
 import com.example.research_center.presentation.research_center.components.SubPage
+import com.example.research_center.presentation.stock_list.StockListScreen
 
 @SuppressLint("NewApi")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResearchCenterScreen(
-    // navController: NavController // Currently no upper layer to return
+    navController: NavController // Currently no upper layer to return
 ) {
 
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
@@ -38,19 +36,9 @@ fun ResearchCenterScreen(
     Scaffold(
         containerColor = Color.White,
         topBar = {
-            Column {
-                CustomTopBar(
-                    title = "研报中心"
-                )
-
-                // Divider
-                HorizontalDivider(
-                    thickness = 0.2.dp,
-                    color = Color.Gray,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
-            }
+            CustomTopBar(
+                title = "研报中心"
+            )
         }
     ) { innerPadding ->
 
@@ -108,20 +96,10 @@ fun ResearchCenterScreen(
             ) { page ->
                 when (page) {
                     0 -> TestScreen()
-                    1 -> TestScreen()
+                    1 -> StockListScreen(navController)
                     2 -> TestScreen()
                 }
             }
         }
     }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(
-    name = "ResearchCenterScreen Preview",
-    showBackground = true
-)
-@Composable
-fun ResearchCenterScreenPreview() {
-    ResearchCenterScreen()
 }

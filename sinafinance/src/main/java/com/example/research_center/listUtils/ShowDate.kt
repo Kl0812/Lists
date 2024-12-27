@@ -14,12 +14,12 @@ import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ShowDate(stock: Stock) {
+fun ShowDate(addDate: String) {
     // Declare date format
     val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
     // Transform date to LocalDateTime
-    val createDateTime = LocalDateTime.parse(stock.adddate, dateTimeFormatter)
+    val createDateTime = LocalDateTime.parse(addDate, dateTimeFormatter)
 
     // Get current date and time
     val now = LocalDateTime.now()

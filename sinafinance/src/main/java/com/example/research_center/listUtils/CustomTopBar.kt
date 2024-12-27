@@ -4,12 +4,14 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -26,41 +28,54 @@ import androidx.compose.ui.unit.sp
 fun CustomTopBar(
     title: String,
     showReturnButton: Boolean = false,
-    onReturnClick: () -> Unit = {}
+    onReturnClick: () -> Unit = {},
+    showDivider: Boolean = true
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .background(Color.White)
-            .padding(8.dp)
-    ) {
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(Color.White)
+                .padding(8.dp)
+        ) {
 
-        // Show return button if needed
-        if (showReturnButton) {
-            IconButton(
-                onClick = onReturnClick,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .wrapContentHeight()
-                    .size(24.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Return Button",
-                    tint = Color.Gray
-                )
+            // Show return button if needed
+            if (showReturnButton) {
+                IconButton(
+                    onClick = onReturnClick,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .wrapContentHeight()
+                        .size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Return Button",
+                        tint = Color.Gray
+                    )
+                }
             }
+
+            // Title
+            Text(
+                text = title,
+                fontSize = 20.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
 
-        // Title
-        Text(
-            text = title,
-            fontSize = 20.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.Center)
-        )
+        // Divider
+        if (showDivider) {
+            HorizontalDivider(
+                thickness = 0.2.dp,
+                color = Color.Gray,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
     }
 }
 

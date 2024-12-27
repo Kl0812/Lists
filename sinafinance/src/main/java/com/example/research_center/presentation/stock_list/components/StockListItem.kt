@@ -52,7 +52,7 @@ fun StockListItem(
                 textAlign = TextAlign.Center
             )
 
-            ShowDate(stock)
+            ShowDate(stock.adddate)
         }
 
         HorizontalDivider(
