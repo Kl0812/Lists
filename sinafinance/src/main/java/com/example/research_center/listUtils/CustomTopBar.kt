@@ -36,7 +36,6 @@ fun CustomTopBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .background(Color.White)
                 .padding(8.dp)
         ) {
 
