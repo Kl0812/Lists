@@ -1,6 +1,7 @@
 package com.example.research_center.presentation.stock_list
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.stock_list.components.StockListItem
+import com.example.research_center.presentation.stock_list.components.StockListMenu
 
 @Composable
 fun StockListScreen(
@@ -25,43 +27,65 @@ fun StockListScreen(
     viewModel: StockListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    Box(
+
+    fun onMenuSelected(menu: String) {
+        val rating_change = when(menu) {
+            "上调" -> 1
+            "下调" -> 3
+            "维持" -> 2
+            "首次" -> 4
+            else -> 0
+        }
+        viewModel.ratingChangeStocks(rating_change = rating_change)
+    }
+
+    Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        LazyColumn(
+
+        StockListMenu(
+            onMenuSelected = ::onMenuSelected
+        )
+
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-        ) {
-            items(state.stock) { stock ->
-                StockListItem(
-                    stock = stock,
-                    onItemClick = {
-                        navController.navigate(
-                            Screen.StockDetailScreen.route + "/${stock.report_id}"
-                        )
-                    }
+        ){
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                items(state.stock) { stock ->
+                    StockListItem(
+                        stock = stock,
+                        onItemClick = {
+                            navController.navigate(
+                                Screen.StockDetailScreen.route + "/${stock.report_id}"
+                            )
+                        }
+                    )
+                }
+            }
+
+            if (state.error.isNotBlank()) {
+                Text(
+                    text = state.error,
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .align(Alignment.Center)
                 )
             }
-        }
 
-        if(state.error.isNotBlank()) {
-            Text(
-                text = state.error,
-                color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .align(Alignment.Center)
-            )
-        }
-
-        if(state.isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .align(Alignment.Center)
-            )
+            if(state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+            }
         }
     }
 }

@@ -22,12 +22,22 @@ class StockListViewModel @Inject constructor(
     private val _state = mutableStateOf(StockListState())
     val state: State<StockListState> = _state
 
+    // Record current rating sort
+    private var currentRatingChange = 0
+
     init {
-        getStock()
+        getStock(rating_change = 0)
     }
 
-    private fun getStock() {
-        getStockUseCase().onEach { result ->
+    fun ratingChangeStocks(rating_change: Int) {
+        currentRatingChange = rating_change
+        getStock(rating_change)
+    }
+
+    private fun getStock(rating_change: Int) {
+        getStockUseCase(
+            rating_change = rating_change
+        ).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _state.value = StockListState(

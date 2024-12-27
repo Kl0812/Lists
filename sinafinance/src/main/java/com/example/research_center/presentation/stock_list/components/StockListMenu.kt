@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,134 +37,150 @@ import com.example.lists.R
 * This file is to create list menu header
 * */
 @Composable
-fun StockListMenu() {
+fun StockListMenu(
+    onMenuSelected: (String) -> Unit
+) {
     var isDropDownExpanded by remember { mutableStateOf(false) }
     var currentFilter by remember { mutableStateOf("全部") }
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .padding(12.dp)
-    ) {
-        Text(
-            text = "近三月行业研报情况",
-            fontSize = 16.sp
-        )
-
-        Box(
+    Column {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .wrapContentSize(Alignment.TopEnd)
-                .clickable { isDropDownExpanded = true }
+                .fillMaxWidth()
+                .background(Color.White)
+                .padding(12.dp)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "评级变动：$currentFilter",
-                    fontSize = 16.sp,
-                    color = Color.Gray
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Image(
-                    painter = painterResource(R.drawable.down_arrow),
-                    contentDescription = "DropDown Icon",
-                    modifier = Modifier.size(16.dp)
-                )
-            }
+            Text(
+                text = "近三月行业研报情况",
+                fontSize = 16.sp
+            )
 
-            DropdownMenu(
-                expanded = isDropDownExpanded,
-                onDismissRequest = { isDropDownExpanded = false },
+            Box(
                 modifier = Modifier
                     .wrapContentSize(Alignment.TopEnd)
-                    .background(Color.White)
+                    .clickable { isDropDownExpanded = true }
             ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "评级变动：$currentFilter",
+                        fontSize = 16.sp,
+                        color = Color.Gray
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Image(
+                        painter = painterResource(R.drawable.down_arrow),
+                        contentDescription = "DropDown Icon",
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
 
-                MenuItem(
-                    text = "全部",
-                    onSelected = {
-                        currentFilter = it
-                        isDropDownExpanded = false
-                    }
-                )
-
-                HorizontalDivider(
-                    thickness = 0.2.dp,
-                    color = Color.Gray,
+                DropdownMenu(
+                    expanded = isDropDownExpanded,
+                    onDismissRequest = { isDropDownExpanded = false },
                     modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                )
+                        .wrapContentSize(Alignment.TopEnd)
+                        .background(Color.White)
+                ) {
 
-                MenuItem(
-                    text = "上调",
-                    onSelected = {
-                        currentFilter = it
-                        isDropDownExpanded = false
-                    }
-                )
+                    MenuItem(
+                        text = "全部",
+                        onSelected = {
+                            currentFilter = it
+                            onMenuSelected(it)
+                            isDropDownExpanded = false
+                        }
+                    )
 
-                HorizontalDivider(
-                    thickness = 0.2.dp,
-                    color = Color.Gray,
-                    modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                )
+                    HorizontalDivider(
+                        thickness = 0.2.dp,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp
+                            )
+                    )
 
-                MenuItem(
-                    text = "下调",
-                    onSelected = {
-                        currentFilter = it
-                        isDropDownExpanded = false
-                    }
-                )
+                    MenuItem(
+                        text = "上调",
+                        onSelected = {
+                            currentFilter = it
+                            onMenuSelected(it)
+                            isDropDownExpanded = false
+                        }
+                    )
 
-                HorizontalDivider(
-                    thickness = 0.2.dp,
-                    color = Color.Gray,
-                    modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                )
+                    HorizontalDivider(
+                        thickness = 0.2.dp,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp
+                            )
+                    )
 
-                MenuItem(
-                    text = "维持",
-                    onSelected = {
-                        currentFilter = it
-                        isDropDownExpanded = false
-                    }
-                )
+                    MenuItem(
+                        text = "下调",
+                        onSelected = {
+                            currentFilter = it
+                            onMenuSelected(it)
+                            isDropDownExpanded = false
+                        }
+                    )
 
-                HorizontalDivider(
-                    thickness = 0.2.dp,
-                    color = Color.Gray,
-                    modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                )
+                    HorizontalDivider(
+                        thickness = 0.2.dp,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp
+                            )
+                    )
 
-                MenuItem(
-                    text = "首次",
-                    onSelected = {
-                        currentFilter = it
-                        isDropDownExpanded = false
-                    }
-                )
+                    MenuItem(
+                        text = "维持",
+                        onSelected = {
+                            currentFilter = it
+                            onMenuSelected(it)
+                            isDropDownExpanded = false
+                        }
+                    )
+
+                    HorizontalDivider(
+                        thickness = 0.2.dp,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp
+                            )
+                    )
+
+                    MenuItem(
+                        text = "首次",
+                        onSelected = {
+                            currentFilter = it
+                            onMenuSelected(it)
+                            isDropDownExpanded = false
+                        }
+                    )
+                }
             }
         }
+
+        HorizontalDivider(
+            thickness = 0.2.dp,
+            color = Color.Gray,
+            modifier = Modifier
+                .fillMaxWidth()
+        )
     }
 }
 
@@ -183,15 +200,4 @@ fun MenuItem(
         },
         onClick = { onSelected(text) }
     )
-}
-
-
-
-@Preview(
-    name = "StockListMenu Preview",
-    showBackground = true
-)
-@Composable
-fun StockListMenuPreview() {
-    StockListMenu()
 }
