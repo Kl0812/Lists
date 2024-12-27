@@ -20,8 +20,6 @@ interface ReportCenterApi {
         // Don't know what are these variables, but they are important and never change,
         // so keep them with default values
         @Query("is_center")is_center: Int = 1,
-        @Query("chwm")chwm: String = "32010_0001",
-        @Query("wm")wm: String = "b122",
 
         // Default important variables
         @Query("page") page: Int = 1, // Add page parameter for pagination
@@ -36,10 +34,6 @@ interface ReportCenterApi {
     // Get hy rank data list
     @GET("report/center/getHyRank?")
     suspend fun getHyRank(
-        // Don't know what are these variables, but they are important and never change,
-        // so keep them with default values
-        @Query("chwm")chwm: String = "32010_0001",
-        @Query("wm")wm: String = "b122",
 
         // Default important variables
         @Query("page") page: Int = 1, // Add page parameter for pagination
@@ -55,10 +49,6 @@ interface ReportCenterApi {
     // Get qs rank data list
     @GET("report/center/getQsRank?")
     suspend fun getQsRank(
-        // Don't know what are these variables, but they are important and never change,
-        // so keep them with default values
-        @Query("chwm")chwm: String = "32010_0001",
-        @Query("wm")wm: String = "b122",
 
         // Default important variables
         @Query("page") page: Int = 1, // Add page parameter for pagination
@@ -74,10 +64,6 @@ interface ReportCenterApi {
     // Get qs symbol rank data list
     @GET("report/center/getQsSymbolRank?")
     suspend fun getQsSymbolRank(
-        // Don't know what are these variables, but they are important and never change,
-        // so keep them with default values
-        @Query("chwm")chwm: String = "32010_0001",
-        @Query("wm")wm: String = "b122",
 
         // Default important variables
         @Query("page") page: Int = 1, // Add page parameter for pagination
