@@ -1,5 +1,6 @@
 package com.example.research_center.presentation.stock_list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,14 +12,21 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.stock_list.components.StockListItem
+import com.example.research_center.presentation.stock_list.components.StockListLazyColumn
 import com.example.research_center.presentation.stock_list.components.StockListMenu
 
 @Composable
@@ -40,23 +48,22 @@ fun StockListScreen(
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
 
         StockListMenu(
-            onMenuSelected = ::onMenuSelected
+            onMenuSelected = ::onMenuSelected,
+            currentRating = viewModel.currentRatingChange
         )
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ){
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                items(state.stock) { stock ->
+        Box(modifier = Modifier
+            .fillMaxWidth()
+        ) {
+            StockListLazyColumn(
+                items = state.stock,
+                isRefreshing = state.isRefreshing,
+                onRefresh = { viewModel.refresh() },
+                content = { stock ->
                     StockListItem(
                         stock = stock,
                         onItemClick = {
@@ -66,7 +73,7 @@ fun StockListScreen(
                         }
                     )
                 }
-            }
+            )
 
             if (state.error.isNotBlank()) {
                 Text(
@@ -74,16 +81,8 @@ fun StockListScreen(
                     color = MaterialTheme.colorScheme.error,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
                         .align(Alignment.Center)
-                )
-            }
-
-            if(state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .align(Alignment.Center)
+                        .padding(20.dp)
                 )
             }
         }

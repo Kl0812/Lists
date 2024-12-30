@@ -90,7 +90,7 @@ dependencies {
     //Coil
     implementation(libs.coil.compose)
 
-    //Swipe Refresh
+    //Pull to Refresh
     implementation (libs.foundation)
     implementation (libs.androidx.foundation)
     implementation (platform(libs.androidx.compose.bom))

@@ -36,10 +36,20 @@ import com.example.lists.R
 * */
 @Composable
 fun StockListMenu(
-    onMenuSelected: (String) -> Unit
+    onMenuSelected: (String) -> Unit,
+    currentRating: Int,
+    modifier: Modifier = Modifier
 ) {
     var isDropDownExpanded by remember { mutableStateOf(false) }
-    var currentFilter by remember { mutableStateOf("全部") }
+    val currentMenuText = remember(currentRating) {
+        when(currentRating) {
+            1 -> "上调"
+            3 -> "下调"
+            2 -> "维持"
+            4 -> "首次"
+            else -> "全部"
+        }
+    }
 
     Column {
         Row(
@@ -65,7 +75,7 @@ fun StockListMenu(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "评级变动：$currentFilter",
+                        text = "评级变动：$currentMenuText",
                         fontSize = 16.sp,
                         color = Color.Gray
                     )
@@ -88,7 +98,6 @@ fun StockListMenu(
                     MenuItem(
                         text = "全部",
                         onSelected = {
-                            currentFilter = it
                             onMenuSelected(it)
                             isDropDownExpanded = false
                         }
@@ -107,7 +116,6 @@ fun StockListMenu(
                     MenuItem(
                         text = "上调",
                         onSelected = {
-                            currentFilter = it
                             onMenuSelected(it)
                             isDropDownExpanded = false
                         }
@@ -126,7 +134,6 @@ fun StockListMenu(
                     MenuItem(
                         text = "下调",
                         onSelected = {
-                            currentFilter = it
                             onMenuSelected(it)
                             isDropDownExpanded = false
                         }
@@ -145,7 +152,6 @@ fun StockListMenu(
                     MenuItem(
                         text = "维持",
                         onSelected = {
-                            currentFilter = it
                             onMenuSelected(it)
                             isDropDownExpanded = false
                         }
@@ -164,7 +170,6 @@ fun StockListMenu(
                     MenuItem(
                         text = "首次",
                         onSelected = {
-                            currentFilter = it
                             onMenuSelected(it)
                             isDropDownExpanded = false
                         }

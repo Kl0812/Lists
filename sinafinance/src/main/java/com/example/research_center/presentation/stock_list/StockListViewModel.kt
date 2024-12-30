@@ -22,16 +22,22 @@ class StockListViewModel @Inject constructor(
     private val _state = mutableStateOf(StockListState())
     val state: State<StockListState> = _state
 
-    // Record current rating sort
-    private var currentRatingChange = 0
+    // Record current rating sort, only assign value inside this view model
+    var currentRatingChange = 0
+        private set
 
     init {
-        getStock(rating_change = 0)
+        getStock(rating_change = currentRatingChange)
     }
 
     fun ratingChangeStocks(rating_change: Int) {
         currentRatingChange = rating_change
-        getStock(rating_change)
+        getStock(currentRatingChange)
+    }
+
+    fun refresh(){
+        _state.value = _state.value.copy(isRefreshing = true)
+        getStock(currentRatingChange)
     }
 
     private fun getStock(rating_change: Int) {
@@ -41,16 +47,18 @@ class StockListViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     _state.value = StockListState(
+                        isRefreshing = false,
                         stock = result.data ?: emptyList()
                     )
                 }
                 is Resource.Error -> {
                     _state.value = StockListState(
+                        isRefreshing = false,
                         error = result.message ?: "Unknown Error"
                     )
                 }
                 is Resource.Loading -> {
-                    _state.value = StockListState(isLoading = true)
+                    // TODO: Nothing todo here right now
                 }
             }
         }.launchIn(viewModelScope)

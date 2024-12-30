@@ -3,6 +3,7 @@ accompanistFlowlayout = "0.17.0"
 agp = "8.7.2"
 androidxComposeBom = "2024.02.01"
 androidxComposeBomVersion = "2023.10.00"
+androidxComposeComposeBom = "2024.12.01"
 coilCompose = "2.1.0"
 composeBomVersion = "1.7.0"
 converterScalars = "2.9.0"
@@ -24,6 +25,7 @@ lifecycleRuntimeKtxVersion = "2.3.1"
 lifecycleViewmodelCompose = "3"
 loggingInterceptor = "5.0.0-alpha.2"
 material = "3"
+material3 = "1.4.0-alpha05"
 navigationCompose = "2.8.4"
 okhttp = "5.0.0-alpha.2"
 retrofitVersion = "2.9.0"
@@ -35,7 +37,10 @@ accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiper
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityCompose" }
 androidx-compose-bom-v170 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
 androidx-compose-bom-v20240201 = { module = "androidx.compose:compose-bom", version.ref = "androidxComposeBom" }
+androidx-compose-bom-v20241201 = { module = "androidx.compose:compose-bom", version.ref = "androidxComposeComposeBom" }
 androidx-compose-foundation-foundation = { module = "androidx.compose.foundation:foundation" }
+androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+androidx-compose-material3-material32 = { module = "androidx.compose.material3:material3" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }

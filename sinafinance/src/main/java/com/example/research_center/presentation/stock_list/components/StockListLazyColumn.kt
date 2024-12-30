@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.zIndex
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,6 +31,7 @@ fun <T> StockListLazyColumn(
     Box(
         modifier = modifier
             .nestedScroll(pullToRefreshState.nestedScrollConnection)
+            .fillMaxSize()
     ) {
         LazyColumn(
             state = lazyListState,
@@ -48,7 +50,7 @@ fun <T> StockListLazyColumn(
         }
 
         LaunchedEffect(isRefreshing) {
-            if(isRefreshing) {
+            if (isRefreshing) {
                 pullToRefreshState.startRefresh()
             } else {
                 pullToRefreshState.endRefresh()
@@ -58,7 +60,7 @@ fun <T> StockListLazyColumn(
         PullToRefreshContainer(
             state = pullToRefreshState,
             modifier = Modifier
-                .align(Alignment.TopCenter),
+                .align(Alignment.TopCenter)
             )
     }
 
