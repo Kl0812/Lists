@@ -64,6 +64,8 @@ dependencies {
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.androidx.navigation.compose)
     implementation (libs.accompanist.flowlayout)
+    implementation(libs.androidx.compose.material3.material3)
+
 
     // Coroutines
     implementation (libs.kotlinx.coroutines.core)
