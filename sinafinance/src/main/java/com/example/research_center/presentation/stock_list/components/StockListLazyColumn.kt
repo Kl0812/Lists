@@ -3,7 +3,6 @@ package com.example.research_center.presentation.stock_list.components
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -17,7 +16,8 @@ fun <T> StockListLazyColumn(
     items: List<T>,
     content: @Composable (T) -> Unit,
     isRefreshing: Boolean,
-    onRefresh: () -> Unit,
+    refresh: () -> Unit,
+    loadMore: () -> Unit,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState()
 ) {
@@ -25,7 +25,7 @@ fun <T> StockListLazyColumn(
 
     PullToRefreshBox(
         isRefreshing = isRefreshing,
-        onRefresh = { onRefresh() },
+        onRefresh = { refresh() },
         state = pullToRefreshState,
     ) {
         LazyColumn(
@@ -33,8 +33,11 @@ fun <T> StockListLazyColumn(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            items(items) {
-                content(it)
+            items(items.size) { index ->
+                content(items[index])
+                if (index == items.lastIndex) {
+                    loadMore()
+                }
             }
         }
     }

@@ -26,31 +26,83 @@ class StockListViewModel @Inject constructor(
     var currentRatingChange = 0
         private set
 
+    var currentPage = 1
+        private set
+
     init {
-        getStock(rating_change = currentRatingChange)
+        getStock(
+            page = currentPage,
+            rating_change = currentRatingChange
+        )
     }
 
     fun ratingChangeStocks(rating_change: Int) {
         currentRatingChange = rating_change
-        getStock(currentRatingChange)
+        currentPage = 1
+
+        getStock(
+            page = currentPage,
+            rating_change = currentRatingChange
+        )
     }
 
     fun refresh(){
-        _state.value = _state.value.copy(isRefreshing = true)
-        getStock(currentRatingChange)
+        _state.value = _state.value.copy(
+            isRefreshing = true,
+            isLoading = false
+        )
+        currentPage = 1
+
+        getStock(
+            page = currentPage,
+            rating_change = currentRatingChange
+        )
     }
 
-    private fun getStock(rating_change: Int) {
+    fun loadMore() {
+        if (_state.value.isLoading) return
+        _state.value = _state.value.copy(
+            isRefreshing = false,
+            isLoading = true
+        )
+        currentPage += 1
+
+        getStock(
+            page = currentPage,
+            rating_change = currentRatingChange
+        )
+    }
+
+    private fun getStock(page: Int, rating_change: Int) {
         getStockUseCase(
+            page = page,
             rating_change = rating_change
         ).onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _state.value = StockListState(
-                        isRefreshing = false,
-                        stock = result.data ?: emptyList()
-                    )
+                    val newData = result.data ?: emptyList()
+                    val oldList = _state.value.stock
+
+                    // If load more data
+                    if (_state.value.isLoading) {
+
+                        val appendedList = oldList + newData
+
+                        _state.value = StockListState(
+                            isRefreshing = false,
+                            isLoading = false,
+                            stock = appendedList
+                        )
+                    // If load first time/refresh/change rating
+                    } else {
+                        _state.value = StockListState(
+                            isRefreshing = false,
+                            isLoading = false,
+                            stock = newData
+                        )
+                    }
                 }
+
                 is Resource.Error -> {
                     _state.value = StockListState(
                         isRefreshing = false,
