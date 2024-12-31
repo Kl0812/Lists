@@ -14,9 +14,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.research_center.listUtils.ReusableLazyColumn
 import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.stock_list.components.StockListItem
-import com.example.research_center.presentation.stock_list.components.StockListLazyColumn
 import com.example.research_center.presentation.stock_list.components.StockListMenu
 
 @Composable
@@ -49,7 +49,7 @@ fun StockListScreen(
         Box(modifier = Modifier
             .fillMaxWidth()
         ) {
-            StockListLazyColumn(
+            ReusableLazyColumn(
                 items = state.stock,
                 isRefreshing = state.isRefreshing,
                 refresh = { viewModel.refresh() },

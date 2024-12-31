@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.stock_list.components
+package com.example.research_center.listUtils
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,9 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
+/*
+* This function is used to display a lazy column,
+* with pull to refresh and load more function
+* */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T> StockListLazyColumn(
+fun <T> ReusableLazyColumn(
     items: List<T>,
     content: @Composable (T) -> Unit,
     isRefreshing: Boolean,
