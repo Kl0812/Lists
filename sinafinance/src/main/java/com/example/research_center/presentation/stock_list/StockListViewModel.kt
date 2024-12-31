@@ -36,7 +36,7 @@ class StockListViewModel @Inject constructor(
         )
     }
 
-    fun ratingChangeStocks(rating_change: Int) {
+    fun ratingChange(rating_change: Int) {
         currentRatingChange = rating_change
         currentPage = 1
 

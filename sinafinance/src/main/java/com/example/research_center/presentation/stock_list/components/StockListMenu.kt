@@ -37,8 +37,7 @@ import com.example.lists.R
 @Composable
 fun StockListMenu(
     onMenuSelected: (String) -> Unit,
-    currentRating: Int,
-    modifier: Modifier = Modifier
+    currentRating: Int
 ) {
     var isDropDownExpanded by remember { mutableStateOf(false) }
     val currentMenuText = remember(currentRating) {
@@ -62,7 +61,7 @@ fun StockListMenu(
         ) {
             Text(
                 text = "近三月行业研报情况",
-                fontSize = 16.sp
+                fontSize = 15.sp
             )
 
             Box(
@@ -76,7 +75,7 @@ fun StockListMenu(
                 ) {
                     Text(
                         text = "评级变动：$currentMenuText",
-                        fontSize = 16.sp,
+                        fontSize = 13.sp,
                         color = Color.Gray
                     )
                     Spacer(modifier = Modifier.width(4.dp))

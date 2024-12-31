@@ -34,7 +34,7 @@ fun StockListScreen(
             "首次" -> 4
             else -> 0
         }
-        viewModel.ratingChangeStocks(rating_change = rating_change)
+        viewModel.ratingChange(rating_change = rating_change)
     }
 
     Column(

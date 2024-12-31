@@ -22,12 +22,55 @@ class QsListViewModel @Inject constructor(
     private val _state = mutableStateOf(QsListState())
     val state: State<QsListState> = _state
 
+    // Get data by date
+    var currentDateType = 1
+        private set
+
+    var currentPage = 1
+        private set
+
+    var currentIsTop = 0
+        private set
+
     init {
-        getQs()
+        getQs(
+            page = currentPage,
+            date_type = currentDateType,
+            is_top = currentIsTop
+        )
     }
 
-    private fun getQs() {
-        getQsUseCase().onEach { result ->
+    fun dateType(date_type: Int) {
+        currentDateType = date_type
+        currentPage = 1
+
+        getQs(
+            page = currentPage,
+            date_type = currentDateType,
+            is_top = currentIsTop
+        )
+    }
+
+    fun isTop(checkTop: Boolean) {
+        currentIsTop = if(checkTop) 1 else 0
+
+        getQs(
+            page = currentPage,
+            date_type = currentDateType,
+            is_top = currentIsTop
+        )
+    }
+
+    private fun getQs(
+        page: Int,
+        date_type: Int,
+        is_top: Int
+    ) {
+        getQsUseCase(
+            page = page,
+            date_type = date_type,
+            is_top = is_top
+        ).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _state.value = QsListState(

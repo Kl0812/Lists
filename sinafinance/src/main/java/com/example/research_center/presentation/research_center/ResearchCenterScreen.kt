@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.research_center.listUtils.CustomTopBar
 import com.example.research_center.presentation.TestScreen
+import com.example.research_center.presentation.qs_list.QsListScreen
 import com.example.research_center.presentation.research_center.components.SubPage
 import com.example.research_center.presentation.stock_list.StockListScreen
 
@@ -97,7 +98,7 @@ fun ResearchCenterScreen(
                 when (page) {
                     0 -> TestScreen()
                     1 -> StockListScreen(navController)
-                    2 -> TestScreen()
+                    2 -> QsListScreen(navController)
                 }
             }
         }

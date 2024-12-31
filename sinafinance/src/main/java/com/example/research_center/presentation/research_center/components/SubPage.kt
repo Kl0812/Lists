@@ -44,10 +44,10 @@ fun SubPage(
         )
         Box(
             modifier = Modifier
-                .height(2.dp)
-                .width(30.dp)
+                .height(3.dp)
+                .width(50.dp)
                 .background(
-                    if (currentPage == myPage) Color.Blue else Color.Transparent
+                    if (currentPage == myPage) Color(0xFF036BFC) else Color.Transparent
                 )
         )
     }
