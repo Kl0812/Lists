@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.research_center.presentation.qs_list.components.QsListMenu
+import com.example.research_center.presentation.qs_list.components.QsListStickyHeader
 
 @Composable
 fun QsListScreen(
@@ -39,6 +40,15 @@ fun QsListScreen(
             isChecked = isTopChecked,
             onCheckedChange = { newChecked ->
                 viewModel.isTop(newChecked)
+            }
+        )
+
+        QsListStickyHeader(
+            currentSortCol = viewModel.currentSortCol,
+            currentSortType = viewModel.currentSortType,
+            hasManualSort = viewModel.hasManualSort,
+            onSortChanged = { col, typeOrNone ->
+                viewModel.setSort(col, typeOrNone)
             }
         )
 

@@ -30,6 +30,11 @@ class StockListViewModel @Inject constructor(
         private set
 
     init {
+        _state.value = _state.value.copy(
+            isRefreshing = true,
+            isLoading = false
+        )
+
         getStock(
             page = currentPage,
             rating_change = currentRatingChange
