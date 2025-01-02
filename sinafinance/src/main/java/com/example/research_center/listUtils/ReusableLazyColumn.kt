@@ -1,5 +1,6 @@
 package com.example.research_center.listUtils
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,13 +46,16 @@ fun <T> ReusableLazyColumn(
         ) {
             items(items.size) { index ->
                 content(items[index])
-                if (index == items.lastIndex) {
-                    loadMore()
+                if (items.size == 20) {
+                    if (index == items.lastIndex) {
+                        loadMore()
+                    }
                 }
             }
 
             // Footer
             item {
+                Log.d("Footer", "Footer: items.size = ${items.size}")
                 // If There's more data and not refreshing
                 if (items.size % 20 == 0) {
                     if (!isRefreshing) {

@@ -14,8 +14,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.research_center.listUtils.ReusableLazyColumn
+import com.example.research_center.presentation.Screen
+import com.example.research_center.presentation.qs_list.components.QsListItem
 import com.example.research_center.presentation.qs_list.components.QsListMenu
 import com.example.research_center.presentation.qs_list.components.QsListStickyHeader
+import com.example.research_center.presentation.stock_list.components.StockListItem
 
 @Composable
 fun QsListScreen(
@@ -46,7 +50,6 @@ fun QsListScreen(
         QsListStickyHeader(
             currentSortCol = viewModel.currentSortCol,
             currentSortType = viewModel.currentSortType,
-            hasManualSort = viewModel.hasManualSort,
             onSortChanged = { col, typeOrNone ->
                 viewModel.setSort(col, typeOrNone)
             }
@@ -55,7 +58,22 @@ fun QsListScreen(
         Box(modifier = Modifier
             .fillMaxWidth()
         ) {
-            // TODO ReusableLazyColumn()
+            ReusableLazyColumn(
+                items = state.qs,
+                isRefreshing = state.isRefreshing, // or whatever
+                refresh = { viewModel.refresh() },
+                loadMore = { viewModel.loadMore() },
+                content = { qs ->
+                    QsListItem(
+                        qs = qs,
+                        onItemClick = {
+                            navController.navigate(
+                                Screen.QsSymbolScreen.route + "/${qs.code}"
+                            )
+                        }
+                    )
+                }
+            )
 
             if (state.error.isNotBlank()) {
                 Text(

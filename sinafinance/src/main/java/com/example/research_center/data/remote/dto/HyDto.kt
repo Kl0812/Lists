@@ -4,7 +4,7 @@ import com.example.research_center.domain.model.Hy
 
 data class HyDto(
     val code: String,
-    val `data`: List<Data>,
+    val `data`: List<Data>?,
     val err: String,
     val msg: String
 ) {
@@ -23,7 +23,7 @@ data class HyDto(
 }
 
 fun HyDto.toHy(): List<Hy> {
-    return data.map { item ->
+    return data?.map { item ->
         Hy(
             name = item.name,
             code = item.code,
@@ -31,5 +31,5 @@ fun HyDto.toHy(): List<Hy> {
             symbol_name = item.symbol_name,
             symbol_num = item.symbol_num.toInt()
         )
-    }
+    } ?: emptyList()
 }

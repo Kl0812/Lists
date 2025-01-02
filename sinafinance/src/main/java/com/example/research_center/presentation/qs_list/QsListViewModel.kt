@@ -33,16 +33,18 @@ class QsListViewModel @Inject constructor(
     var currentIsTop = 0
         private set
 
-    var currentSortCol = "num"
+    var currentSortCol = ""
         private set
 
-    var currentSortType = 0
-        private set
-
-    var hasManualSort = false
+    var currentSortType = -1
         private set
 
     init {
+        _state.value = _state.value.copy(
+            isRefreshing = true,
+            isLoading = false
+        )
+
         getQs(
             page = currentPage,
             date_type = currentDateType,
@@ -67,6 +69,7 @@ class QsListViewModel @Inject constructor(
 
     fun isTop(checkTop: Boolean) {
         currentIsTop = if(checkTop) 1 else 0
+        currentPage = 1
 
         getQs(
             page = currentPage,
@@ -78,16 +81,43 @@ class QsListViewModel @Inject constructor(
     }
 
     fun setSort(col: String, typeOrNone: Int) {
-        Log.d("QsListViewModel", "request => typeOrNone=$typeOrNone ")
-        hasManualSort = true
-        if (typeOrNone == -1) {
-            hasManualSort = false
-            currentSortCol = "num"
-            currentSortType = 0
-        } else {
-            currentSortCol = col
-            currentSortType = typeOrNone
-        }
+        currentPage = 1
+
+        currentSortCol = col
+        currentSortType = typeOrNone
+
+        getQs(
+            page = currentPage,
+            date_type = currentDateType,
+            is_top = currentIsTop,
+            sort_type = currentSortType,
+            sort_col = currentSortCol
+        )
+    }
+
+    fun refresh(){
+        _state.value = _state.value.copy(
+            isRefreshing = true,
+            isLoading = false
+        )
+        currentPage = 1
+
+        getQs(
+            page = currentPage,
+            date_type = currentDateType,
+            is_top = currentIsTop,
+            sort_type = currentSortType,
+            sort_col = currentSortCol
+        )
+    }
+
+    fun loadMore() {
+        if (_state.value.isLoading) return
+        _state.value = _state.value.copy(
+            isRefreshing = false,
+            isLoading = true
+        )
+        currentPage += 1
 
         getQs(
             page = currentPage,
@@ -105,10 +135,6 @@ class QsListViewModel @Inject constructor(
         sort_type: Int,
         sort_col: String
     ) {
-        Log.d("QsListViewModel", "request => date_type=$date_type ")
-        Log.d("QsListViewModel", "request => is_top=$is_top")
-        Log.d("QsListViewModel", "request => sort_type=$sort_type")
-        Log.d("QsListViewModel", "request => sort_col=$sort_col")
         getQsUseCase(
             page = page,
             date_type = date_type,
@@ -118,17 +144,36 @@ class QsListViewModel @Inject constructor(
         ).onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _state.value = QsListState(
-                        qs = result.data ?: emptyList()
-                    )
+                    val newData = result.data ?: emptyList()
+                    val oldList = _state.value.qs
+
+                    // If load more data
+                    if (_state.value.isLoading) {
+
+                        val appendedList = oldList + newData
+
+                        _state.value = QsListState(
+                            isRefreshing = false,
+                            isLoading = false,
+                            qs = appendedList
+                        )
+                        // If load first time/refresh/change rating
+                    } else {
+                        _state.value = QsListState(
+                            isRefreshing = false,
+                            isLoading = false,
+                            qs = newData
+                        )
+                    }
                 }
                 is Resource.Error -> {
                     _state.value = QsListState(
+                        isRefreshing = false,
                         error = result.message ?: "Unknown Error"
                     )
                 }
                 is Resource.Loading -> {
-                    _state.value = QsListState(isLoading = true)
+                    // TODO: Nothing todo here right now
                 }
             }
         }.launchIn(viewModelScope)

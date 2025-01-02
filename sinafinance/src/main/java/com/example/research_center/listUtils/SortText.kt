@@ -1,6 +1,7 @@
 package com.example.research_center.listUtils
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,41 +33,28 @@ fun SortText(
     isSelected: Boolean,
     currentSortType: Int,
     sortCol: String,
-    hasManualSort: Boolean,
     onSortChanged: (sortCol: String, sortTypeOrNone: Int) -> Unit
 ) {
 
     // Check sort state by checking if this sort
     // text is selected and current sort type
-    val sortState = remember(isSelected, currentSortType, hasManualSort) {
-        if (!hasManualSort) {
-            0
-        } else {
-            if (!isSelected) 0
-            else {
-                // if isSelected=true, sort_type=0 => desc => state=1
-                // if isSelected=true, sort_type=1 => asc => state=2
-                when (currentSortType) {
-                    0 -> 1 // desc
-                    1 -> 2 // asc
-                    else -> 0
-                }
+    val sortState = remember(isSelected, currentSortType) {
+        if (!isSelected) 0
+        else {
+            // if isSelected=true, sort_type=0 => desc => state=1
+            // if isSelected=true, sort_type=1 => asc => state=2
+            when (currentSortType) {
+                0 -> 1 // desc
+                1 -> 2 // asc
+                else -> 0
             }
         }
     }
 
     // Arrow color
-    val arrowDownColor = if (!hasManualSort) {
-        Color.Gray
-    } else {
-        if (sortState == 1) Color(0xFF036BFC) else Color.Gray
-    }
+    val arrowDownColor =  if (sortState == 1) Color(0xFF036BFC) else Color.Gray
 
-    val arrowUpColor = if (!hasManualSort) {
-        Color.Gray
-    } else {
-        if (sortState == 2) Color(0xFF036BFC) else Color.Gray
-    }
+    val arrowUpColor = if (sortState == 2) Color(0xFF036BFC) else Color.Gray
 
     // Set text size and get the height to dp
     // Current arrow icon is not really good,
@@ -75,27 +63,20 @@ fun SortText(
     val textSize = 12.sp
     val textHeightDp = with(LocalDensity.current) { textSize.toDp() } + 12.dp
 
+    val onClick = {
+        val newState = (sortState + 1) % 3
+        val newTypeOrNone = when(newState) {
+            1 -> 0 // desc
+            2 -> 1 // asc
+            else -> -1 // none
+        }
+        onSortChanged(sortCol, newTypeOrNone)
+    }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .clickable {
-                // 循环: 0(none)->1(desc)->2(asc)->0(none)...
-                val newState = (sortState + 1) % 3
-                when (newState) {
-                    1 -> {
-                        // desc => sort_type=0
-                        onSortChanged(sortCol, 0)
-                    }
-                    2 -> {
-                        // asc => sort_type=1
-                        onSortChanged(sortCol, 1)
-                    }
-                    else -> {
-                        // none => sort_typeOrNone=-1 表示清除
-                        onSortChanged(sortCol, -1)
-                    }
-                }
-            }
+            .clickable { onClick() }
     ) {
         // Text
         Text(
@@ -143,7 +124,6 @@ fun SortTextPreview() {
         isSelected = true,
         currentSortType = 1,
         sortCol = "num",
-        hasManualSort = false,
         onSortChanged = { _, _ -> }
     )
 }

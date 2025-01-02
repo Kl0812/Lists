@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +25,6 @@ import com.example.research_center.listUtils.SortText
 fun QsListStickyHeader(
     currentSortCol: String,
     currentSortType: Int,
-    hasManualSort: Boolean,
     onSortChanged: (String, Int) -> Unit
 ) {
     Row(
@@ -39,35 +39,34 @@ fun QsListStickyHeader(
         Text(
             text = "券商机构",
             color = Color.Gray,
-            fontSize = 12.sp
+            fontSize = 12.sp,
+            modifier = Modifier.weight(1f),
         )
 
-        // 右侧: 两个排序文本
-        Row(
-            modifier = Modifier
-                .wrapContentSize()
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterEnd
         ) {
-            // 1) 研报数量 => sort_col = "num"
             SortText(
                 label = "研报数量",
-                isSelected = (currentSortCol == "num"),
+                isSelected = (currentSortCol == "num" && currentSortType != -1),
                 currentSortType = currentSortType,
                 sortCol = "num",
-                hasManualSort = hasManualSort,
                 onSortChanged = { col, typeOrNone ->
                     onSortChanged(col, typeOrNone)
                 }
             )
+        }
 
-            Spacer(modifier = Modifier.width(16.dp))
-
-            // 2) 推荐股票平均涨幅 => sort_col = "percent"
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterEnd
+        ) {
             SortText(
                 label = "推荐股票平均涨幅",
-                isSelected = (currentSortCol == "percent"),
+                isSelected = (currentSortCol == "percent" && currentSortType != -1),
                 currentSortType = currentSortType,
                 sortCol = "percent",
-                hasManualSort = hasManualSort,
                 onSortChanged = { col, typeOrNone ->
                     onSortChanged(col, typeOrNone)
                 }
@@ -86,7 +85,6 @@ fun QsListStickHeaderPreview() {
     QsListStickyHeader(
         currentSortCol = "percent",
         currentSortType = 1,
-        hasManualSort = false,
         onSortChanged = { _, _ -> }
     )
 }

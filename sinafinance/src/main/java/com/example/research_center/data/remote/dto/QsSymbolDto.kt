@@ -4,7 +4,7 @@ import com.example.research_center.domain.model.QsSymbol
 
 data class QsSymbolDto(
     val code: String,
-    val `data`: List<Data>,
+    val `data`: List<Data>?,
     val err: String,
     val msg: String
 ) {
@@ -21,11 +21,11 @@ data class QsSymbolDto(
 }
 
 fun QsSymbolDto.toQsSymbol(): List<QsSymbol> {
-    return data.map { item ->
+    return data?.map { item ->
         QsSymbol(
             name = item.name,
             date = item.date,
             percent = item.percent.toFloat()
         )
-    }
+    } ?: emptyList()
 }

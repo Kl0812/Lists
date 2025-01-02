@@ -18,41 +18,53 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.research_center.domain.model.Qs
 import com.example.research_center.domain.model.Stock
 import com.example.research_center.listUtils.ShowDate
 
 @SuppressLint("NewApi")
 @Composable
-fun StockListItem(
-    stock: Stock,
-    onItemClick: (Stock) -> Unit
+fun QsListItem(
+    qs: Qs,
+    onItemClick: (Qs) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onItemClick(stock)
+                onItemClick(qs)
             }
             .padding(top = 12.dp, start = 16.dp, end = 16.dp)
     ) {
-        Text(
-            text = stock.title,
-            fontSize = 16.sp,
-        )
-
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
 
             Text(
-                text = stock.orgname,
-                fontSize = 12.sp,
-                color = Color.Gray,
-                textAlign = TextAlign.Center
+                text = qs.name,
+                fontSize = 16.sp,
+                modifier = Modifier.weight(1f),
             )
 
-            ShowDate(stock.adddate)
+            Text(
+                text = qs.num.toString(),
+                fontSize = 16.sp,
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.End,
+                color = Color(0xFF036BFC)
+            )
+
+            Text(
+                text = "${qs.percent}%",
+                fontSize = 16.sp,
+                color = if(qs.percent > 0) Color.Red
+                    else if(qs.percent == 0f) Color.Gray
+                    else Color(0xFF31AB1C),
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.End
+            )
+
         }
 
         HorizontalDivider(
@@ -67,21 +79,20 @@ fun StockListItem(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(
-    name = "StockListItem Preview",
+    name = "QsListItem Preview",
     showBackground = true
 )
 @Composable
-fun StockListItemPreview() {
-    val sampleStock = Stock(
-        adddate = "2024-12-26 00:00:00",
-        orgname = "东吴证券",
-        report_id = "788525455904",
-        title = "宇邦新材(301266)：焊带加工费下滑短期承压 BC新品有望结构性改善盈利"
+fun QsListItemPreview() {
+    val sampleQs = Qs(
+        name = "东吴证券",
+        num = 33,
+        percent = 2.44f,
+        code = "DW100"
     )
 
-    // 当预览时，onItemClick可以使用空的lambda
-    StockListItem(
-        stock = sampleStock,
+    QsListItem(
+        qs = sampleQs,
         onItemClick = {}
     )
 }

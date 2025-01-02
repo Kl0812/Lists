@@ -4,7 +4,7 @@ import com.example.research_center.domain.model.Qs
 
 data class QsDto(
     val code: String,
-    val `data`: List<Data>,
+    val `data`: List<Data>?,
     val err: String,
     val msg: String
 ) {
@@ -20,12 +20,12 @@ data class QsDto(
 }
 
 fun QsDto.toQs(): List<Qs> {
-    return data.map { item ->
+    return data?.map { item ->
         Qs(
             name = item.name,
             percent = item.percent.toFloat(),
             num = item.num.toInt(),
             code = item.code
         )
-    }
+    } ?: emptyList()
 }
