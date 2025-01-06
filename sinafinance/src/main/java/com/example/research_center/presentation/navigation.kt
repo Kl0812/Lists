@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.research_center.presentation.qs_symbol_list.QsSymbolListScreen
 import com.example.research_center.presentation.research_center.ResearchCenterScreen
 import com.example.research_center.presentation.stock_detail.StockDetailScreen
 
@@ -26,7 +27,7 @@ fun AppNavHost(
         exitTransition = { ExitTransition.None }
     ) {
         composable(
-            route = Screen.ResearchCenterScreen.route
+            route = Screen.ResearchCenterScreen.route,
         ) {
             ResearchCenterScreen(navController)
         }
@@ -47,6 +48,24 @@ fun AppNavHost(
             }
         ) {
             StockDetailScreen(navController)
+        }
+
+        composable(
+            route = Screen.QsSymbolScreen.route + "/{qs_code}",
+            enterTransition = {
+                slideIntoContainer(
+                    animationSpec = tween(300, easing = EaseIn),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Start
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    animationSpec = tween(300, easing = EaseOut),
+                    towards = AnimatedContentTransitionScope.SlideDirection.End
+                )
+            }
+        ) {
+            QsSymbolListScreen(navController)
         }
     }
 }
