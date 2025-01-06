@@ -1,5 +1,6 @@
 package com.example.research_center.presentation.stock_list
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -65,6 +66,9 @@ class StockListViewModel @Inject constructor(
     }
 
     fun loadMore() {
+
+        if (_state.value.isLoading || _state.value.isEndReached) return
+
         if (_state.value.isLoading) return
         _state.value = _state.value.copy(
             isRefreshing = false,
@@ -88,22 +92,28 @@ class StockListViewModel @Inject constructor(
                     val newData = result.data ?: emptyList()
                     val oldList = _state.value.stock
 
+                    if (newData.size < 20) {
+                        _state.value = _state.value.copy(
+                            isEndReached = true
+                        )
+                    }
+
                     // If load more data
                     if (_state.value.isLoading) {
-
                         val appendedList = oldList + newData
-
-                        _state.value = StockListState(
+                        _state.value = _state.value.copy(
                             isRefreshing = false,
                             isLoading = false,
-                            stock = appendedList
+                            stock = appendedList,
+                            isEndReached = _state.value.isEndReached || (newData.size < 20)
                         )
                     // If load first time/refresh/change rating
                     } else {
-                        _state.value = StockListState(
+                        _state.value = _state.value.copy(
                             isRefreshing = false,
                             isLoading = false,
-                            stock = newData
+                            stock = newData,
+                            isEndReached = (newData.size < 20)
                         )
                     }
                 }

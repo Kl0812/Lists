@@ -52,6 +52,7 @@ fun StockListScreen(
             ReusableLazyColumn(
                 items = state.stock,
                 isRefreshing = state.isRefreshing,
+                isEndReached = state.isEndReached,
                 refresh = { viewModel.refresh() },
                 loadMore = { viewModel.loadMore() },
                 content = { stock ->

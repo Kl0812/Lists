@@ -27,6 +27,7 @@ fun <T> ReusableLazyColumn(
     items: List<T>,
     content: @Composable (T) -> Unit,
     isRefreshing: Boolean,
+    isEndReached: Boolean,
     refresh: () -> Unit,
     loadMore: () -> Unit,
     modifier: Modifier = Modifier,
@@ -46,24 +47,20 @@ fun <T> ReusableLazyColumn(
         ) {
             items(items.size) { index ->
                 content(items[index])
-                if (items.size == 20) {
-                    if (index == items.lastIndex) {
-                        loadMore()
-                    }
+                if (!isEndReached && index == items.lastIndex) {
+                    loadMore()
                 }
             }
 
             // Footer
             item {
                 // If There's more data and not refreshing
-                if (items.size % 20 == 0) {
-                    if (!isRefreshing) {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
+                if (!isEndReached && !isRefreshing) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
                     }
                 // If no more data
                 } else {

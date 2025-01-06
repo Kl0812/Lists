@@ -112,7 +112,9 @@ class QsListViewModel @Inject constructor(
     }
 
     fun loadMore() {
-        if (_state.value.isLoading) return
+
+        if (_state.value.isLoading || _state.value.isEndReached) return
+
         _state.value = _state.value.copy(
             isRefreshing = false,
             isLoading = true
@@ -147,22 +149,28 @@ class QsListViewModel @Inject constructor(
                     val newData = result.data ?: emptyList()
                     val oldList = _state.value.qs
 
+                    if (newData.size < 20) {
+                        _state.value = _state.value.copy(
+                            isEndReached = true
+                        )
+                    }
+
                     // If load more data
                     if (_state.value.isLoading) {
-
                         val appendedList = oldList + newData
-
-                        _state.value = QsListState(
+                        _state.value = _state.value.copy(
                             isRefreshing = false,
                             isLoading = false,
-                            qs = appendedList
+                            qs = appendedList,
+                            isEndReached = _state.value.isEndReached || (newData.size < 20)
                         )
-                        // If load first time/refresh/change rating
+                    // If load first time/refresh/change rating
                     } else {
-                        _state.value = QsListState(
+                        _state.value = _state.value.copy(
                             isRefreshing = false,
                             isLoading = false,
-                            qs = newData
+                            qs = newData,
+                            isEndReached = (newData.size < 20)
                         )
                     }
                 }

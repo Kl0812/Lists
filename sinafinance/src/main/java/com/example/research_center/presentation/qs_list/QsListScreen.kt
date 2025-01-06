@@ -60,6 +60,7 @@ fun QsListScreen(
             ReusableLazyColumn(
                 items = state.qs,
                 isRefreshing = state.isRefreshing, // or whatever
+                isEndReached = state.isEndReached,
                 refresh = { viewModel.refresh() },
                 loadMore = { viewModel.loadMore() },
                 content = { qs ->
