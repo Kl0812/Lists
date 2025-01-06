@@ -31,7 +31,6 @@ fun QsListScreen(
     val dateType = viewModel.currentDateType
     val isTopChecked = (viewModel.currentIsTop == 1)
 
-
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -48,8 +47,8 @@ fun QsListScreen(
         )
 
         QsListStickyHeader(
-            currentSortCol = viewModel.currentSortCol,
-            currentSortType = viewModel.currentSortType,
+            currentSortCol = viewModel.currentSortCol.value,
+            currentSortType = viewModel.currentSortType.value,
             onSortChanged = { col, typeOrNone ->
                 viewModel.setSort(col, typeOrNone)
             }

@@ -33,11 +33,11 @@ class QsListViewModel @Inject constructor(
     var currentIsTop = 0
         private set
 
-    var currentSortCol = ""
-        private set
+    private val _currentSortCol = mutableStateOf("")
+    val currentSortCol: State<String> = _currentSortCol
 
-    var currentSortType = -1
-        private set
+    private val _currentSortType = mutableStateOf(-1)
+    val currentSortType: State<Int> = _currentSortType
 
     init {
         _state.value = _state.value.copy(
@@ -49,8 +49,8 @@ class QsListViewModel @Inject constructor(
             page = currentPage,
             date_type = currentDateType,
             is_top = currentIsTop,
-            sort_type = currentSortType,
-            sort_col = currentSortCol
+            sort_type = currentSortType.value,
+            sort_col = currentSortCol.value
         )
     }
 
@@ -62,8 +62,8 @@ class QsListViewModel @Inject constructor(
             page = currentPage,
             date_type = currentDateType,
             is_top = currentIsTop,
-            sort_type = currentSortType,
-            sort_col = currentSortCol
+            sort_type = currentSortType.value,
+            sort_col = currentSortCol.value
         )
     }
 
@@ -75,23 +75,23 @@ class QsListViewModel @Inject constructor(
             page = currentPage,
             date_type = currentDateType,
             is_top = currentIsTop,
-            sort_type = currentSortType,
-            sort_col = currentSortCol
+            sort_type = currentSortType.value,
+            sort_col = currentSortCol.value
         )
     }
 
     fun setSort(col: String, typeOrNone: Int) {
         currentPage = 1
 
-        currentSortCol = col
-        currentSortType = typeOrNone
+        _currentSortCol.value = col
+        _currentSortType.value = typeOrNone
 
         getQs(
             page = currentPage,
             date_type = currentDateType,
             is_top = currentIsTop,
-            sort_type = currentSortType,
-            sort_col = currentSortCol
+            sort_type = currentSortType.value,
+            sort_col = currentSortCol.value
         )
     }
 
@@ -106,8 +106,8 @@ class QsListViewModel @Inject constructor(
             page = currentPage,
             date_type = currentDateType,
             is_top = currentIsTop,
-            sort_type = currentSortType,
-            sort_col = currentSortCol
+            sort_type = currentSortType.value,
+            sort_col = currentSortCol.value
         )
     }
 
@@ -123,8 +123,8 @@ class QsListViewModel @Inject constructor(
             page = currentPage,
             date_type = currentDateType,
             is_top = currentIsTop,
-            sort_type = currentSortType,
-            sort_col = currentSortCol
+            sort_type = currentSortType.value,
+            sort_col = currentSortCol.value
         )
     }
 

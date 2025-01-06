@@ -55,7 +55,6 @@ fun <T> ReusableLazyColumn(
 
             // Footer
             item {
-                Log.d("Footer", "Footer: items.size = ${items.size}")
                 // If There's more data and not refreshing
                 if (items.size % 20 == 0) {
                     if (!isRefreshing) {

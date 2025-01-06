@@ -1,5 +1,6 @@
 package com.example.research_center.listUtils
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -15,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lists.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun SortText(
     label: String,
@@ -38,16 +40,13 @@ fun SortText(
 
     // Check sort state by checking if this sort
     // text is selected and current sort type
-    val sortState = remember(isSelected, currentSortType) {
-        if (!isSelected) 0
-        else {
-            // if isSelected=true, sort_type=0 => desc => state=1
-            // if isSelected=true, sort_type=1 => asc => state=2
-            when (currentSortType) {
-                0 -> 1 // desc
-                1 -> 2 // asc
-                else -> 0
-            }
+    val sortState = if (!isSelected) {
+        0
+    } else {
+        when (currentSortType) {
+            0 -> 1 // desc
+            1 -> 2 // asc
+            else -> 0
         }
     }
 
@@ -70,7 +69,10 @@ fun SortText(
             2 -> 1 // asc
             else -> -1 // none
         }
-        onSortChanged(sortCol, newTypeOrNone)
+
+        val newSortCol = if (newState == 0) "" else sortCol
+
+        onSortChanged(newSortCol, newTypeOrNone)
     }
 
     Row(
