@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.qs_list.components
+package com.example.research_center.presentation.qs_symbol_list.components
 
 import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
@@ -20,20 +20,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.research_center.domain.model.Qs
+import com.example.research_center.domain.model.QsSymbol
 import com.example.research_center.domain.model.Stock
 import com.example.research_center.listUtils.ShowDate
 
 @SuppressLint("NewApi")
 @Composable
-fun QsListItem(
-    qs: Qs,
-    onItemClick: (Qs) -> Unit
+fun QsSymbolListItem(
+    qsSymbol: QsSymbol,
+    onItemClick: (QsSymbol) -> Unit
 ) {
     // Transform digital format
     val decimalFormat = DecimalFormat("0.00")
-    val percentValue = decimalFormat.format(qs.percent)
+    val percentValue = decimalFormat.format(qsSymbol.percent)
     val prefix = when {
-        qs.percent > 0 -> "+"
+        qsSymbol.percent > 0 -> "+"
         else -> ""
     }
 
@@ -41,7 +42,7 @@ fun QsListItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onItemClick(qs)
+                onItemClick(qsSymbol)
             }
             .padding(top = 12.dp, start = 16.dp, end = 16.dp)
     ) {
@@ -51,24 +52,24 @@ fun QsListItem(
         ) {
 
             Text(
-                text = qs.name,
+                text = qsSymbol.name,
                 fontSize = 16.sp,
                 modifier = Modifier.weight(1f),
             )
 
             Text(
-                text = qs.num.toString(),
+                text = qsSymbol.date,
                 fontSize = 16.sp,
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
-                color = Color(0xFF036BFC)
+                color = Color.Black
             )
 
             Text(
                 text = "$prefix$percentValue%",
                 fontSize = 16.sp,
-                color = if(qs.percent > 0) Color.Red
-                    else if(qs.percent == 0f) Color.Gray
+                color = if(qsSymbol.percent > 0) Color.Red
+                    else if(qsSymbol.percent == 0f) Color.Gray
                     else Color(0xFF31AB1C),
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End
@@ -92,16 +93,15 @@ fun QsListItem(
     showBackground = true
 )
 @Composable
-fun QsListItemPreview() {
-    val sampleQs = Qs(
-        name = "东吴证券",
-        num = 33,
-        percent = 2.44f,
-        code = "DW100"
+fun QsSymbolListItemPreview() {
+    val sampleQsSymbol = QsSymbol(
+        name = "聚灿光电",
+        date = "2025-01-01",
+        percent = 0f,
     )
 
-    QsListItem(
-        qs = sampleQs,
+    QsSymbolListItem(
+        qsSymbol = sampleQsSymbol,
         onItemClick = {}
     )
 }
