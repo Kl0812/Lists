@@ -1,9 +1,12 @@
 package com.example.research_center.presentation.qs_symbol_list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -20,9 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.research_center.listUtils.CustomTopBar
-import com.example.research_center.listUtils.DateTypeSelector
-import com.example.research_center.presentation.qs_symbol_list.components.QsSymbolListSection
-import com.example.research_center.presentation.qs_symbol_list.components.StockListSection
+import com.example.research_center.presentation.qs_symbol_list.components.header.DateTypeHeaderSection
+import com.example.research_center.presentation.qs_symbol_list.components.recent_cover.QsSymbolListSection
+import com.example.research_center.presentation.qs_symbol_list.components.report_list.StockListSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +38,7 @@ fun QsSymbolListScreen(
     val qsName = "东吴证券" // TODO: 替换为真实名称
 
     val pullToRefreshState = rememberPullToRefreshState()
+    val dateType = viewModel.currentDateType
 
     Scaffold(
         containerColor = Color.White,
@@ -66,17 +70,31 @@ fun QsSymbolListScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
 
-                    DateTypeSelector(
-                        currentDateType = viewModel.currentDateType,
+                    DateTypeHeaderSection(
+                        currentDateType = dateType,
                         onDateTypeSelected = { newType ->
-                            // TODO
+                            viewModel.dateType(newType)
                         }
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(12.dp)
+                            .background(Color(0xFFF0F0F0))
                     )
 
                     // 近期覆盖股票
                     QsSymbolListSection(
                         qsName = qsName, // TODO
                         viewModel = viewModel
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(12.dp)
+                            .background(Color(0xFFF0F0F0))
                     )
 
                     // 研报列表

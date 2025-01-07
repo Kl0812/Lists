@@ -37,13 +37,14 @@ class QsSymbolListViewModel @Inject constructor(
     private val _currentSortType = mutableStateOf(-1)
     val currentSortType: State<Int> = _currentSortType
 
+    private val qs_code = savedStateHandle.get<String>(Constants.QS_CODE)
+
     init {
         _state.value = _state.value.copy(
             isRefreshing = true,
             isLoading = false
         )
 
-        val qs_code = savedStateHandle.get<String>(Constants.QS_CODE)
         if(qs_code != null) {
             getQsSymbol(qs_code)
         } else {
@@ -69,6 +70,17 @@ class QsSymbolListViewModel @Inject constructor(
 
         // TODO
 
+    }
+
+    fun dateType(date_type: Int) {
+        currentDateType = date_type
+        currentPage = 1
+
+        if(qs_code != null) {
+            getQsSymbol(qs_code)
+        } else {
+            _state.value = QsSymbolListState(error="qs_code is null")
+        }
     }
 
     private fun getQsSymbol(qs_code: String) {

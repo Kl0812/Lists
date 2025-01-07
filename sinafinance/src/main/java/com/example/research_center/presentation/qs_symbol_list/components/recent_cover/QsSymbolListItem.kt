@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.qs_symbol_list.components
+package com.example.research_center.presentation.qs_symbol_list.components.recent_cover
 
 import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
@@ -19,10 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.research_center.domain.model.Qs
 import com.example.research_center.domain.model.QsSymbol
-import com.example.research_center.domain.model.Stock
-import com.example.research_center.listUtils.ShowDate
 
 @SuppressLint("NewApi")
 @Composable
@@ -82,7 +79,6 @@ fun QsSymbolListItem(
             color = Color.Gray,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp)
         )
     }
 }

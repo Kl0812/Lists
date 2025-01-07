@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.qs_symbol_list.components
+package com.example.research_center.presentation.qs_symbol_list.components.recent_cover
 
 import android.os.Build
 import androidx.annotation.RequiresApi
