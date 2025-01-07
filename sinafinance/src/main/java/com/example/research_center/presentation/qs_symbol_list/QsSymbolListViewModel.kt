@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.research_center.common.Constants
 import com.example.research_center.common.Resource
 import com.example.research_center.domain.use_case.get_qsSymbol.GetQsSymbolUseCase
+import com.example.research_center.domain.use_case.get_stock.GetStockUseCase
+import com.example.research_center.presentation.stock_list.StockListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -19,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QsSymbolListViewModel @Inject constructor(
     private val getQsSymbolUseCase: GetQsSymbolUseCase,
+    private val getStockUseCase: GetStockUseCase,
     savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
@@ -26,6 +29,9 @@ class QsSymbolListViewModel @Inject constructor(
     val state: State<QsSymbolListState> = _state
 
     var currentDateType = 1
+        private set
+
+    var currentPage = 1
         private set
 
     private val _currentSortCol = mutableStateOf("")
@@ -56,6 +62,15 @@ class QsSymbolListViewModel @Inject constructor(
         } else {
             _state.value = QsSymbolListState(error="qs_code is null")
         }
+
+        if(qs_code != null) {
+            getStock(
+                qs_code = qs_code,
+                page = currentPage
+            )
+        } else {
+            _state.value = QsSymbolListState(error="qs_code is null")
+        }
     }
 
     fun refresh(){
@@ -63,6 +78,7 @@ class QsSymbolListViewModel @Inject constructor(
             isRefreshing = true,
             isLoading = false
         )
+        currentPage = 1
 
         if(qs_code != null) {
             getQsSymbol(
@@ -70,6 +86,15 @@ class QsSymbolListViewModel @Inject constructor(
                 date_type = currentDateType,
                 sort_type = _currentSortType.value,
                 sort_col = _currentSortCol.value
+            )
+        } else {
+            _state.value = QsSymbolListState(error="qs_code is null")
+        }
+
+        if(qs_code != null) {
+            getStock(
+                qs_code = qs_code,
+                page = currentPage
             )
         } else {
             _state.value = QsSymbolListState(error="qs_code is null")
@@ -107,6 +132,27 @@ class QsSymbolListViewModel @Inject constructor(
         }
     }
 
+    fun loadMore() {
+
+        if (_state.value.isLoading || _state.value.isEndReached) return
+
+        if (_state.value.isLoading) return
+        _state.value = _state.value.copy(
+            isRefreshing = false,
+            isLoading = true
+        )
+        currentPage += 1
+
+        if(qs_code != null) {
+            getStock(
+                qs_code = qs_code,
+                page = currentPage
+            )
+        } else {
+            _state.value = QsSymbolListState(error="qs_code is null")
+        }
+    }
+
     private fun getQsSymbol(
         qs_code: String,
         date_type: Int,
@@ -127,6 +173,58 @@ class QsSymbolListViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _state.value = QsSymbolListState(
+                        error = result.message ?: "Unknown Error"
+                    )
+                }
+                is Resource.Loading -> {
+                    // TODO: Nothing todo here right now
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun getStock(
+        page: Int,
+        qs_code: String
+    ) {
+        getStockUseCase(
+            page = page,
+            qs_code = qs_code
+        ).onEach { result ->
+            when(result) {
+                is Resource.Success -> {
+                    val newData = result.data ?: emptyList()
+                    val oldList = _state.value.reportList
+
+                    if (newData.size < 20) {
+                        _state.value = _state.value.copy(
+                            isEndReached = true
+                        )
+                    }
+
+                    // If load more data
+                    if (_state.value.isLoading) {
+                        val appendedList = oldList + newData
+                        _state.value = _state.value.copy(
+                            isRefreshing = false,
+                            isLoading = false,
+                            reportList = appendedList,
+                            isEndReached = _state.value.isEndReached || (newData.size < 20)
+                        )
+                        // If load first time/refresh/change rating
+                    } else {
+                        _state.value = _state.value.copy(
+                            isRefreshing = false,
+                            isLoading = false,
+                            reportList = newData,
+                            isEndReached = (newData.size < 20)
+                        )
+                    }
+                }
+
+                is Resource.Error -> {
+                    _state.value = QsSymbolListState(
+                        isRefreshing = false,
                         error = result.message ?: "Unknown Error"
                     )
                 }

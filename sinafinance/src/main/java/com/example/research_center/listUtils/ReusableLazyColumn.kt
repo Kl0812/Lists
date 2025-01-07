@@ -55,12 +55,14 @@ fun <T> ReusableLazyColumn(
             // Footer
             item {
                 // If There's more data and not refreshing
-                if (!isEndReached && !isRefreshing) {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
+                if (!isEndReached) {
+                    if (!isRefreshing) {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
                     }
                 // If no more data
                 } else {

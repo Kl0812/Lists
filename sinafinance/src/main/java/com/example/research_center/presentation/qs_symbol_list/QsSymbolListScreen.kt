@@ -110,8 +110,13 @@ fun QsSymbolListScreen(
                     }
 
                     item {
-                        StockListSection()
-                        // TODO: 传 viewModel for pagination
+                        StockListSection(
+                            items = state.reportList,
+                            isRefreshing = state.isRefreshing,
+                            isEndReached = state.isEndReached,
+                            navController = navController,
+                            loadMore = { viewModel.loadMore() }
+                        )
                     }
                 }
             }
