@@ -79,6 +79,7 @@ fun QsSymbolListItem(
             color = Color.Gray,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 8.dp)
         )
     }
 }

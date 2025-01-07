@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.research_center.domain.model.QsSymbol
 import com.example.research_center.presentation.qs_symbol_list.QsSymbolListViewModel
 
 @Composable
@@ -47,23 +48,22 @@ fun QsSymbolListSection(
 
     // Main content
     var isExpanded by remember { mutableStateOf(false) }
-    val symbolList = listOf("股票A", "股票B","股票C","股票D","股票E","股票F","股票G") // TODO: placeholder
+    val symbolList = viewModel.state.value.qsSymbol
 
     // if symbolList.size>4 && !isExpanded, only display 4 items
-    val displayList = if(!isExpanded && symbolList.size>4) symbolList.take(4) else symbolList
+    val displayList = if(!isExpanded && symbolList.size>4) {
+        symbolList.take(4)
+    } else {
+        symbolList
+    }
 
     Column {
-        displayList.forEach { stockName ->
-            Text(
-                text = stockName,
-                modifier = Modifier
-                    .padding(16.dp)
-            )
-            HorizontalDivider(
-                thickness = 0.2.dp,
-                color = Color.Gray,
-                modifier = Modifier
-                    .fillMaxWidth()
+        displayList.forEach { item: QsSymbol ->
+            QsSymbolListItem(
+                qsSymbol = item,
+                onItemClick = {
+                    // TODO: navController.navigate(...)
+                }
             )
         }
 

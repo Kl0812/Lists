@@ -29,7 +29,7 @@ fun QsSymbolListStickyHeader(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color(0xFFF0F0F0))
-            .padding(horizontal = 12.dp, vertical = 4.dp),
+            .padding(horizontal = 16.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
