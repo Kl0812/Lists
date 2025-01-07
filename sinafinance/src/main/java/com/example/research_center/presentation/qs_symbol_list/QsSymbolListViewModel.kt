@@ -37,7 +37,11 @@ class QsSymbolListViewModel @Inject constructor(
     private val _currentSortType = mutableStateOf(-1)
     val currentSortType: State<Int> = _currentSortType
 
-    private val qs_code = savedStateHandle.get<String>(Constants.QS_CODE)
+    // 通过路径获取证券code
+    // 由于证券code等于证券name
+    // 所以路径名既可以用作qs_code，也可以用作qs name
+    private val qs_code = savedStateHandle.get<String>("qs_code")
+    val qsCode: String? get() = qs_code
 
     init {
         _state.value = _state.value.copy(

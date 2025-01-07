@@ -35,7 +35,7 @@ fun QsSymbolListScreen(
 ) {
     val state = viewModel.state.value
 
-    val qsName = "东吴证券" // TODO: 替换为真实名称
+    val qsName = viewModel.qsCode ?: "未知券商"
 
     val pullToRefreshState = rememberPullToRefreshState()
     val dateType = viewModel.currentDateType

@@ -20,6 +20,7 @@ import com.example.research_center.presentation.qs_list.components.QsListItem
 import com.example.research_center.presentation.qs_list.components.QsListMenu
 import com.example.research_center.presentation.qs_list.components.QsListStickyHeader
 import com.example.research_center.presentation.stock_list.components.StockListItem
+import java.net.URLEncoder
 
 @Composable
 fun QsListScreen(
@@ -68,7 +69,9 @@ fun QsListScreen(
                         qs = qs,
                         onItemClick = {
                             navController.navigate(
-                                Screen.QsSymbolScreen.route + "/${qs.code}"
+                                // 将证券code作为路径传递
+                                Screen.QsSymbolScreen.route +
+                                        "/${URLEncoder.encode(qs.code, "UTF-8")}"
                             )
                         }
                     )
