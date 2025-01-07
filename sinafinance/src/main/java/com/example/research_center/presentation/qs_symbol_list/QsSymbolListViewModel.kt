@@ -28,9 +28,6 @@ class QsSymbolListViewModel @Inject constructor(
     var currentDateType = 1
         private set
 
-    var currentPage = 1
-        private set
-
     private val _currentSortCol = mutableStateOf("")
     val currentSortCol: State<String> = _currentSortCol
 
@@ -50,7 +47,12 @@ class QsSymbolListViewModel @Inject constructor(
         )
 
         if(qs_code != null) {
-            getQsSymbol(qs_code)
+            getQsSymbol(
+                qs_code = qs_code,
+                date_type = currentDateType,
+                sort_type = _currentSortType.value,
+                sort_col = _currentSortCol.value
+            )
         } else {
             _state.value = QsSymbolListState(error="qs_code is null")
         }
@@ -61,34 +63,62 @@ class QsSymbolListViewModel @Inject constructor(
             isRefreshing = true,
             isLoading = false
         )
-        currentPage = 1
-
-        // TODO
-    }
-
-    fun setSort(col: String, typeOrNone: Int) {
-        currentPage = 1
-
-        _currentSortCol.value = col
-        _currentSortType.value = typeOrNone
-
-        // TODO
-
-    }
-
-    fun dateType(date_type: Int) {
-        currentDateType = date_type
-        currentPage = 1
 
         if(qs_code != null) {
-            getQsSymbol(qs_code)
+            getQsSymbol(
+                qs_code = qs_code,
+                date_type = currentDateType,
+                sort_type = _currentSortType.value,
+                sort_col = _currentSortCol.value
+            )
         } else {
             _state.value = QsSymbolListState(error="qs_code is null")
         }
     }
 
-    private fun getQsSymbol(qs_code: String) {
-        getQsSymbolUseCase(qs_code = qs_code).onEach { result ->
+    fun setSort(col: String, typeOrNone: Int) {
+        _currentSortCol.value = if (typeOrNone == -1) "" else col
+        _currentSortType.value = typeOrNone
+
+        if(qs_code != null) {
+            getQsSymbol(
+                qs_code = qs_code,
+                date_type = currentDateType,
+                sort_type = typeOrNone,
+                sort_col = _currentSortCol.value
+            )
+        } else {
+            _state.value = QsSymbolListState(error="qs_code is null")
+        }
+    }
+
+    fun dateType(date_type: Int) {
+        currentDateType = date_type
+
+        if(qs_code != null) {
+            getQsSymbol(
+                qs_code = qs_code,
+                date_type = currentDateType,
+                sort_type = _currentSortType.value,
+                sort_col = _currentSortCol.value
+            )
+        } else {
+            _state.value = QsSymbolListState(error="qs_code is null")
+        }
+    }
+
+    private fun getQsSymbol(
+        qs_code: String,
+        date_type: Int,
+        sort_type: Int,
+        sort_col: String
+    ) {
+        getQsSymbolUseCase(
+            qs_code = qs_code,
+            date_type = date_type,
+            sort_type = sort_type,
+            sort_col = sort_col
+        ).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _state.value = QsSymbolListState(

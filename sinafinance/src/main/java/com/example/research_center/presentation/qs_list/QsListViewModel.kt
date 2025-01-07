@@ -83,7 +83,7 @@ class QsListViewModel @Inject constructor(
     fun setSort(col: String, typeOrNone: Int) {
         currentPage = 1
 
-        _currentSortCol.value = col
+        _currentSortCol.value = if (typeOrNone == -1) "" else col
         _currentSortType.value = typeOrNone
 
         getQs(

@@ -1,5 +1,6 @@
 package com.example.research_center.presentation.qs_symbol_list.components.report_list
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
@@ -11,15 +12,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 
 fun StockListSection() {
-    LazyColumn() {
-        item {
-            Text(
-                text = "研报列表",
-                modifier = Modifier
-                    .padding(16.dp),
-                fontWeight = FontWeight.Bold
-            )
-        }
+    //TODO: placeholder
+    Column() {
+        Text(
+            text = "研报列表",
+            modifier = Modifier
+                .padding(16.dp),
+            fontWeight = FontWeight.Bold
+        )
     }
 }
     /*items: List<T>,

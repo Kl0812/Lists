@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -38,6 +41,7 @@ fun QsSymbolListScreen(
     val qsName = viewModel.qsCode ?: "未知券商"
 
     val pullToRefreshState = rememberPullToRefreshState()
+    val lazyListState: LazyListState = rememberLazyListState()
     val dateType = viewModel.currentDateType
 
     Scaffold(
@@ -66,40 +70,49 @@ fun QsSymbolListScreen(
                     .fillMaxSize()
             ) {
 
-                Column(
+                LazyColumn(
+                    state = lazyListState,
                     modifier = Modifier.fillMaxSize()
                 ) {
 
-                    DateTypeHeaderSection(
-                        currentDateType = dateType,
-                        onDateTypeSelected = { newType ->
-                            viewModel.dateType(newType)
-                        }
-                    )
+                    item {
+                        DateTypeHeaderSection(
+                            currentDateType = dateType,
+                            onDateTypeSelected = { newType ->
+                                viewModel.dateType(newType)
+                            }
+                        )
+                    }
 
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(12.dp)
-                            .background(Color(0xFFF0F0F0))
-                    )
+                    item {
+                        Spacer(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(12.dp)
+                                .background(Color(0xFFF0F0F0))
+                        )
+                    }
 
-                    // 近期覆盖股票
-                    QsSymbolListSection(
-                        qsName = qsName, // TODO
-                        viewModel = viewModel
-                    )
+                    item {
+                        QsSymbolListSection(
+                            qsName = qsName,
+                            viewModel = viewModel
+                        )
+                    }
 
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(12.dp)
-                            .background(Color(0xFFF0F0F0))
-                    )
+                    item {
+                        Spacer(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(12.dp)
+                                .background(Color(0xFFF0F0F0))
+                        )
+                    }
 
-                    // 研报列表
-                    StockListSection()
-                    // TODO: 传 viewModel for pagination
+                    item {
+                        StockListSection()
+                        // TODO: 传 viewModel for pagination
+                    }
                 }
             }
 
