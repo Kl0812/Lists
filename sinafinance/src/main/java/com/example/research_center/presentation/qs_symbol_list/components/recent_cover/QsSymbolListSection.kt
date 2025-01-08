@@ -1,5 +1,6 @@
 package com.example.research_center.presentation.qs_symbol_list.components.recent_cover
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,7 +24,9 @@ import com.example.research_center.presentation.qs_symbol_list.QsSymbolListViewM
 @Composable
 fun QsSymbolListSection(
     qsName: String,
-    viewModel: QsSymbolListViewModel
+    viewModel: QsSymbolListViewModel,
+    isExpanded: Boolean,
+    onExpandChanged: (Boolean) -> Unit
 ) {
     // Title
     Box(
@@ -39,15 +42,14 @@ fun QsSymbolListSection(
 
     // Header
     QsSymbolListStickyHeader(
-        currentSortCol = viewModel.currentSortCol.value, // TODO
-        currentSortType = viewModel.currentSortType.value, // TODO
+        currentSortCol = viewModel.currentSortCol.value,
+        currentSortType = viewModel.currentSortType.value,
         onSortChanged = { col, typeOrNone ->
             viewModel.setSort(col, typeOrNone)
         }
     )
 
     // Main content
-    var isExpanded by remember { mutableStateOf(false) }
     val symbolList = viewModel.state.value.qsSymbol
 
     // if symbolList.size>4 && !isExpanded, only display 4 items
@@ -80,7 +82,7 @@ fun QsSymbolListSection(
                         text = "查看更多",
                         modifier = Modifier
                             .clickable {
-                                isExpanded = true
+                                onExpandChanged(true)
                             },
                         color = Color(0xFF036BFC)
                     )
@@ -89,7 +91,7 @@ fun QsSymbolListSection(
                         text = "收起更多",
                         modifier = Modifier
                             .clickable {
-                                isExpanded = false
+                                onExpandChanged(false)
                             },
                         color = Color(0xFF036BFC)
                     )

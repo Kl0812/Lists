@@ -20,6 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,12 +45,12 @@ fun QsSymbolListScreen(
     viewModel: QsSymbolListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-
-    val qsName = viewModel.qsCode ?: "未知券商"
-
     val pullToRefreshState = rememberPullToRefreshState()
     val lazyListState: LazyListState = rememberLazyListState()
+
     val dateType = viewModel.currentDateType
+    val qsName = viewModel.qsCode ?: "未知券商"
+    var isExpanded by remember { mutableStateOf(false) }
 
     Scaffold(
         containerColor = Color.White,
@@ -100,7 +104,11 @@ fun QsSymbolListScreen(
                     item {
                         QsSymbolListSection(
                             qsName = qsName,
-                            viewModel = viewModel
+                            viewModel = viewModel,
+                            isExpanded = isExpanded,
+                            onExpandChanged = { expanded ->
+                                isExpanded = expanded
+                            }
                         )
                     }
 
