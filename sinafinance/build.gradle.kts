@@ -100,6 +100,14 @@ dependencies {
     implementation (libs.androidx.compose.foundation.foundation)
     implementation (libs.material3)
 
+    //Ktor (Retrofit does not support websocket)
+    implementation (libs.ktor.client.core)
+    implementation (libs.ktor.client.cio)
+    implementation (libs.ktor.client.serialization)
+    implementation (libs.ktor.client.websockets)
+
+    implementation (libs.kotlinx.serialization.json)
+
 }
 
 kapt {

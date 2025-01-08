@@ -57,7 +57,7 @@ fun QsListMenu(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(
-    name = "StockListItem Preview",
+    name = "ReportListItem Preview",
     showBackground = true
 )
 @Composable

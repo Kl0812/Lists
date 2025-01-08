@@ -1,6 +1,6 @@
 package com.example.research_center.domain.model
 
-data class StockDetail(
+data class ReportDetail(
     val title: String,
     val orgname: String,
     val author: String,

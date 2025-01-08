@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.stock_detail
+package com.example.research_center.presentation.report_detail
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,9 +30,9 @@ import com.example.research_center.listUtils.ShowDate
 
 @SuppressLint("NewApi")
 @Composable
-fun StockDetailScreen(
+fun ReportDetailScreen(
     navController: NavController,
-    viewModel: StockDetailViewModel = hiltViewModel()
+    viewModel: ReportDetailViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
     Scaffold(
@@ -54,7 +53,7 @@ fun StockDetailScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            state.stockDetail?.let { detail ->
+            state.reportDetail?.let { detail ->
 
                 Column(
                     modifier = Modifier

@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.stock_list.components
+package com.example.research_center.presentation.report_list.components
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -18,25 +18,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.research_center.domain.model.Stock
+import com.example.research_center.domain.model.Report
 import com.example.research_center.listUtils.ShowDate
 
 @SuppressLint("NewApi")
 @Composable
-fun StockListItem(
-    stock: Stock,
-    onItemClick: (Stock) -> Unit
+fun ReportListItem(
+    report: Report,
+    onItemClick: (Report) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onItemClick(stock)
+                onItemClick(report)
             }
             .padding(top = 12.dp, start = 16.dp, end = 16.dp)
     ) {
         Text(
-            text = stock.title,
+            text = report.title,
             fontSize = 16.sp,
         )
 
@@ -46,13 +46,13 @@ fun StockListItem(
         ) {
 
             Text(
-                text = stock.orgname,
+                text = report.orgname,
                 fontSize = 12.sp,
                 color = Color.Gray,
                 textAlign = TextAlign.Center
             )
 
-            ShowDate(stock.adddate)
+            ShowDate(report.adddate)
         }
 
         HorizontalDivider(
@@ -67,12 +67,12 @@ fun StockListItem(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(
-    name = "StockListItem Preview",
+    name = "ReportListItem Preview",
     showBackground = true
 )
 @Composable
-fun StockListItemPreview() {
-    val sampleStock = Stock(
+fun ReportListItemPreview() {
+    val sampleReport = Report(
         adddate = "2024-12-26 00:00:00",
         orgname = "东吴证券",
         report_id = "788525455904",
@@ -80,8 +80,8 @@ fun StockListItemPreview() {
     )
 
     // 当预览时，onItemClick可以使用空的lambda
-    StockListItem(
-        stock = sampleStock,
+    ReportListItem(
+        report = sampleReport,
         onItemClick = {}
     )
 }

@@ -1,8 +1,8 @@
 package com.example.research_center.data.remote.dto
 
-import com.example.research_center.domain.model.Stock
+import com.example.research_center.domain.model.Report
 
-data class StockDto(
+data class ReportDto(
     val code: String,
     val `data`: List<Data>?,
     val err: String,
@@ -21,9 +21,9 @@ data class StockDto(
     )
 }
 
-fun StockDto.toStock(): List<Stock> {
+fun ReportDto.toReport(): List<Report> {
     return data?.map { item ->
-        Stock (
+        Report (
             adddate = item.adddate,
             orgname = item.orgname,
             report_id = item.report_id,

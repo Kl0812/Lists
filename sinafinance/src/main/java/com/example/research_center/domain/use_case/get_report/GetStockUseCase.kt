@@ -1,8 +1,8 @@
-package com.example.research_center.domain.use_case.get_stock
+package com.example.research_center.domain.use_case.get_report
 
 import com.example.research_center.common.Resource
-import com.example.research_center.data.remote.dto.toStock
-import com.example.research_center.domain.model.Stock
+import com.example.research_center.data.remote.dto.toReport
+import com.example.research_center.domain.model.Report
 import com.example.research_center.domain.repository.ReportCenterRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,9 +11,9 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 /*
-* Set page loading state and set stock list information
+* Set page loading state and set report list information
 * */
-class GetStockUseCase @Inject constructor(
+class GetReportUseCase @Inject constructor(
     private val repository: ReportCenterRepository
 ) {
     operator fun invoke(
@@ -21,16 +21,16 @@ class GetStockUseCase @Inject constructor(
         rating_change: Int = 0,
         hy_code: String = "",
         qs_code: String = ""
-    ): Flow<Resource<List<Stock>>> = flow {
+    ): Flow<Resource<List<Report>>> = flow {
         try {
             emit(Resource.Loading())
-            val stock = repository.getList(
+            val report = repository.getList(
                 page = page,
                 rating_change = rating_change,
                 hy_code = hy_code,
                 qs_code = qs_code
-            ).toStock()
-            emit(Resource.Success(stock))
+            ).toReport()
+            emit(Resource.Success(report))
         } catch(e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
         } catch(e: IOException) {

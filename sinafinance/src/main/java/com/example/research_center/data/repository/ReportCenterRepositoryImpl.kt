@@ -1,12 +1,12 @@
 package com.example.research_center.data.repository
 
 import com.example.research_center.data.remote.ReportCenterApi
-import com.example.research_center.data.remote.StockDetailApi
+import com.example.research_center.data.remote.ReportDetailApi
 import com.example.research_center.data.remote.dto.HyDto
 import com.example.research_center.data.remote.dto.QsDto
 import com.example.research_center.data.remote.dto.QsSymbolDto
-import com.example.research_center.data.remote.dto.StockDetailDto
-import com.example.research_center.data.remote.dto.StockDto
+import com.example.research_center.data.remote.dto.ReportDetailDto
+import com.example.research_center.data.remote.dto.ReportDto
 import com.example.research_center.domain.repository.ReportCenterRepository
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ import javax.inject.Inject
 * */
 class ReportCenterRepositoryImpl @Inject constructor(
     private val listApi: ReportCenterApi,
-    private val detailApi: StockDetailApi
+    private val detailApi: ReportDetailApi
 ) : ReportCenterRepository {
 
     override suspend fun getList(
@@ -24,7 +24,7 @@ class ReportCenterRepositoryImpl @Inject constructor(
         rating_change: Int,
         hy_code: String,
         qs_code: String
-    ): StockDto {
+    ): ReportDto {
         return listApi.getList(
             page = page,
             rating_change = rating_change,
@@ -83,7 +83,7 @@ class ReportCenterRepositoryImpl @Inject constructor(
 
     override suspend fun getShowById(
         rptid: String
-    ): StockDetailDto {
+    ): ReportDetailDto {
         return detailApi.getShowById(
             rptid = rptid
         )

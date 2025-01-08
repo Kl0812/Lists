@@ -1,27 +1,26 @@
-package com.example.research_center.presentation.stock_list
+package com.example.research_center.presentation.report_list
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.research_center.common.Resource
-import com.example.research_center.domain.use_case.get_stock.GetStockUseCase
+import com.example.research_center.domain.use_case.get_report.GetReportUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 /*
-* View Model for stock list, used to maintain the state
+* View Model for report list, used to maintain the state
 * */
 @HiltViewModel
-class StockListViewModel @Inject constructor(
-    private val getStockUseCase: GetStockUseCase
+class ReportListViewModel @Inject constructor(
+    private val getReportUseCase: GetReportUseCase
 ): ViewModel() {
 
-    private val _state = mutableStateOf(StockListState())
-    val state: State<StockListState> = _state
+    private val _state = mutableStateOf(ReportListState())
+    val state: State<ReportListState> = _state
 
     // Record current rating sort, only assign value inside this view model
     var currentRatingChange = 0
@@ -36,7 +35,7 @@ class StockListViewModel @Inject constructor(
             isLoading = false
         )
 
-        getStock(
+        getReport(
             page = currentPage,
             rating_change = currentRatingChange
         )
@@ -46,7 +45,7 @@ class StockListViewModel @Inject constructor(
         currentRatingChange = rating_change
         currentPage = 1
 
-        getStock(
+        getReport(
             page = currentPage,
             rating_change = currentRatingChange
         )
@@ -59,7 +58,7 @@ class StockListViewModel @Inject constructor(
         )
         currentPage = 1
 
-        getStock(
+        getReport(
             page = currentPage,
             rating_change = currentRatingChange
         )
@@ -76,21 +75,21 @@ class StockListViewModel @Inject constructor(
         )
         currentPage += 1
 
-        getStock(
+        getReport(
             page = currentPage,
             rating_change = currentRatingChange
         )
     }
 
-    private fun getStock(page: Int, rating_change: Int) {
-        getStockUseCase(
+    private fun getReport(page: Int, rating_change: Int) {
+        getReportUseCase(
             page = page,
             rating_change = rating_change
         ).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     val newData = result.data ?: emptyList()
-                    val oldList = _state.value.stock
+                    val oldList = _state.value.report
 
                     if (newData.size < 20) {
                         _state.value = _state.value.copy(
@@ -104,7 +103,7 @@ class StockListViewModel @Inject constructor(
                         _state.value = _state.value.copy(
                             isRefreshing = false,
                             isLoading = false,
-                            stock = appendedList,
+                            report = appendedList,
                             isEndReached = _state.value.isEndReached || (newData.size < 20)
                         )
                     // If load first time/refresh/change rating
@@ -112,7 +111,7 @@ class StockListViewModel @Inject constructor(
                         _state.value = _state.value.copy(
                             isRefreshing = false,
                             isLoading = false,
-                            stock = newData,
+                            report = newData,
                             isEndReached = (newData.size < 20)
                         )
                     }

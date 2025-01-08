@@ -36,7 +36,7 @@ import com.example.research_center.listUtils.CustomTopBar
 import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.qs_symbol_list.components.header.DateTypeHeaderSection
 import com.example.research_center.presentation.qs_symbol_list.components.recent_cover.QsSymbolListSection
-import com.example.research_center.presentation.stock_list.components.StockListItem
+import com.example.research_center.presentation.report_list.components.ReportListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -143,12 +143,12 @@ fun QsSymbolListScreen(
                         )
                     }
 
-                    itemsIndexed(state.reportList) { index, stock ->
-                        StockListItem(
-                            stock = stock,
+                    itemsIndexed(state.reportList) { index, report ->
+                        ReportListItem(
+                            report = report,
                             onItemClick = {
                                 navController.navigate(
-                                    Screen.StockDetailScreen.route + "/${stock.report_id}"
+                                    Screen.ReportDetailScreen.route + "/${report.report_id}"
                                 )
                             }
                         )

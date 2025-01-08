@@ -20,8 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.research_center.domain.model.Qs
-import com.example.research_center.domain.model.Stock
-import com.example.research_center.listUtils.ShowDate
 
 @SuppressLint("NewApi")
 @Composable

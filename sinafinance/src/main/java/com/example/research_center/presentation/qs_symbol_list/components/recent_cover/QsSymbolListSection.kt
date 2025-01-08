@@ -23,7 +23,7 @@ import com.example.research_center.presentation.qs_symbol_list.QsSymbolListViewM
 
 @Composable
 fun QsSymbolListSection(
-    qsName: String,
+    qsName: String, // can be used for route later
     viewModel: QsSymbolListViewModel,
     isExpanded: Boolean,
     onExpandChanged: (Boolean) -> Unit

@@ -1,16 +1,14 @@
 package com.example.research_center.presentation.qs_symbol_list
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.research_center.common.Constants
+import com.example.research_center.common.Constants.QS_CODE
 import com.example.research_center.common.Resource
 import com.example.research_center.domain.use_case.get_qsSymbol.GetQsSymbolUseCase
-import com.example.research_center.domain.use_case.get_stock.GetStockUseCase
-import com.example.research_center.presentation.stock_list.StockListState
+import com.example.research_center.domain.use_case.get_report.GetReportUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,12 +16,12 @@ import javax.inject.Inject
 
 /*
 * View Model for qs symbol list, used to maintain the state
-* Also is contains GetStockUseCase for StockListSection
+* Also is contains GetReportUseCase for ReportListSection
 * */
 @HiltViewModel
 class QsSymbolListViewModel @Inject constructor(
     private val getQsSymbolUseCase: GetQsSymbolUseCase,
-    private val getStockUseCase: GetStockUseCase,
+    private val getReportUseCase: GetReportUseCase,
     savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
@@ -45,7 +43,7 @@ class QsSymbolListViewModel @Inject constructor(
     // 通过路径获取证券code
     // 由于证券code等于证券name
     // 所以路径名既可以用作qs_code，也可以用作qs name
-    private val qs_code = savedStateHandle.get<String>("qs_code")
+    private val qs_code = savedStateHandle.get<String>(QS_CODE)
     val qsCode: String? get() = qs_code
 
     init {
@@ -68,7 +66,7 @@ class QsSymbolListViewModel @Inject constructor(
         }
 
         if(qs_code != null) {
-            getStock(
+            getReport(
                 qs_code = qs_code,
                 page = currentPage
             )
@@ -100,7 +98,7 @@ class QsSymbolListViewModel @Inject constructor(
         }
 
         if(qs_code != null) {
-            getStock(
+            getReport(
                 qs_code = qs_code,
                 page = currentPage
             )
@@ -158,7 +156,7 @@ class QsSymbolListViewModel @Inject constructor(
         currentPage += 1
 
         if(qs_code != null) {
-            getStock(
+            getReport(
                 qs_code = qs_code,
                 page = currentPage
             )
@@ -201,11 +199,11 @@ class QsSymbolListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getStock(
+    private fun getReport(
         page: Int,
         qs_code: String
     ) {
-        getStockUseCase(
+        getReportUseCase(
             page = page,
             qs_code = qs_code
         ).onEach { result ->

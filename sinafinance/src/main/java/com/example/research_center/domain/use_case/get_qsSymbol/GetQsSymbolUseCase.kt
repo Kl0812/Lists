@@ -2,10 +2,7 @@ package com.example.research_center.domain.use_case.get_qsSymbol
 
 import com.example.research_center.common.Resource
 import com.example.research_center.data.remote.dto.toQsSymbol
-import com.example.research_center.data.remote.dto.toStockDetail
 import com.example.research_center.domain.model.QsSymbol
-import com.example.research_center.domain.model.Stock
-import com.example.research_center.domain.model.StockDetail
 import com.example.research_center.domain.repository.ReportCenterRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

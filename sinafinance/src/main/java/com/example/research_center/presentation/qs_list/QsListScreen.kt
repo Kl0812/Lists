@@ -19,7 +19,6 @@ import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.qs_list.components.QsListItem
 import com.example.research_center.presentation.qs_list.components.QsListMenu
 import com.example.research_center.presentation.qs_list.components.QsListStickyHeader
-import com.example.research_center.presentation.stock_list.components.StockListItem
 import java.net.URLEncoder
 
 @Composable

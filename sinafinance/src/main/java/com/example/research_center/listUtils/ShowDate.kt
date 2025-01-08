@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.example.research_center.domain.model.Stock
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

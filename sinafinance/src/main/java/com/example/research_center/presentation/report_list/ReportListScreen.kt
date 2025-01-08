@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.stock_list
+package com.example.research_center.presentation.report_list
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,13 +16,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.research_center.listUtils.ReusableLazyColumn
 import com.example.research_center.presentation.Screen
-import com.example.research_center.presentation.stock_list.components.StockListItem
-import com.example.research_center.presentation.stock_list.components.StockListMenu
+import com.example.research_center.presentation.report_list.components.ReportListItem
+import com.example.research_center.presentation.report_list.components.ReportListMenu
 
 @Composable
-fun StockListScreen(
+fun ReportListScreen(
     navController: NavController,
-    viewModel: StockListViewModel = hiltViewModel()
+    viewModel: ReportListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
 
@@ -41,7 +41,7 @@ fun StockListScreen(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        StockListMenu(
+        ReportListMenu(
             onMenuSelected = ::onMenuSelected,
             currentRating = viewModel.currentRatingChange
         )
@@ -50,17 +50,17 @@ fun StockListScreen(
             .fillMaxWidth()
         ) {
             ReusableLazyColumn(
-                items = state.stock,
+                items = state.report,
                 isRefreshing = state.isRefreshing,
                 isEndReached = state.isEndReached,
                 refresh = { viewModel.refresh() },
                 loadMore = { viewModel.loadMore() },
-                content = { stock ->
-                    StockListItem(
-                        stock = stock,
+                content = { report ->
+                    ReportListItem(
+                        report = report,
                         onItemClick = {
                             navController.navigate(
-                                Screen.StockDetailScreen.route + "/${stock.report_id}"
+                                Screen.ReportDetailScreen.route + "/${report.report_id}"
                             )
                         }
                     )

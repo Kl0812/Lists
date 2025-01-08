@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -22,7 +21,7 @@ import com.example.research_center.listUtils.CustomTopBar
 import com.example.research_center.presentation.TestScreen
 import com.example.research_center.presentation.qs_list.QsListScreen
 import com.example.research_center.presentation.research_center.components.SubPage
-import com.example.research_center.presentation.stock_list.StockListScreen
+import com.example.research_center.presentation.report_list.ReportListScreen
 
 @SuppressLint("NewApi")
 @Composable
@@ -97,7 +96,7 @@ fun ResearchCenterScreen(
             ) { page ->
                 when (page) {
                     0 -> TestScreen()
-                    1 -> StockListScreen(navController)
+                    1 -> ReportListScreen(navController)
                     2 -> QsListScreen(navController)
                 }
             }

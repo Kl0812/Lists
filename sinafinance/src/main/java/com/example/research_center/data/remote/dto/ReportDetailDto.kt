@@ -1,8 +1,8 @@
 package com.example.research_center.data.remote.dto
 
-import com.example.research_center.domain.model.StockDetail
+import com.example.research_center.domain.model.ReportDetail
 
-data class StockDetailDto(
+data class ReportDetailDto(
     val result: Result
 ) {
     data class Result(
@@ -35,8 +35,8 @@ data class StockDetailDto(
     }
 }
 
-fun StockDetailDto.toStockDetail(): StockDetail {
-    return StockDetail (
+fun ReportDetailDto.toReportDetail(): ReportDetail {
+    return ReportDetail (
             title = result.data.data.title,
             orgname = result.data.data.orgname,
             author = result.data.data.author,

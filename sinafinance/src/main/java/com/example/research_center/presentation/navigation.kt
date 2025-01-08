@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.research_center.presentation.qs_symbol_list.QsSymbolListScreen
 import com.example.research_center.presentation.research_center.ResearchCenterScreen
-import com.example.research_center.presentation.stock_detail.StockDetailScreen
+import com.example.research_center.presentation.report_detail.ReportDetailScreen
 
 @Composable
 fun AppNavHost(
@@ -31,7 +31,7 @@ fun AppNavHost(
         }
 
         composable(
-            route = Screen.StockDetailScreen.route + "/{rptid}",
+            route = Screen.ReportDetailScreen.route + "/{rptid}",
             enterTransition = {
                 slideIntoContainer(
                     animationSpec = tween(300, easing = EaseIn),
@@ -45,7 +45,7 @@ fun AppNavHost(
                 )
             }
         ) {
-            StockDetailScreen(navController)
+            ReportDetailScreen(navController)
         }
 
         composable(

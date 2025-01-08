@@ -3,8 +3,8 @@ package com.example.research_center.data.remote
 import com.example.research_center.data.remote.dto.HyDto
 import com.example.research_center.data.remote.dto.QsDto
 import com.example.research_center.data.remote.dto.QsSymbolDto
-import com.example.research_center.data.remote.dto.StockDetailDto
-import com.example.research_center.data.remote.dto.StockDto
+import com.example.research_center.data.remote.dto.ReportDetailDto
+import com.example.research_center.data.remote.dto.ReportDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -14,7 +14,7 @@ import retrofit2.http.Query
 * */
 interface ReportCenterApi {
 
-    // Get stock financial data list
+    // Get report financial data list
     @GET("report/center/getList?")
     suspend fun getList(
         // Don't know what are these variables, but they are important and never change,
@@ -29,7 +29,7 @@ interface ReportCenterApi {
         @Query("rating_change") rating_change: Int = 0, // 评级变动，默认为全部
         @Query("hy_code") hy_code: String = "", // 行业代码，默认为无
         @Query("qs_code") qs_code: String = "" // 券商代码，默认为无
-    ): StockDto
+    ): ReportDto
 
     // Get hy rank data list
     @GET("report/center/getHyRank?")

@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.stock_list.components
+package com.example.research_center.presentation.report_list.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,7 +35,7 @@ import com.example.lists.R
 * This file is to create list menu header
 * */
 @Composable
-fun StockListMenu(
+fun ReportListMenu(
     onMenuSelected: (String) -> Unit,
     currentRating: Int
 ) {

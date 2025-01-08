@@ -3,8 +3,8 @@ package com.example.research_center.domain.repository
 import com.example.research_center.data.remote.dto.HyDto
 import com.example.research_center.data.remote.dto.QsDto
 import com.example.research_center.data.remote.dto.QsSymbolDto
-import com.example.research_center.data.remote.dto.StockDetailDto
-import com.example.research_center.data.remote.dto.StockDto
+import com.example.research_center.data.remote.dto.ReportDetailDto
+import com.example.research_center.data.remote.dto.ReportDto
 
 /*
 * Interface for api functionality, can also implement cache here
@@ -16,7 +16,7 @@ interface ReportCenterRepository {
         rating_change: Int,
         hy_code: String,
         qs_code: String
-    ): StockDto
+    ): ReportDto
 
     suspend fun getHyRank(
         page: Int,
@@ -44,6 +44,6 @@ interface ReportCenterRepository {
 
     suspend fun getShowById(
         rptid: String
-    ): StockDetailDto
+    ): ReportDetailDto
 
 }
