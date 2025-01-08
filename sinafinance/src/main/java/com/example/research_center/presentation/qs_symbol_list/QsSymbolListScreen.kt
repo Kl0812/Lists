@@ -2,7 +2,6 @@ package com.example.research_center.presentation.qs_symbol_list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,8 +9,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -21,14 +23,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.research_center.listUtils.CustomTopBar
+import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.qs_symbol_list.components.header.DateTypeHeaderSection
 import com.example.research_center.presentation.qs_symbol_list.components.recent_cover.QsSymbolListSection
-import com.example.research_center.presentation.qs_symbol_list.components.report_list.StockListSection
+import com.example.research_center.presentation.stock_list.components.StockListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -110,13 +114,61 @@ fun QsSymbolListScreen(
                     }
 
                     item {
-                        StockListSection(
-                            items = state.reportList,
-                            isRefreshing = state.isRefreshing,
-                            isEndReached = state.isEndReached,
-                            navController = navController,
-                            loadMore = { viewModel.loadMore() }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                text = "研报列表",
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+
+                    item {
+                        HorizontalDivider(
+                            thickness = 0.2.dp,
+                            color = Color.Gray,
+                            modifier = Modifier
+                                .fillMaxWidth()
                         )
+                    }
+
+                    itemsIndexed(state.reportList) { index, stock ->
+                        StockListItem(
+                            stock = stock,
+                            onItemClick = {
+                                navController.navigate(
+                                    Screen.StockDetailScreen.route + "/${stock.report_id}"
+                                )
+                            }
+                        )
+                        // Load more when reach bottom of the list
+                        if (!state.isEndReached && index == state.reportList.lastIndex) {
+                            viewModel.loadMore()
+                        }
+                    }
+
+                    item {
+                        // If There's more data and not refreshing
+                        if (!state.isEndReached) {
+                            if (!state.isRefreshing) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator()
+                                }
+                            }
+                            // If no more data
+                        } else {
+                            Text(
+                                text = "没有更多数据",
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
+                            )
+                        }
                     }
                 }
             }

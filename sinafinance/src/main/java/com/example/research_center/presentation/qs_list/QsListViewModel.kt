@@ -175,7 +175,7 @@ class QsListViewModel @Inject constructor(
                     }
                 }
                 is Resource.Error -> {
-                    _state.value = QsListState(
+                    _state.value = _state.value.copy(
                         isRefreshing = false,
                         error = result.message ?: "Unknown Error"
                     )

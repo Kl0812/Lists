@@ -119,7 +119,7 @@ class StockListViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _state.value = StockListState(
+                    _state.value = _state.value.copy(
                         isRefreshing = false,
                         error = result.message ?: "Unknown Error"
                     )

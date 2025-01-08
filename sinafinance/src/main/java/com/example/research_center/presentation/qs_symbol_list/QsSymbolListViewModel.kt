@@ -1,5 +1,6 @@
 package com.example.research_center.presentation.qs_symbol_list
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 /*
 * View Model for qs symbol list, used to maintain the state
+* Also is contains GetStockUseCase for StockListSection
 * */
 @HiltViewModel
 class QsSymbolListViewModel @Inject constructor(
@@ -60,7 +62,9 @@ class QsSymbolListViewModel @Inject constructor(
                 sort_col = _currentSortCol.value
             )
         } else {
-            _state.value = QsSymbolListState(error="qs_code is null")
+            _state.value = _state.value.copy(
+                error="qs_code is null"
+            )
         }
 
         if(qs_code != null) {
@@ -69,7 +73,9 @@ class QsSymbolListViewModel @Inject constructor(
                 page = currentPage
             )
         } else {
-            _state.value = QsSymbolListState(error="qs_code is null")
+            _state.value = _state.value.copy(
+                error="qs_code is null"
+            )
         }
     }
 
@@ -88,7 +94,9 @@ class QsSymbolListViewModel @Inject constructor(
                 sort_col = _currentSortCol.value
             )
         } else {
-            _state.value = QsSymbolListState(error="qs_code is null")
+            _state.value = _state.value.copy(
+                error="qs_code is null"
+            )
         }
 
         if(qs_code != null) {
@@ -97,7 +105,9 @@ class QsSymbolListViewModel @Inject constructor(
                 page = currentPage
             )
         } else {
-            _state.value = QsSymbolListState(error="qs_code is null")
+            _state.value = _state.value.copy(
+                error="qs_code is null"
+            )
         }
     }
 
@@ -113,7 +123,9 @@ class QsSymbolListViewModel @Inject constructor(
                 sort_col = _currentSortCol.value
             )
         } else {
-            _state.value = QsSymbolListState(error="qs_code is null")
+            _state.value = _state.value.copy(
+                error="qs_code is null"
+            )
         }
     }
 
@@ -128,7 +140,9 @@ class QsSymbolListViewModel @Inject constructor(
                 sort_col = _currentSortCol.value
             )
         } else {
-            _state.value = QsSymbolListState(error="qs_code is null")
+            _state.value = _state.value.copy(
+                error="qs_code is null"
+            )
         }
     }
 
@@ -149,7 +163,9 @@ class QsSymbolListViewModel @Inject constructor(
                 page = currentPage
             )
         } else {
-            _state.value = QsSymbolListState(error="qs_code is null")
+            _state.value = _state.value.copy(
+                error="qs_code is null"
+            )
         }
     }
 
@@ -167,12 +183,14 @@ class QsSymbolListViewModel @Inject constructor(
         ).onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _state.value = QsSymbolListState(
+                    _state.value = _state.value.copy(
+                        isRefreshing = false,
                         qsSymbol = result.data ?: emptyList()
                     )
                 }
                 is Resource.Error -> {
-                    _state.value = QsSymbolListState(
+                    _state.value = _state.value.copy(
+                        isRefreshing = false,
                         error = result.message ?: "Unknown Error"
                     )
                 }
@@ -211,7 +229,7 @@ class QsSymbolListViewModel @Inject constructor(
                             reportList = appendedList,
                             isEndReached = _state.value.isEndReached || (newData.size < 20)
                         )
-                        // If load first time/refresh/change rating
+                    // If load first time/refresh/change rating
                     } else {
                         _state.value = _state.value.copy(
                             isRefreshing = false,
@@ -223,7 +241,7 @@ class QsSymbolListViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _state.value = QsSymbolListState(
+                    _state.value = _state.value.copy(
                         isRefreshing = false,
                         error = result.message ?: "Unknown Error"
                     )

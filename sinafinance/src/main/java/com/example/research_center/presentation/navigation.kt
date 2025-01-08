@@ -6,7 +6,6 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.tween
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,7 +14,6 @@ import com.example.research_center.presentation.qs_symbol_list.QsSymbolListScree
 import com.example.research_center.presentation.research_center.ResearchCenterScreen
 import com.example.research_center.presentation.stock_detail.StockDetailScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavHost(
     navController: NavHostController
