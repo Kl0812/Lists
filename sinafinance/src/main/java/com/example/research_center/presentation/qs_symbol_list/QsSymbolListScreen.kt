@@ -108,7 +108,8 @@ fun QsSymbolListScreen(
                             isExpanded = isExpanded,
                             onExpandChanged = { expanded ->
                                 isExpanded = expanded
-                            }
+                            },
+                            navController = navController
                         )
                     }
 

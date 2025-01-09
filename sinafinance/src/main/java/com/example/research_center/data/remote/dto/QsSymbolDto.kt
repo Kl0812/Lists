@@ -23,6 +23,7 @@ data class QsSymbolDto(
 fun QsSymbolDto.toQsSymbol(): List<QsSymbol> {
     return data?.map { item ->
         QsSymbol(
+            code = item.code,
             name = item.name,
             date = item.date,
             percent = item.percent.toFloat()

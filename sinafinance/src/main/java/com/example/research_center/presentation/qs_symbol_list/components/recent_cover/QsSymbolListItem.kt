@@ -95,6 +95,7 @@ fun QsSymbolListItemPreview() {
         name = "聚灿光电",
         date = "2025-01-01",
         percent = 0f,
+        code = "sh600000",
     )
 
     QsSymbolListItem(

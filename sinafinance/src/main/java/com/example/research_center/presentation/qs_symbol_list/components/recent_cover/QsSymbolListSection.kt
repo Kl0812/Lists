@@ -18,15 +18,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.research_center.domain.model.QsSymbol
+import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.qs_symbol_list.QsSymbolListViewModel
+import java.net.URLEncoder
 
 @Composable
 fun QsSymbolListSection(
     qsName: String, // can be used for route later
     viewModel: QsSymbolListViewModel,
     isExpanded: Boolean,
-    onExpandChanged: (Boolean) -> Unit
+    onExpandChanged: (Boolean) -> Unit,
+    navController: NavController
 ) {
     // Title
     Box(
@@ -64,7 +68,9 @@ fun QsSymbolListSection(
             QsSymbolListItem(
                 qsSymbol = item,
                 onItemClick = {
-                    // TODO: navController.navigate(...)
+                    navController.navigate(
+                        Screen.StockScreen.route + "/${item.code}"
+                    )
                 }
             )
         }

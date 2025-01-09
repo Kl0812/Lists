@@ -6,4 +6,5 @@ object Constants {
 
     const val REPORT_ID = "rptid"
     const val QS_CODE = "qs_code"
+    const val STOCK_CODE = "stock_code"
 }

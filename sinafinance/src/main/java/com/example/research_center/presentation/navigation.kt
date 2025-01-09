@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import com.example.research_center.presentation.qs_symbol_list.QsSymbolListScreen
 import com.example.research_center.presentation.research_center.ResearchCenterScreen
 import com.example.research_center.presentation.report_detail.ReportDetailScreen
+import com.example.research_center.presentation.stock.StockScreen
 
 @Composable
 fun AppNavHost(
@@ -21,8 +22,6 @@ fun AppNavHost(
     NavHost(
         navController = navController,
         startDestination = Screen.ResearchCenterScreen.route,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None }
     ) {
         composable(
             route = Screen.ResearchCenterScreen.route,
@@ -32,38 +31,20 @@ fun AppNavHost(
 
         composable(
             route = Screen.ReportDetailScreen.route + "/{rptid}",
-            enterTransition = {
-                slideIntoContainer(
-                    animationSpec = tween(300, easing = EaseIn),
-                    towards = AnimatedContentTransitionScope.SlideDirection.Start
-                )
-            },
-            exitTransition = {
-                slideOutOfContainer(
-                    animationSpec = tween(300, easing = EaseOut),
-                    towards = AnimatedContentTransitionScope.SlideDirection.End
-                )
-            }
         ) {
             ReportDetailScreen(navController)
         }
 
         composable(
             route = Screen.QsSymbolScreen.route + "/{qs_code}",
-            enterTransition = {
-                slideIntoContainer(
-                    animationSpec = tween(300, easing = EaseIn),
-                    towards = AnimatedContentTransitionScope.SlideDirection.Start
-                )
-            },
-            exitTransition = {
-                slideOutOfContainer(
-                    animationSpec = tween(300, easing = EaseOut),
-                    towards = AnimatedContentTransitionScope.SlideDirection.End
-                )
-            }
         ) {
             QsSymbolListScreen(navController)
+        }
+
+        composable(
+            route = Screen.StockScreen.route + "/{stock_code}",
+        ) {
+            StockScreen(navController)
         }
     }
 }
