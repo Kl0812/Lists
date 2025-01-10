@@ -18,14 +18,14 @@ fun StockDto.toStock(): Stock {
 
     return Stock(
         stockName = stockName,
-        top = data.getOrNull(1)?.toFloatOrNull() ?: 0f,
-        ycp = data.getOrNull(2)?.toFloatOrNull() ?: 0f,
-        rtp = data.getOrNull(3)?.toFloatOrNull() ?: 0f,
-        htp = data.getOrNull(4)?.toFloatOrNull() ?: 0f,
-        ltp = data.getOrNull(5)?.toFloatOrNull() ?: 0f,
-        bp = data.getOrNull(6)?.toFloatOrNull() ?: 0f,
-        ap = data.getOrNull(7)?.toFloatOrNull() ?: 0f,
-        tq = data.getOrNull(8)?.toFloatOrNull() ?: 0f,
-        ta = data.getOrNull(9)?.toFloatOrNull() ?: 0f
+        top = data.getOrNull(1) ?: "",
+        ycp = data.getOrNull(2) ?: "",
+        rtp = data.getOrNull(3) ?: "",
+        htp = data.getOrNull(4) ?: "",
+        ltp = data.getOrNull(5) ?: "",
+        bp = data.getOrNull(6) ?: "",
+        ap = data.getOrNull(7) ?: "",
+        tq = data.getOrNull(8) ?: "",
+        ta = data.getOrNull(9) ?: ""
     )
 }

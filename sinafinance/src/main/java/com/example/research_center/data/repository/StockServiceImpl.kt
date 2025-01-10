@@ -61,16 +61,16 @@ class StockServiceImpl(
 
     override suspend fun getStock(): Stock {
         return Stock(
-            stockName = "初始数据",
-            top = 0f,
-            ycp = 0f,
-            rtp = 0f,
-            htp = 0f,
-            ltp = 0f,
-            bp = 0f,
-            ap = 0f,
-            tq = 0f,
-            ta = 0f
+            stockName = "暂无数据",
+            top = "暂无数据",
+            ycp = "暂无数据",
+            rtp = "暂无数据",
+            htp = "暂无数据",
+            ltp = "暂无数据",
+            bp = "暂无数据",
+            ap = "暂无数据",
+            tq = "暂无数据",
+            ta = "暂无数据"
         )
     }
 }

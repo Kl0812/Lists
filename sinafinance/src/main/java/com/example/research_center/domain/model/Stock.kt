@@ -13,13 +13,13 @@ package com.example.research_center.domain.model
 * */
 data class Stock(
     val stockName: String,
-    val top: Float,
-    val ycp: Float,
-    val rtp: Float,
-    val htp: Float,
-    val ltp: Float,
-    val bp: Float,
-    val ap: Float,
-    val tq: Float,
-    val ta: Float
+    val top: String,
+    val ycp: String,
+    val rtp: String,
+    val htp: String,
+    val ltp: String,
+    val bp: String,
+    val ap: String,
+    val tq: String,
+    val ta: String
 )

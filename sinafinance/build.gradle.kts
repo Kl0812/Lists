@@ -6,7 +6,7 @@ plugins {
     id("com.google.dagger.hilt.android")
 
     // Serialization
-    kotlin("plugin.serialization")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -71,12 +71,11 @@ dependencies {
 
 
     // Coroutines
-    implementation (libs.kotlinx.coroutines.core)
-    implementation (libs.kotlinx.coroutines.android)
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
     // Coroutine Lifecycle Scopes
-    implementation (libs.androidx.lifecycle.viewmodel.ktx)
-    implementation (libs.androidx.lifecycle.runtime.ktx.v231)
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 
     // Retrofit
     implementation(libs.retrofit2.retrofit)
@@ -103,12 +102,12 @@ dependencies {
     implementation (libs.material3)
 
     //Ktor (Retrofit does not support websocket)
-    implementation (libs.ktor.client.core)
-    implementation (libs.ktor.client.cio)
-    implementation (libs.ktor.client.serialization)
-    implementation (libs.ktor.client.websockets)
+    implementation ("io.ktor:ktor-client-core:1.6.3")
+    implementation ("io.ktor:ktor-client-cio:1.6.3")
+    implementation ("io.ktor:ktor-client-serialization:1.6.3")
+    implementation ("io.ktor:ktor-client-websockets:1.6.3")
 
-    implementation (libs.kotlinx.serialization.json)
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 
 }
 
