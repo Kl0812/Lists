@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.research_center.common.Constants.SINA_BLUE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -47,7 +48,7 @@ fun SubPage(
                 .height(3.dp)
                 .width(50.dp)
                 .background(
-                    if (currentPage == myPage) Color(0xFF036BFC) else Color.Transparent
+                    if (currentPage == myPage) Color(SINA_BLUE) else Color.Transparent
                 )
         )
     }

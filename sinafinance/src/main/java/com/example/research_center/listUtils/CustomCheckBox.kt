@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.research_center.presentation.qs_list.components.QsListMenu
+import com.example.research_center.common.Constants.SINA_BLUE
 
 @Composable
 fun CustomCheckBox(
@@ -41,7 +41,7 @@ fun CustomCheckBox(
             modifier = Modifier
                 .scale(scaleMultiplier),
             colors = CheckboxDefaults.colors(
-                checkedColor = Color(0xFF036BFC),
+                checkedColor = Color(SINA_BLUE),
                 uncheckedColor = Color.Gray,
                 checkmarkColor = Color.White,
             )

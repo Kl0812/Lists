@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.research_center.common.Constants.SINA_GRAY
 import com.example.research_center.listUtils.SortText
 
 @Composable
@@ -32,7 +33,7 @@ fun QsListStickyHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFFF0F0F0))
+            .background(Color(SINA_GRAY))
             .padding(horizontal = 12.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

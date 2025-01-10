@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.research_center.common.Constants.SINA_BLUE
 import com.example.research_center.domain.model.QsSymbol
 import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.qs_symbol_list.QsSymbolListViewModel
@@ -90,7 +91,7 @@ fun QsSymbolListSection(
                             .clickable {
                                 onExpandChanged(true)
                             },
-                        color = Color(0xFF036BFC)
+                        color = Color(SINA_BLUE)
                     )
                 } else {
                     Text(
@@ -99,7 +100,7 @@ fun QsSymbolListSection(
                             .clickable {
                                 onExpandChanged(false)
                             },
-                        color = Color(0xFF036BFC)
+                        color = Color(SINA_BLUE)
                     )
                 }
             }

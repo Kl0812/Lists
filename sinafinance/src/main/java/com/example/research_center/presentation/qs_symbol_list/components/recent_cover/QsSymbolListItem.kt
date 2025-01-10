@@ -13,12 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.research_center.common.Constants.SINA_GREEN
 import com.example.research_center.domain.model.QsSymbol
 
 @SuppressLint("NewApi")
@@ -45,6 +47,7 @@ fun QsSymbolListItem(
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom,
             modifier = Modifier.fillMaxWidth()
         ) {
 
@@ -67,7 +70,7 @@ fun QsSymbolListItem(
                 fontSize = 16.sp,
                 color = if(qsSymbol.percent > 0) Color.Red
                     else if(qsSymbol.percent == 0f) Color.Gray
-                    else Color(0xFF31AB1C),
+                    else Color(SINA_GREEN),
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End
             )

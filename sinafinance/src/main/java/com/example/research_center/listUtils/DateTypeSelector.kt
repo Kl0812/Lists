@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.research_center.common.Constants.SINA_BLUE
+import com.example.research_center.common.Constants.SINA_GRAY
 
 @Composable
 fun DateTypeSelector(
@@ -56,11 +58,11 @@ fun SelectableBox(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val backgroundColor = Color(0xFFF0F0F0)
+    val backgroundColor = Color(SINA_GRAY)
 
     // Change color is selected
-    val borderColor = if (isSelected) Color(0xFF036BFC) else Color.Gray
-    val textColor   = if (isSelected) Color(0xFF036BFC) else Color.Gray
+    val borderColor = if (isSelected) Color(SINA_BLUE) else Color.Gray
+    val textColor   = if (isSelected) Color(SINA_BLUE) else Color.Gray
 
     Box(
         modifier = Modifier

@@ -1,15 +1,20 @@
-package com.example.research_center.presentation.qs_symbol_list.components.recent_cover
+package com.example.research_center.presentation.hy_list.components
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,9 +25,7 @@ import com.example.research_center.common.Constants.SINA_GRAY
 import com.example.research_center.listUtils.SortText
 
 @Composable
-
-fun QsSymbolListStickyHeader(
-    currentSortCol: String,
+fun HyListStickyHeader(
     currentSortType: Int,
     onSortChanged: (String, Int) -> Unit
 ) {
@@ -30,13 +33,12 @@ fun QsSymbolListStickyHeader(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color(SINA_GRAY))
-            .padding(horizontal = 16.dp, vertical = 4.dp),
+            .padding(horizontal = 12.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 左侧: "券商机构"
         Text(
-            text = "股票名称",
+            text = "名称",
             color = Color.Gray,
             fontSize = 12.sp,
             modifier = Modifier.weight(1f),
@@ -47,10 +49,10 @@ fun QsSymbolListStickyHeader(
             contentAlignment = Alignment.CenterEnd
         ) {
             SortText(
-                label = "最新覆盖日期",
-                isSelected = (currentSortCol == "date"),
+                label = "研报数量",
+                isSelected = true,
                 currentSortType = currentSortType,
-                sortCol = "date",
+                sortCol = "num",
                 onSortChanged = { col, typeOrNone ->
                     onSortChanged(col, typeOrNone)
                 }
@@ -61,14 +63,10 @@ fun QsSymbolListStickyHeader(
             modifier = Modifier.weight(1f),
             contentAlignment = Alignment.CenterEnd
         ) {
-            SortText(
-                label = "覆盖后涨幅",
-                isSelected = (currentSortCol == "percent"),
-                currentSortType = currentSortType,
-                sortCol = "percent",
-                onSortChanged = { col, typeOrNone ->
-                    onSortChanged(col, typeOrNone)
-                }
+            Text(
+                text = "明星个股",
+                fontSize = 12.sp,
+                color = Color.Gray
             )
         }
     }
@@ -76,14 +74,13 @@ fun QsSymbolListStickyHeader(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(
-    name = "QsSymbolListStickyHeader Preview",
+    name = "HyListStickyHeader Preview",
     showBackground = true
 )
 @Composable
-fun QsSymbolListStickyHeaderPreview() {
-    QsSymbolListStickyHeader(
-        currentSortCol = "date",
-        currentSortType = 0,
+fun HyListStickyHeaderPreview() {
+    HyListStickyHeader(
+        currentSortType = 1,
         onSortChanged = { _, _ -> }
     )
 }

@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.research_center.common.Constants.SINA_GRAY
 import com.example.research_center.listUtils.CustomTopBar
 import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.qs_symbol_list.components.header.DateTypeHeaderSection
@@ -97,7 +98,7 @@ fun QsSymbolListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(12.dp)
-                                .background(Color(0xFFF0F0F0))
+                                .background(Color(SINA_GRAY))
                         )
                     }
 
@@ -118,7 +119,7 @@ fun QsSymbolListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(12.dp)
-                                .background(Color(0xFFF0F0F0))
+                                .background(Color(SINA_GRAY))
                         )
                     }
 

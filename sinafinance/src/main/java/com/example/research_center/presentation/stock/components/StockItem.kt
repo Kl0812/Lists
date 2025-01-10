@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.research_center.common.Constants.SINA_GREEN
 
 @Composable
 fun StockItem(
@@ -80,7 +81,7 @@ fun StockItem(
             displayText = decimalFormat.format(myFloat)
             displayColor = when {
                 myFloat  > ycpFloat -> Color.Red
-                myFloat  < ycpFloat -> Color(0xFF31AB1C)  // 绿色
+                myFloat  < ycpFloat -> Color(SINA_GREEN)  // 绿色
                 else -> Color.Gray
             }
         }

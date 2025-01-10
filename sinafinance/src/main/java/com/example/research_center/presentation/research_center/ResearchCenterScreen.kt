@@ -18,10 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.research_center.listUtils.CustomTopBar
-import com.example.research_center.presentation.TestScreen
+import com.example.research_center.presentation.hy_list.HyListScreen
 import com.example.research_center.presentation.qs_list.QsListScreen
-import com.example.research_center.presentation.research_center.components.SubPage
 import com.example.research_center.presentation.report_list.ReportListScreen
+import com.example.research_center.presentation.research_center.components.SubPage
 
 @SuppressLint("NewApi")
 @Composable
@@ -95,7 +95,7 @@ fun ResearchCenterScreen(
                 state = pagerState
             ) { page ->
                 when (page) {
-                    0 -> TestScreen()
+                    0 -> HyListScreen(navController)
                     1 -> ReportListScreen(navController)
                     2 -> QsListScreen(navController)
                 }
