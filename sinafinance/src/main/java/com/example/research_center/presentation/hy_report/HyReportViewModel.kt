@@ -74,7 +74,8 @@ class HyReportViewModel @Inject constructor(
     fun refresh(){
         _state.value = _state.value.copy(
             isRefreshing = true,
-            isLoading = false
+            isLoading = false,
+            error = ""
         )
         currentPage = 1
 

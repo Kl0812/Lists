@@ -40,7 +40,12 @@ class HyListViewModel @Inject constructor(
             isLoading = false
         )
 
-        getHy(
+        getHyForChart(
+            date_type = currentDateType,
+            type = currentSwType
+        )
+
+        getHyForList(
             page = currentPage,
             date_type = currentDateType,
             sort_type = currentSortType.value,
@@ -52,7 +57,12 @@ class HyListViewModel @Inject constructor(
         currentDateType = date_type
         currentPage = 1
 
-        getHy(
+        getHyForChart(
+            date_type = currentDateType,
+            type = currentSwType
+        )
+
+        getHyForList(
             page = currentPage,
             date_type = currentDateType,
             sort_type = currentSortType.value,
@@ -64,7 +74,12 @@ class HyListViewModel @Inject constructor(
         currentSwType = type
         currentPage = 1
 
-        getHy(
+        getHyForChart(
+            date_type = currentDateType,
+            type = currentSwType
+        )
+
+        getHyForList(
             page = currentPage,
             date_type = currentDateType,
             sort_type = currentSortType.value,
@@ -77,7 +92,7 @@ class HyListViewModel @Inject constructor(
 
         _currentSortType.value = typeOrNone
 
-        getHy(
+        getHyForList(
             page = currentPage,
             date_type = currentDateType,
             sort_type = currentSortType.value,
@@ -88,11 +103,17 @@ class HyListViewModel @Inject constructor(
     fun refresh(){
         _state.value = _state.value.copy(
             isRefreshing = true,
-            isLoading = false
+            isLoading = false,
+            error = ""
         )
         currentPage = 1
 
-        getHy(
+        getHyForChart(
+            date_type = currentDateType,
+            type = currentSwType
+        )
+
+        getHyForList(
             page = currentPage,
             date_type = currentDateType,
             sort_type = currentSortType.value,
@@ -109,7 +130,7 @@ class HyListViewModel @Inject constructor(
         )
         currentPage += 1
 
-        getHy(
+        getHyForList(
             page = currentPage,
             date_type = currentDateType,
             sort_type = currentSortType.value,
@@ -117,7 +138,8 @@ class HyListViewModel @Inject constructor(
         )
     }
 
-    private fun getHy(
+    // Get data list
+    private fun getHyForList(
         page: Int,
         date_type: Int,
         sort_type: Int,
@@ -162,6 +184,36 @@ class HyListViewModel @Inject constructor(
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isRefreshing = false,
+                        error = result.message ?: "Unknown Error"
+                    )
+                }
+                is Resource.Loading -> {
+                    // TODO: Nothing todo here right now
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    // Get data list for bar chart
+    private fun getHyForChart(
+        date_type: Int,
+        type: Int
+    ) {
+        getHyUseCase(
+            page = 1,
+            date_type = date_type,
+            type = type,
+            sort_type = 0
+        ).onEach { result ->
+            when(result) {
+                is Resource.Success -> {
+                    val newData = result.data ?: emptyList()
+                    _state.value = _state.value.copy(
+                        barChart = newData.take(10)
+                    )
+                }
+                is Resource.Error -> {
+                    _state.value = _state.value.copy(
                         error = result.message ?: "Unknown Error"
                     )
                 }

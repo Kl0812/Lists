@@ -81,7 +81,9 @@ fun HyListScreen(
                 }
 
                 item {
-                    HyBarChart()
+                    HyBarChart(
+                        data = state.barChart
+                    )
                 }
 
                 stickyHeader {
