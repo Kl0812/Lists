@@ -1,6 +1,7 @@
 package com.example.research_center.data.remote.dto
 
 import com.example.research_center.domain.model.Hy
+import java.util.Locale
 
 data class HyDto(
     val code: String,
@@ -26,7 +27,7 @@ fun HyDto.toHy(): List<Hy> {
     return data?.map { item ->
         Hy(
             name = item.name,
-            code = item.code,
+            code = item.code.uppercase(),
             num = item.num.toInt(),
             symbol_name = item.symbol_name,
             symbol_num = item.symbol_num.toInt()

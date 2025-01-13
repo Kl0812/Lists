@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.report_list
+package com.example.research_center.presentation.research_center.pages.report_list
 
 import com.example.research_center.domain.model.Report
 

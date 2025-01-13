@@ -1,7 +1,6 @@
-package com.example.research_center.presentation.hy_list.components
+package com.example.research_center.presentation.research_center.pages.report_list.components
 
 import android.annotation.SuppressLint
-import android.icu.text.DecimalFormat
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
@@ -13,60 +12,47 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.research_center.common.Constants.SINA_BLUE
-import com.example.research_center.common.Constants.SINA_GREEN
-import com.example.research_center.domain.model.Hy
-import com.example.research_center.domain.model.Qs
+import com.example.research_center.domain.model.Report
+import com.example.research_center.listUtils.ShowDate
 
 @SuppressLint("NewApi")
 @Composable
-fun HyListItem(
-    hy: Hy,
-    onItemClick: (Hy) -> Unit
+fun ReportListItem(
+    report: Report,
+    onItemClick: (Report) -> Unit
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onItemClick(hy)
+                onItemClick(report)
             }
             .padding(top = 12.dp, start = 16.dp, end = 16.dp)
     ) {
+        Text(
+            text = report.title,
+            fontSize = 16.sp,
+        )
+
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Bottom
+            modifier = Modifier.fillMaxWidth()
         ) {
 
             Text(
-                text = hy.name,
-                fontSize = 16.sp,
-                modifier = Modifier.weight(1f),
+                text = report.orgname,
+                fontSize = 12.sp,
+                color = Color.Gray,
+                textAlign = TextAlign.Center
             )
 
-            Text(
-                text = hy.num.toString(),
-                fontSize = 16.sp,
-                modifier = Modifier.weight(1f),
-                textAlign = TextAlign.End,
-                color = Color(SINA_BLUE)
-            )
-
-            Text(
-                text = "${hy.symbol_name}(${hy.symbol_num})",
-                fontSize = 16.sp,
-                modifier = Modifier.weight(1f),
-                textAlign = TextAlign.End
-            )
-
+            ShowDate(report.adddate)
         }
 
         HorizontalDivider(
@@ -81,21 +67,21 @@ fun HyListItem(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(
-    name = "HyListItem Preview",
+    name = "ReportListItem Preview",
     showBackground = true
 )
 @Composable
-fun HyListItemPreview() {
-    val sampleHy = Hy(
-        name = "汽车",
-        num = 49,
-        code = "hy0280000",
-        symbol_name = "宇通客车",
-        symbol_num = 5,
+fun ReportListItemPreview() {
+    val sampleReport = Report(
+        adddate = "2024-12-26 00:00:00",
+        orgname = "东吴证券",
+        report_id = "788525455904",
+        title = "宇邦新材(301266)：焊带加工费下滑短期承压 BC新品有望结构性改善盈利"
     )
 
-    HyListItem(
-        hy = sampleHy,
+    // 当预览时，onItemClick可以使用空的lambda
+    ReportListItem(
+        report = sampleReport,
         onItemClick = {}
     )
 }

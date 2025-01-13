@@ -1,13 +1,15 @@
-package com.example.research_center.presentation.hy_list.components
+package com.example.research_center.presentation.research_center.pages.hy_list.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -44,20 +46,25 @@ fun SwType(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable { onClick() }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "研报覆盖行业前10  ",
+                text = "研报覆盖行业前10",
                 fontSize = textSize
             )
+            Spacer(modifier = Modifier.width(10.dp))
+
             Text(
-                text = "$swTitle  ",
+                text = swTitle,
                 fontSize = textSize,
-                color = Color(SINA_BLUE)
+                color = Color(SINA_BLUE),
+                modifier = Modifier
+                    .clickable { onClick() }
             )
+            Spacer(modifier = Modifier.width(10.dp))
+
             Icon(
                 painter = painterResource(R.drawable.swap),
                 contentDescription = "arrow triangle down",
@@ -78,7 +85,7 @@ fun SwType(
 @Composable
 fun SwTypePreview() {
     SwType(
-        currentSwType = 1,
+        currentSwType = 2,
         onClick = { }
     )
 }

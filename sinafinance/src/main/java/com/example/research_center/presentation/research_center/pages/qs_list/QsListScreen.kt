@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.report_list
+package com.example.research_center.presentation.research_center.pages.qs_list
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,51 +16,61 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.research_center.listUtils.ReusableLazyColumn
 import com.example.research_center.presentation.Screen
-import com.example.research_center.presentation.report_list.components.ReportListItem
-import com.example.research_center.presentation.report_list.components.ReportListMenu
+import com.example.research_center.presentation.research_center.pages.qs_list.components.QsListItem
+import com.example.research_center.presentation.research_center.pages.qs_list.components.QsListMenu
+import com.example.research_center.presentation.research_center.pages.qs_list.components.QsListStickyHeader
+import java.net.URLEncoder
 
 @Composable
-fun ReportListScreen(
+fun QsListScreen(
     navController: NavController,
-    viewModel: ReportListViewModel = hiltViewModel()
+    viewModel: QsListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
 
-    fun onMenuSelected(menu: String) {
-        val rating_change = when(menu) {
-            "上调" -> 1
-            "下调" -> 3
-            "维持" -> 2
-            "首次" -> 4
-            else -> 0
-        }
-        viewModel.ratingChange(rating_change = rating_change)
-    }
+    val dateType = viewModel.currentDateType
+    val isTopChecked = (viewModel.currentIsTop == 1)
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        ReportListMenu(
-            onMenuSelected = ::onMenuSelected,
-            currentRating = viewModel.currentRatingChange
+        QsListMenu(
+            currentDateType = dateType,
+            onDateTypeSelected = { newType ->
+                viewModel.dateType(newType)
+            },
+            isChecked = isTopChecked,
+            onCheckedChange = { newChecked ->
+                viewModel.isTop(newChecked)
+            }
+        )
+
+        QsListStickyHeader(
+            currentSortCol = viewModel.currentSortCol.value,
+            currentSortType = viewModel.currentSortType.value,
+            onSortChanged = { col, typeOrNone ->
+                viewModel.setSort(col, typeOrNone)
+            }
         )
 
         Box(modifier = Modifier
             .fillMaxWidth()
         ) {
             ReusableLazyColumn(
-                items = state.report,
-                isRefreshing = state.isRefreshing,
+                items = state.qs,
+                isRefreshing = state.isRefreshing, // or whatever
                 isEndReached = state.isEndReached,
                 refresh = { viewModel.refresh() },
                 loadMore = { viewModel.loadMore() },
-                content = { report ->
-                    ReportListItem(
-                        report = report,
+                content = { qs ->
+                    QsListItem(
+                        qs = qs,
                         onItemClick = {
                             navController.navigate(
-                                Screen.ReportDetailScreen.route + "/${report.report_id}"
+                                // 将证券code作为路径传递
+                                Screen.QsSymbolListScreen.route +
+                                        "/${URLEncoder.encode(qs.code, "UTF-8")}"
                             )
                         }
                     )

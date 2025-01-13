@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.qs_list.components
+package com.example.research_center.presentation.research_center.pages.hy_list.components
 
 import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
@@ -22,44 +22,46 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.research_center.common.Constants.SINA_BLUE
 import com.example.research_center.common.Constants.SINA_GREEN
+import com.example.research_center.domain.model.Hy
 import com.example.research_center.domain.model.Qs
 
 @SuppressLint("NewApi")
 @Composable
-fun QsListItem(
-    qs: Qs,
-    onItemClick: (Qs) -> Unit
+fun HyListItem(
+    hy: Hy,
+    onItemClick: (Hy) -> Unit
 ) {
-    // Transform digital format
-    val decimalFormat = DecimalFormat("0.00")
-    val percentValue = decimalFormat.format(qs.percent)
-    val prefix = when {
-        qs.percent > 0 -> "+"
-        else -> ""
-    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onItemClick(qs)
+                onItemClick(hy)
             }
             .padding(top = 12.dp, start = 16.dp, end = 16.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Bottom
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Text(
-                text = qs.name,
-                fontSize = 16.sp,
-                modifier = Modifier.weight(1f),
-            )
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = hy.name,
+                    fontSize = 16.sp
+                )
+                Text(
+                    text = hy.code,
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
+            }
 
             Text(
-                text = qs.num.toString(),
+                text = hy.num.toString(),
                 fontSize = 16.sp,
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
@@ -67,11 +69,8 @@ fun QsListItem(
             )
 
             Text(
-                text = "$prefix$percentValue%",
+                text = "${hy.symbol_name}(${hy.symbol_num})",
                 fontSize = 16.sp,
-                color = if(qs.percent > 0) Color.Red
-                    else if(qs.percent == 0f) Color.Gray
-                    else Color(SINA_GREEN),
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End
             )
@@ -90,20 +89,21 @@ fun QsListItem(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(
-    name = "QsListItem Preview",
+    name = "HyListItem Preview",
     showBackground = true
 )
 @Composable
-fun QsListItemPreview() {
-    val sampleQs = Qs(
-        name = "东吴证券",
-        num = 33,
-        percent = 2.44f,
-        code = "DW100"
+fun HyListItemPreview() {
+    val sampleHy = Hy(
+        name = "汽车",
+        num = 49,
+        code = "hy0280000",
+        symbol_name = "宇通客车",
+        symbol_num = 5,
     )
 
-    QsListItem(
-        qs = sampleQs,
+    HyListItem(
+        hy = sampleHy,
         onItemClick = {}
     )
 }

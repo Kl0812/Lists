@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.qs_list
+package com.example.research_center.presentation.research_center.pages.qs_list
 
 import com.example.research_center.domain.model.Qs
 

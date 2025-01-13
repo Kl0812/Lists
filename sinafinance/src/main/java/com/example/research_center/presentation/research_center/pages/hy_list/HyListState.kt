@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.hy_list
+package com.example.research_center.presentation.research_center.pages.hy_list
 
 import com.example.research_center.domain.model.Hy
 

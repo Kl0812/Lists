@@ -37,7 +37,7 @@ import com.example.research_center.listUtils.CustomTopBar
 import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.qs_symbol_list.components.header.DateTypeHeaderSection
 import com.example.research_center.presentation.qs_symbol_list.components.recent_cover.QsSymbolListSection
-import com.example.research_center.presentation.report_list.components.ReportListItem
+import com.example.research_center.presentation.research_center.pages.report_list.components.ReportListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

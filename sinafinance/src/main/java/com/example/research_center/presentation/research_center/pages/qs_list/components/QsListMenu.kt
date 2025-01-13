@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.qs_list.components
+package com.example.research_center.presentation.research_center.pages.qs_list.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi

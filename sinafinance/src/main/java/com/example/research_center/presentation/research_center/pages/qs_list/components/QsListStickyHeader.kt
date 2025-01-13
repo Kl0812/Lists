@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.hy_list.components
+package com.example.research_center.presentation.research_center.pages.qs_list.components
 
 import android.os.Build
 import android.util.Log
@@ -25,7 +25,8 @@ import com.example.research_center.common.Constants.SINA_GRAY
 import com.example.research_center.listUtils.SortText
 
 @Composable
-fun HyListStickyHeader(
+fun QsListStickyHeader(
+    currentSortCol: String,
     currentSortType: Int,
     onSortChanged: (String, Int) -> Unit
 ) {
@@ -37,8 +38,9 @@ fun HyListStickyHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // 左侧: "券商机构"
         Text(
-            text = "名称",
+            text = "券商机构",
             color = Color.Gray,
             fontSize = 12.sp,
             modifier = Modifier.weight(1f),
@@ -50,7 +52,7 @@ fun HyListStickyHeader(
         ) {
             SortText(
                 label = "研报数量",
-                isSelected = true,
+                isSelected = (currentSortCol == "num"),
                 currentSortType = currentSortType,
                 sortCol = "num",
                 onSortChanged = { col, typeOrNone ->
@@ -63,10 +65,14 @@ fun HyListStickyHeader(
             modifier = Modifier.weight(1f),
             contentAlignment = Alignment.CenterEnd
         ) {
-            Text(
-                text = "明星个股",
-                fontSize = 12.sp,
-                color = Color.Gray
+            SortText(
+                label = "推荐股票平均涨幅",
+                isSelected = (currentSortCol == "percent"),
+                currentSortType = currentSortType,
+                sortCol = "percent",
+                onSortChanged = { col, typeOrNone ->
+                    onSortChanged(col, typeOrNone)
+                }
             )
         }
     }
@@ -74,12 +80,13 @@ fun HyListStickyHeader(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(
-    name = "HyListStickyHeader Preview",
+    name = "QsListStickHeader Preview",
     showBackground = true
 )
 @Composable
-fun HyListStickyHeaderPreview() {
-    HyListStickyHeader(
+fun QsListStickHeaderPreview() {
+    QsListStickyHeader(
+        currentSortCol = "percent",
         currentSortType = 1,
         onSortChanged = { _, _ -> }
     )

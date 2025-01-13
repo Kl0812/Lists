@@ -10,9 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.research_center.presentation.hy_report.HyReportScreen
 import com.example.research_center.presentation.qs_symbol_list.QsSymbolListScreen
 import com.example.research_center.presentation.report_detail.ReportDetailScreen
 import com.example.research_center.presentation.research_center.ResearchCenterScreen
+import com.example.research_center.presentation.research_center.pages.hy_list.HyListScreen
 import com.example.research_center.presentation.stock.StockScreen
 
 @Composable
@@ -61,7 +63,7 @@ fun AppNavHost(
         }
 
         composable(
-            route = Screen.QsSymbolScreen.route + "/{qs_code}",
+            route = Screen.QsSymbolListScreen.route + "/{qs_code}",
         ) {
             QsSymbolListScreen(navController)
         }
@@ -70,6 +72,12 @@ fun AppNavHost(
             route = Screen.StockScreen.route + "/{stock_code}",
         ) {
             StockScreen(navController)
+        }
+
+        composable(
+            route = Screen.HyReportScreen.route + "/{hy_code}/{hy_name}",
+        ) {
+            HyReportScreen(navController)
         }
     }
 }

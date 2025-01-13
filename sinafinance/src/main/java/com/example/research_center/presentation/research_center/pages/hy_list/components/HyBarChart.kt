@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.hy_list.components
+package com.example.research_center.presentation.research_center.pages.hy_list.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

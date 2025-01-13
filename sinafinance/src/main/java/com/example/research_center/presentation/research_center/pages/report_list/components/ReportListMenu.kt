@@ -1,4 +1,4 @@
-package com.example.research_center.presentation.report_list.components
+package com.example.research_center.presentation.research_center.pages.report_list.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
