@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.research_center.common.Constants.HY_CODE
 import com.example.research_center.common.Constants.HY_NAME
 import com.example.research_center.common.Resource
-import com.example.research_center.domain.use_case.get_qsSymbol.GetQsSymbolUseCase
 import com.example.research_center.domain.use_case.get_report.GetReportUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -16,8 +15,8 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 /*
-* View Model for qs symbol list, used to maintain the state
-* Also is contains GetReportUseCase for ReportListSection
+* View Model for hy report list, used to maintain the state
+* It contains GetReportUseCase for ReportListSection
 * */
 @HiltViewModel
 class HyReportViewModel @Inject constructor(
@@ -58,6 +57,7 @@ class HyReportViewModel @Inject constructor(
         }
     }
 
+    // Function for change menu rate
     fun ratingChange(rating_change: Int) {
         currentRatingChange = rating_change
         currentPage = 1
@@ -71,6 +71,7 @@ class HyReportViewModel @Inject constructor(
         }
     }
 
+    // Function eo refresh
     fun refresh(){
         _state.value = _state.value.copy(
             isRefreshing = true,
@@ -88,6 +89,7 @@ class HyReportViewModel @Inject constructor(
         }
     }
 
+    // Function to load more data
     fun loadMore() {
 
         if (_state.value.isLoading || _state.value.isEndReached) return
@@ -108,6 +110,7 @@ class HyReportViewModel @Inject constructor(
         }
     }
 
+    // Function to get data list from api and update hy report state
     private fun getReport(
         page: Int,
         rating_change: Int,

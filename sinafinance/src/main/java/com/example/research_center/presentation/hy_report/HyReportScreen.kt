@@ -2,16 +2,11 @@ package com.example.research_center.presentation.hy_report
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,11 +18,12 @@ import androidx.navigation.NavController
 import com.example.research_center.listUtils.CustomTopBar
 import com.example.research_center.listUtils.ReusableLazyColumn
 import com.example.research_center.presentation.Screen
-import com.example.research_center.presentation.qs_symbol_list.QsSymbolListViewModel
 import com.example.research_center.presentation.research_center.pages.report_list.components.ReportListItem
 import com.example.research_center.presentation.research_center.pages.report_list.components.ReportListMenu
 
-@OptIn(ExperimentalMaterial3Api::class)
+/*
+* Main screen for 行业研报列表
+* */
 @Composable
 fun HyReportScreen(
     navController: NavController,
@@ -40,6 +36,7 @@ fun HyReportScreen(
     Scaffold(
         containerColor = Color.White,
         topBar = {
+            // Show hy name as title
             CustomTopBar(
                 title = hyName,
                 showReturnButton = true,
@@ -50,6 +47,7 @@ fun HyReportScreen(
         }
     ) { innerPadding ->
 
+        // Menu select function
         fun onMenuSelected(menu: String) {
             val rating_change = when(menu) {
                 "上调" -> 1
@@ -61,16 +59,19 @@ fun HyReportScreen(
             viewModel.ratingChange(rating_change = rating_change)
         }
 
+        // Main contents
         Column(
             modifier = Modifier
                 .padding(innerPadding)
         ) {
 
+            // Menu
             ReportListMenu(
                 onMenuSelected = ::onMenuSelected,
                 currentRating = viewModel.currentRatingChange
             )
 
+            // Report list
             Box(modifier = Modifier
                 .fillMaxWidth()
             ) {

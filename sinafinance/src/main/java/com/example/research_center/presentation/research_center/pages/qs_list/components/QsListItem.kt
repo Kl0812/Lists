@@ -24,6 +24,9 @@ import com.example.research_center.common.Constants.SINA_BLUE
 import com.example.research_center.common.Constants.SINA_GREEN
 import com.example.research_center.domain.model.Qs
 
+/*
+* Customised qs list item component
+* */
 @SuppressLint("NewApi")
 @Composable
 fun QsListItem(

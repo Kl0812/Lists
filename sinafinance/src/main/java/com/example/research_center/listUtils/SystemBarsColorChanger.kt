@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 /*
-* This file contain two functions to change system bars color.
+* Customised system bar color changer components.
 * The SystemBarsColorChanger can only be called in a composable function
 * The changeSystemBarsColor can be called without a composable scope (such as in a button onClick)
 * */

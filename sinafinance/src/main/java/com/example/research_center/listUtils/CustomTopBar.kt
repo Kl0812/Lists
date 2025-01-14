@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lists.R
 
+/*
+* Customised app top bar component
+* */
 @Composable
 fun CustomTopBar(
     title: String,

@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.example.lists.R
 
 /*
-* This file is to create list menu header
+* Customised report list menu header component
 * */
 @Composable
 fun ReportListMenu(

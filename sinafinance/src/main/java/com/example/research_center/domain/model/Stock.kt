@@ -1,6 +1,7 @@
 package com.example.research_center.domain.model
 
 /*
+* Customised model
 * 今日开盘价 Today's Opening Price: top
 * 昨日收盘价 Yesterday's Closing Price: ycp
 * 最近成交价 Recent Transaction Price: rtp

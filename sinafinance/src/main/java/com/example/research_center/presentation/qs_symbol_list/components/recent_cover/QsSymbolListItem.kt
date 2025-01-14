@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.research_center.common.Constants.SINA_GREEN
 import com.example.research_center.domain.model.QsSymbol
 
+// Customised component for 近期覆盖列表 data list item
 @SuppressLint("NewApi")
 @Composable
 fun QsSymbolListItem(

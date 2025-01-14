@@ -18,11 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.research_center.listUtils.CustomTopBar
+import com.example.research_center.presentation.research_center.components.SubPage
 import com.example.research_center.presentation.research_center.pages.hy_list.HyListScreen
 import com.example.research_center.presentation.research_center.pages.qs_list.QsListScreen
 import com.example.research_center.presentation.research_center.pages.report_list.ReportListScreen
-import com.example.research_center.presentation.research_center.components.SubPage
 
+/*
+* The top level main screen for this app, 研报中心
+* It contains three sub-pages, which contain different information and ui
+* */
 @SuppressLint("NewApi")
 @Composable
 fun ResearchCenterScreen(

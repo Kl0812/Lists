@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
 /*
-* This function is used to display a lazy column,
-* with pull to refresh and load more function
+*Customised reusable lazy column component,
+* allow pull to refresh and load more functions
 * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

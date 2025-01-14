@@ -17,6 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.research_center.common.Constants.SINA_GREEN
 
+/*
+* Customised component for display a single stock item22
+* */
 @Composable
 fun StockItem(
     title: String,

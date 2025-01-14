@@ -3,11 +3,13 @@ package com.example.research_center.data.remote.dto
 import com.example.research_center.domain.model.Stock
 import kotlinx.serialization.Serializable
 
+// Class which contains csv string from websocket connection
 @Serializable
 data class StockDto(
     val information: String
 )
 
+// Function which convert DTO to customised model
 fun StockDto.toStock(): Stock {
     // Split the string by ","
     val data = information.split(",")

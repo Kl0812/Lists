@@ -19,6 +19,9 @@ import com.example.research_center.common.Constants.SINA_BLUE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+/*
+* Customised component for switchable sub-pages
+* */
 @Composable
 fun SubPage(
     text: String,

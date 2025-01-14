@@ -2,6 +2,7 @@ package com.example.research_center.data.remote.dto
 
 import com.example.research_center.domain.model.Report
 
+// Class which contains json data transfer object
 data class ReportDto(
     val code: String,
     val `data`: List<Data>?,
@@ -21,6 +22,7 @@ data class ReportDto(
     )
 }
 
+// Function which convert DTO to customised model
 fun ReportDto.toReport(): List<Report> {
     return data?.map { item ->
         Report (

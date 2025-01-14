@@ -17,6 +17,9 @@ import com.example.research_center.listUtils.SystemBarsColorChanger
 import com.example.research_center.presentation.ui.theme.ListsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+/*
+* Entrance of the whole project
+* */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

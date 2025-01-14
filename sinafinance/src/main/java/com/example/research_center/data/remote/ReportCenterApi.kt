@@ -3,14 +3,12 @@ package com.example.research_center.data.remote
 import com.example.research_center.data.remote.dto.HyDto
 import com.example.research_center.data.remote.dto.QsDto
 import com.example.research_center.data.remote.dto.QsSymbolDto
-import com.example.research_center.data.remote.dto.ReportDetailDto
 import com.example.research_center.data.remote.dto.ReportDto
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 /*
-* List API information, use LIST_BASE_UR
+* List API path, use LIST_BASE_URL
 * */
 interface ReportCenterApi {
 

@@ -18,6 +18,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.research_center.common.Constants.SINA_BLUE
 
+/*
+* Customised check box component
+* */
 @Composable
 fun CustomCheckBox(
     isChecked: Boolean,

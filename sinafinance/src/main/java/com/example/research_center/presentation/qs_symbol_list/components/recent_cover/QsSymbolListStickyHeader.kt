@@ -19,8 +19,12 @@ import androidx.compose.ui.unit.sp
 import com.example.research_center.common.Constants.SINA_GRAY
 import com.example.research_center.listUtils.SortText
 
+/*
+* Customised 近期覆盖股票 section sticky header
+* This sticky header does not contain a real compose stick header,
+* because this header is only used for 近期覆盖股票 section
+* */
 @Composable
-
 fun QsSymbolListStickyHeader(
     currentSortCol: String,
     currentSortType: Int,

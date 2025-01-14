@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 /*
-* Report detail API information, use DETAIL_BASE_UR
+* Report detail API path, use DETAIL_BASE_UR
 * */
 interface ReportDetailApi {
 

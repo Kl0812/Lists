@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 /*
 * View Model for qs symbol list, used to maintain the state
-* Also is contains GetReportUseCase for ReportListSection
+* Also contains GetReportUseCase for ReportListSection
 * */
 @HiltViewModel
 class QsSymbolListViewModel @Inject constructor(
@@ -77,6 +77,7 @@ class QsSymbolListViewModel @Inject constructor(
         }
     }
 
+    // Refresh function
     fun refresh(){
         _state.value = _state.value.copy(
             isRefreshing = true,
@@ -110,6 +111,7 @@ class QsSymbolListViewModel @Inject constructor(
         }
     }
 
+    // Function to set sort by changing sort_col and sort_type parameters
     fun setSort(col: String, typeOrNone: Int) {
         _currentSortCol.value = if (typeOrNone == -1) "" else col
         _currentSortType.value = typeOrNone
@@ -128,6 +130,7 @@ class QsSymbolListViewModel @Inject constructor(
         }
     }
 
+    // Function to change date type
     fun dateType(date_type: Int) {
         currentDateType = date_type
 
@@ -145,6 +148,7 @@ class QsSymbolListViewModel @Inject constructor(
         }
     }
 
+    // Function to load more data
     fun loadMore() {
 
         if (_state.value.isLoading || _state.value.isEndReached) return
@@ -168,6 +172,8 @@ class QsSymbolListViewModel @Inject constructor(
         }
     }
 
+    // Main function to get data list from api for 近期覆盖列表 section
+    // It may use given parameters to get sorted data list
     private fun getQsSymbol(
         qs_code: String,
         date_type: Int,
@@ -200,6 +206,8 @@ class QsSymbolListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    // Main function to get data list from api for 研报列表 section
+    // It will not use given parameters to get sorted data list
     private fun getReport(
         page: Int,
         qs_code: String

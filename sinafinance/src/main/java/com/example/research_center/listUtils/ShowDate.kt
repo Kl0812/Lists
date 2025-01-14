@@ -11,6 +11,9 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/*
+* Customised date display component
+* */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ShowDate(addDate: String) {

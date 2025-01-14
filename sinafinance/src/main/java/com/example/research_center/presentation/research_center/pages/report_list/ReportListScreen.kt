@@ -19,6 +19,9 @@ import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.research_center.pages.report_list.components.ReportListItem
 import com.example.research_center.presentation.research_center.pages.report_list.components.ReportListMenu
 
+/*
+* report list screen for one subpage of the 研报中心 page,
+* */
 @Composable
 fun ReportListScreen(
     navController: NavController,

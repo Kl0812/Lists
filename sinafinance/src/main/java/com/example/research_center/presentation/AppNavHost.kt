@@ -14,9 +14,12 @@ import com.example.research_center.presentation.hy_report.HyReportScreen
 import com.example.research_center.presentation.qs_symbol_list.QsSymbolListScreen
 import com.example.research_center.presentation.report_detail.ReportDetailScreen
 import com.example.research_center.presentation.research_center.ResearchCenterScreen
-import com.example.research_center.presentation.research_center.pages.hy_list.HyListScreen
 import com.example.research_center.presentation.stock.StockScreen
 
+/*
+* Customised app navigation function to handle
+* page navigation, routes and animation
+* */
 @Composable
 fun AppNavHost(
     navController: NavHostController

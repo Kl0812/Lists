@@ -2,6 +2,7 @@ package com.example.research_center.data.remote.dto
 
 import com.example.research_center.domain.model.QsSymbol
 
+// Class which contains json data transfer object
 data class QsSymbolDto(
     val code: String,
     val `data`: List<Data>?,
@@ -20,6 +21,7 @@ data class QsSymbolDto(
     )
 }
 
+// Function which convert DTO to customised model
 fun QsSymbolDto.toQsSymbol(): List<QsSymbol> {
     return data?.map { item ->
         QsSymbol(

@@ -26,6 +26,9 @@ import com.example.research_center.presentation.research_center.pages.hy_list.co
 import com.example.research_center.presentation.research_center.pages.hy_list.components.HyListStickyHeader
 import com.example.research_center.presentation.research_center.pages.hy_list.components.SwType
 
+/*
+* Hy screen for one subpage of the 研报中心 page
+* */
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun HyListScreen(
@@ -95,6 +98,7 @@ fun HyListScreen(
                     )
                 }
 
+                // Main list
                 itemsIndexed(state.hy) { index, hy ->
                     HyListItem(
                         hy = hy,

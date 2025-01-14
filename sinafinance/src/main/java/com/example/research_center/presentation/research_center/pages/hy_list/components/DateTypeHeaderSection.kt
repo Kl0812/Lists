@@ -12,6 +12,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.research_center.listUtils.DateTypeSelector
 
+/*
+* Customised data type selector header component
+* */
 @Composable
 fun DateTypeHeaderSection(
     currentDateType: Int,

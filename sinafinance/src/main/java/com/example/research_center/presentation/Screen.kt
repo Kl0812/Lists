@@ -1,7 +1,7 @@
 package com.example.research_center.presentation
 
 /*
-* Set screen navigation route
+* Screen navigation routes
 * */
 sealed class Screen(val route: String) {
     object ResearchCenterScreen: Screen("research_center")

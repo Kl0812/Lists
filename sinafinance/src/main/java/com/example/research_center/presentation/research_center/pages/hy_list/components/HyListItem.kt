@@ -1,7 +1,6 @@
 package com.example.research_center.presentation.research_center.pages.hy_list.components
 
 import android.annotation.SuppressLint
-import android.icu.text.DecimalFormat
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
@@ -21,10 +20,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.research_center.common.Constants.SINA_BLUE
-import com.example.research_center.common.Constants.SINA_GREEN
 import com.example.research_center.domain.model.Hy
-import com.example.research_center.domain.model.Qs
 
+/*
+* Customised hy list item component
+* */
 @SuppressLint("NewApi")
 @Composable
 fun HyListItem(

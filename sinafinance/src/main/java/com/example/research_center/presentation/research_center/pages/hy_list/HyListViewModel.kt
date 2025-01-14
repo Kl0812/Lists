@@ -195,6 +195,7 @@ class HyListViewModel @Inject constructor(
     }
 
     // Get data list for bar chart
+    // Data sort will not be influenced by sort_type and page
     private fun getHyForChart(
         date_type: Int,
         type: Int

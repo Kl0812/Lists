@@ -2,6 +2,9 @@ package com.example.research_center.presentation.research_center.pages.report_li
 
 import com.example.research_center.domain.model.Report
 
+/*
+* Class to store report list state
+* */
 data class ReportListState (
     val isRefreshing: Boolean = false,
     val isLoading: Boolean = false,

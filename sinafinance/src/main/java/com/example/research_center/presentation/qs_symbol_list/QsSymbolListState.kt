@@ -3,6 +3,9 @@ package com.example.research_center.presentation.qs_symbol_list
 import com.example.research_center.domain.model.QsSymbol
 import com.example.research_center.domain.model.Report
 
+/*
+* Class to store state for qs symbol list
+* */
 data class QsSymbolListState (
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,

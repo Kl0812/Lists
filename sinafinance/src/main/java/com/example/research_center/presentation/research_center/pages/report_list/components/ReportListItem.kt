@@ -21,6 +21,9 @@ import androidx.compose.ui.unit.sp
 import com.example.research_center.domain.model.Report
 import com.example.research_center.listUtils.ShowDate
 
+/*
+* Customised report list item component
+* */
 @SuppressLint("NewApi")
 @Composable
 fun ReportListItem(

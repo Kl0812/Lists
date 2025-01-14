@@ -24,8 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lists.R
 import com.example.research_center.common.Constants.SINA_BLUE
-import com.example.research_center.listUtils.SortText
 
+/*
+* Customised 申万 type changer components
+* */
 @Composable
 fun SwType(
     currentSwType: Int,

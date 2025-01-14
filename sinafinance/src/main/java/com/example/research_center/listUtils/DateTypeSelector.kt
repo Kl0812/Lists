@@ -20,6 +20,11 @@ import androidx.compose.ui.unit.sp
 import com.example.research_center.common.Constants.SINA_BLUE
 import com.example.research_center.common.Constants.SINA_GRAY
 
+/*
+* Customised date type selector component
+* Can only select three different types:
+* 近一周，近一月，近三月
+* */
 @Composable
 fun DateTypeSelector(
     currentDateType: Int,

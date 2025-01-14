@@ -1,8 +1,8 @@
 package com.example.research_center.data.remote.dto
 
 import com.example.research_center.domain.model.Hy
-import java.util.Locale
 
+// Class which contains json data transfer object
 data class HyDto(
     val code: String,
     val `data`: List<Data>?,
@@ -23,6 +23,7 @@ data class HyDto(
     )
 }
 
+// Function which convert DTO to customised model
 fun HyDto.toHy(): List<Hy> {
     return data?.map { item ->
         Hy(

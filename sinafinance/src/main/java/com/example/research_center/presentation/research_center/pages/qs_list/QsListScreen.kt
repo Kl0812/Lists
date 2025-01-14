@@ -21,6 +21,9 @@ import com.example.research_center.presentation.research_center.pages.qs_list.co
 import com.example.research_center.presentation.research_center.pages.qs_list.components.QsListStickyHeader
 import java.net.URLEncoder
 
+/*
+* qs list screen for one subpage of the 研报中心 page
+* */
 @Composable
 fun QsListScreen(
     navController: NavController,

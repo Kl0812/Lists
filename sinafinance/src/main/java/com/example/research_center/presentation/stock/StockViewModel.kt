@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.research_center.common.Constants.STOCK_CODE
 import com.example.research_center.common.Resource
-import com.example.research_center.data.remote.StockService
 import com.example.research_center.domain.repository.StockRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,6 +16,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/*
+* View model for stock
+* Use websocket to establish a connection and retrieve data continually
+* */
 @HiltViewModel
 class StockViewModel @Inject constructor(
     private val stockRepository: StockRepository,

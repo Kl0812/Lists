@@ -1,18 +1,12 @@
 package com.example.research_center.presentation.qs_symbol_list.components.recent_cover
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,8 +17,8 @@ import com.example.research_center.common.Constants.SINA_BLUE
 import com.example.research_center.domain.model.QsSymbol
 import com.example.research_center.presentation.Screen
 import com.example.research_center.presentation.qs_symbol_list.QsSymbolListViewModel
-import java.net.URLEncoder
 
+// Main component for 近期覆盖股票 section
 @Composable
 fun QsSymbolListSection(
     qsName: String, // can be used for route later

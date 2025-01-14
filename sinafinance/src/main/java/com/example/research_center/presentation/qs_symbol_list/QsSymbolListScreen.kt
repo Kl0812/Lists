@@ -39,6 +39,12 @@ import com.example.research_center.presentation.qs_symbol_list.components.header
 import com.example.research_center.presentation.qs_symbol_list.components.recent_cover.QsSymbolListSection
 import com.example.research_center.presentation.research_center.pages.report_list.components.ReportListItem
 
+/*
+* Main screen for qs symbol list screen
+* This screen contains two sections: 近期覆盖股票 and 研报列表
+* There's a DateTypeSelector for 近期覆盖股票
+* All the sort functions will not influence 研报列表 section
+* */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QsSymbolListScreen(
@@ -84,6 +90,7 @@ fun QsSymbolListScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
 
+                    // 近期覆盖股票 section
                     item {
                         DateTypeHeaderSection(
                             currentDateType = dateType,
@@ -123,6 +130,7 @@ fun QsSymbolListScreen(
                         )
                     }
 
+                    // 研报列表 section
                     item {
                         Box(
                             modifier = Modifier

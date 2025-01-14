@@ -23,6 +23,10 @@ import androidx.compose.ui.unit.sp
 import com.example.lists.R
 import com.example.research_center.common.Constants.SINA_BLUE
 
+/*
+* Customised sort text component,
+* allow three states: desc, asc and non-selected
+* */
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun SortText(

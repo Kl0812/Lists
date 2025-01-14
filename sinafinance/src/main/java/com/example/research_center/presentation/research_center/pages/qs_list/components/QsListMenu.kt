@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +18,7 @@ import com.example.research_center.listUtils.CustomCheckBox
 import com.example.research_center.listUtils.DateTypeSelector
 
 /*
-* This file is to create list menu header
+* Customised qs list menu header
 * */
 @Composable
 fun QsListMenu(

@@ -28,6 +28,9 @@ import androidx.navigation.NavController
 import com.example.research_center.listUtils.CustomTopBar
 import com.example.research_center.listUtils.ShowDate
 
+/*
+* Main report detail screen
+* */
 @SuppressLint("NewApi")
 @Composable
 fun ReportDetailScreen(
