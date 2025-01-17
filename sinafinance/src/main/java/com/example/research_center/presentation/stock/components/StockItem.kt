@@ -90,11 +90,27 @@ fun StockItem(
         }
 
         "成交数量", "成交金额" -> {
-            // 除以 10000 后，显示两位小数并加“万”
-            val millionValue = myFloat / 10000f
-            val text2decimals = decimalFormat.format(millionValue)
-            displayText = "$text2decimals 万"
             displayColor = Color.Black
+            when {
+                // < 1 万
+                myFloat < 10_000 -> {
+                    displayText = decimalFormat.format(myFloat)
+                }
+
+                // [1 万, 1 亿)
+                myFloat < 100_000_000 -> {
+                    val wValue = myFloat / 10_000f
+                    val text2decimals = decimalFormat.format(wValue)
+                    displayText = "$text2decimals 万"
+                }
+
+                // >= 1 亿
+                else -> {
+                    val yValue = myFloat / 100_000_000f
+                    val text2decimals = decimalFormat.format(yValue)
+                    displayText = "$text2decimals 亿"
+                }
+            }
         }
 
         else -> {
